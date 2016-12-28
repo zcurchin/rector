@@ -1,0 +1,10 @@
+<div class="layout layout-align-center-center">
+  <div class="layout-column login-form card">
+    <h3 class="form-title">Create Account</h3>
+    {{paper-input label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
+    {{paper-input label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
+    {{paper-input label="E-mail" type="email" value=email onChange=(action (mut email))}}
+    {{paper-input label="Password" type="password" value=password onChange=(action (mut password))}}
+    {{#paper-button raised=true primary=true onClick=(action "signUp")}}Sign Up{{/paper-button}}
+  </div>
+</div>

@@ -6,6 +6,11 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+
+    torii: {
+      sessionServiceName: 'session'
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -20,6 +25,24 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    firebase: {
+      apiKey: 'AIzaSyDdBGXk9_lZv57ehjQn6E2Lpl1ZlBm5UaY',
+      authDomain: 'rector-test.firebaseapp.com',
+      databaseURL: 'https://rector-test.firebaseio.com',
+      storageBucket: 'rector-test.appspot.com',
+    },
+
+    // needed for ember-paper
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-inline'",
+      'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
+      'font-src': "'self' fonts.gstatic.com",
+      'connect-src': "'self'",
+      'img-src': "'self' data:",
+      'media-src': "'self'"
     }
   };
 

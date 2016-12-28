@@ -1,0 +1,25 @@
+{{! without contextual components }}
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+
+    <!-- {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+      {{#paper-button iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}} -->
+
+    <h2>Rector</h2>
+
+    <span class="flex"></span>
+
+    {{#if session.isAuthenticated}}
+      <h2>{{session.currentUser.displayName}}</h2>
+      {{#paper-button raised=true onClick=(action "signOut")}}Sign Out{{/paper-button}}
+    {{else}}
+      {{#paper-button raised=true onClick=(action "signUp")}}Create Account{{/paper-button}}
+    {{/if}}
+
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+
+{{outlet}}

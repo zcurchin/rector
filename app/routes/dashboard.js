@@ -1,10 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const {
+  Route,
+  inject: { service },
+  get
+} = Ember;
+
+export default Route.extend({
+  session: service(),
+
   model: function(){
-    return {
-      user_email: this.get('session.currentUser.email'),
-      user_name: this.get('session.currentUser.displayName')
-    };    
+    let currentUser = get(this, 'session.currentUser');
+
+    return this.get('store').query('user', {
+      orderBy: 'uid',
+      equalTo: currentUser.uid
+    });
   }
 });

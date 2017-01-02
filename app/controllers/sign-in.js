@@ -1,12 +1,18 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  actions: {
-    signIn: function() {
-      var self = this;
+const {
+  Controller,
+  inject: { service },
+  get
+} = Ember;
 
-      // email: test@example.com
-      // pass: password1234
+export default Controller.extend({
+  firebaseApp: service(),
+  error_msg: '',
+
+  actions: {
+    signIn() {
+      var self = this;
 
       this.get('session').open('firebase', {
         provider: 'password',
@@ -14,26 +20,17 @@ export default Ember.Controller.extend({
         password: self.get('password')
 
       }).then(function() {
-        // console.log(data.currentUser);
-
+        self.set('email', '');
+        self.set('password', '');
         self.transitionToRoute('dashboard');
 
-        // data.currentUser.updateProfile({
-        //   displayName: "Jane Q. User",
-        //   photoURL: "https://example.com/jane-q-user/profile.jpg",
-        //   testParam: 'hallo there'
-        // }).then(function() {
-        //   // Update successful.
-        // }, function(error) {
-        //   // An error happened.
-        // });
-
-        //console.log(self.get('session'));
-
-
-      }).catch(function(err){
-        console.log(err);
+      }).catch(function(err){        
+        self.set('error_msg', err.message);
       });
+    },
+
+    signUp(){
+      this.transitionToRoute('sign-up');
     }
   }
 });

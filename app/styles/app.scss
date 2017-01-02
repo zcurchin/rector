@@ -1,8 +1,37 @@
+
+$primary: 'indigo';
+$accent: "purple";
+$warn: "pink";
+
 @import 'ember-paper';
 
 
 body {
-  background: #ecefff;
+  background: #e0e5ff;
+}
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar),
+md-toolbar:not(.md-menu-toolbar) {
+  background-color: color($primary, '400');
+  position: fixed;
+}
+
+.md-button.md-default-theme.md-primary.md-raised {
+  background-color: color($primary, '400');
+}
+
+.app-container {
+  position: relative;
+}
+
+md-sidenav {
+  box-shadow: none !important;
+}
+
+.inner-sidenav {
+  width: 100%;
+  height: 100%;
+  padding-top: 64px;
 }
 
 .card {
@@ -11,6 +40,10 @@ body {
   background: #FFF;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+
+  .title {
+    margin-top: 0;
+  }
 }
 
 .login-form {

@@ -1,0 +1,75 @@
+<div class="app-container">
+
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+
+      <h2>Rector</h2>
+
+      <span class="flex"></span>
+
+      {{#if session.isAuthenticated}}
+        {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+          {{#paper-button iconButton=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
+            {{paper-icon "more-vert"}}
+          {{/paper-button}}
+        {{/paper-sidenav-toggle}}
+      {{/if}}
+
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+
+  {{#paper-sidenav-container class="inner-sidenav"}}
+    {{#if session.isAuthenticated}}
+      {{#paper-sidenav
+        class="md-whiteframe-z2"
+        name="left"
+        open=leftSideBarOpen
+        onToggle=(action (mut leftSideBarOpen))
+      }}
+        {{#paper-content padding=true}}
+          {{#paper-item}}
+            {{paper-icon "account-circle"}}
+            <p>Profile</p>
+          {{/paper-item}}
+
+          {{#paper-item}}
+            {{paper-icon "grade"}}
+            <p>Grade</p>
+          {{/paper-item}}
+
+          {{#paper-item}}
+            {{paper-icon "equalizer"}}
+            <p>Statistics</p>
+          {{/paper-item}}
+
+          {{#paper-item}}
+            {{paper-icon "settings"}}
+            <p>Settings</p>
+          {{/paper-item}}
+
+          {{#paper-item onClick=(action "signOut")}}
+            {{paper-icon "lock"}}
+            <p>Sign Out</p>
+          {{/paper-item}}
+          <!-- {{#paper-item as |controls|}}
+            {{paper-icon "network-wifi"}}
+            <p>Wi-Fi</p>
+            {{controls.switch secondary=true value=wifiEnabled onChange=(action (mut wifiEnabled))}}
+          {{/paper-item}}
+          {{#paper-item as |controls|}}
+            {{paper-icon "bluetooth"}}
+            <p>Bluetooth</p>
+            {{controls.switch secondary=true value=bluetoothEnabled onChange=(action (mut bluetoothEnabled))}}
+          {{/paper-item}} -->
+        {{/paper-content}}
+      {{/paper-sidenav}}
+    {{/if}}
+
+    {{#paper-card-content class="flex"}}
+      <div class="layout-fill">
+        {{outlet}}
+      </div>
+    {{/paper-card-content}}
+  {{/paper-sidenav-container}}
+
+</div>

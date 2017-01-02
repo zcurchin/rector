@@ -1,8 +1,15 @@
 <div class="layout layout-align-center-center">
   <div class="layout-column login-form card">
-    <h3 class="form-title">Sign Up</h3>
-    {{paper-input label="E-mail" type="email" value=email onChange=(action (mut email))}}
-    {{paper-input label="Password" type="password" value=password onChange=(action (mut password))}}
+    <h3 class="title">Sign In</h3>
+
+    {{#if error_msg}}
+      <!-- {{paper-icon "error" size=24}} -->
+      <h5>{{error_msg}}</h5>
+    {{/if}}
+
+    {{paper-input label="email" type="email" value=email onChange=(action (mut email))}}
+    {{paper-input label="password" type="password" value=password onChange=(action (mut password))}}
     {{#paper-button raised=true primary=true onClick=(action "signIn")}}Sign In{{/paper-button}}
+    {{#paper-button noink=true primary=true onClick=(action "signUp")}}Create Account{{/paper-button}}
   </div>
 </div>

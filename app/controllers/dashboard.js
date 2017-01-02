@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  actions: {
-    grade: function(){
+const {
+  Controller,
+  inject: { service },
+} = Ember;
 
-    }
-  }
+export default Controller.extend({
+
 });

@@ -38,10 +38,11 @@ export default Controller.extend({
       auth.createUserWithEmailAndPassword(email, pass).then((currentUser) => {
 
         let user = get(self, 'store').createRecord('user', {
-          uid: currentUser.uid,
+          auth_uid: currentUser.uid,
           first_name: first_name,
           last_name: last_name,
-          email: email
+          email: email,
+          job_title: 'boss'
         });
 
         user.save().then((_user) => {

@@ -26,7 +26,7 @@ export default Component.extend({
     setContainerDims();
 
     $(window).on('resize', () => {
-      run(self, setContainerDims, 200, false);
+      run.debounce(self, setContainerDims, 200);
     });
   },
 

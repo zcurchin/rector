@@ -21,7 +21,6 @@
   {{#paper-sidenav-container class="inner-sidenav"}}
     {{#if session.isAuthenticated}}
       {{#paper-sidenav
-        class="md-whiteframe-z2"
         name="left"
         open=leftSideBarOpen
         onToggle=(action (mut leftSideBarOpen))
@@ -66,10 +65,9 @@
     {{/if}}
 
     {{#paper-card-content class="flex"}}
-      <div class="layout-fill">
-        {{outlet}}
-      </div>
+      {{outlet}}
     {{/paper-card-content}}
+
   {{/paper-sidenav-container}}
 
 </div>

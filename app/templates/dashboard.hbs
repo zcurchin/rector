@@ -2,8 +2,12 @@
   <div class="layout-column card">
 
     {{#each model as |user|}}
-      <h3>{{user.uid}}</h3>
-      <h3>{{user.first_name}} {{user.last_name}}</h3>
+      <!-- {{#each-in user as |key value|}}
+        {{key}}:{{value}}
+      {{/each-in}} -->
+
+      <h3>{{user.auth_uid}}</h3>
+      <h3>{{user.full_name}}</h3>
       <h3>{{user.email}}</h3>
     {{/each}}
   </div>

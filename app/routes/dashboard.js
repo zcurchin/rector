@@ -4,40 +4,25 @@ import RSVP from 'rsvp';
 const {
   Route,
   inject: { service },
-  get,
-  run
+  get
 } = Ember;
 
 export default Route.extend({
-  session: service(),
+  user: service(),
 
-  model: function(){
-    let currentUser = get(this, 'session.currentUser');
+  model(){
+    let user = get(this, 'user');
 
-    // let self = this;
-    // return new RSVP.Promise(function(resolve) {
-    //   Ember.run.later(function() {
-    //     resolve({ msg: 'Hold Your Horses' });
-    //   }, 100000);
-    // });
+    return new RSVP.Promise((resolve, reject) => {
+      let requests = {
+        profile: user.get('profile'),
+        account: user.get('account')
+      };
 
-    return this.get('store').query('user', {
-      orderBy: 'auth_uid',
-      equalTo: currentUser.uid
+      RSVP.hash(requests).then(data => {
+        console.log(data);
+        resolve(data);
+      });
     });
-
   }
-
-  // actions: {
-  //   loading(transition, originRoute) {
-  //     console.log('### LOADING');
-  //     // let controller = this.controllerFor('foo');
-  //     // controller.set('currentlyLoading', true);
-  //     //
-  //     // transition.promise.finally(() => {
-  //     //   //controller.set('currentlyLoading', false);
-  //     //   console.log('### LOADED');
-  //     // });
-  //   }
-  // }
 });

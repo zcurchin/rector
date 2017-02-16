@@ -1,5 +1,5 @@
-<div class="layout layout-align-center-center">
-  <div class="layout-column login-form card">
+
+  <div class="layout-column card card-centered">
     <h3 class="title">Create Account</h3>
 
     {{#if error_msg}}
@@ -7,16 +7,36 @@
       <h5>{{error_msg}}</h5>
     {{/if}}
 
-    {{paper-input label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
-    {{paper-input label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
-    {{paper-input label="E-mail" type="email" value=email onChange=(action (mut email))}}
-    {{paper-input label="Password" type="password" value=password onChange=(action (mut password))}}
+    {{#paper-form onSubmit=(action "createUser") as |form|}}
 
-    {{#if wiatForAccountCreation}}
-      {{paper-progress-linear accent=true}}
-    {{/if}}
+      {{#paper-switch value=createAdmin onChange=(action (mut createAdmin))}}
+        Create restaurant admin account
+      {{/paper-switch}}
 
-    {{#paper-button raised=true primary=true onClick=(action "createAccount")}}Submit{{/paper-button}}
-    {{#paper-button noink=true primary=true onClick=(action "goToSignIn")}}Back to Sign In{{/paper-button}}
+      {{#unless createAdmin}}
+      {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
+      {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
+        {{paper-input required=true label="Username" type="text" value=username onChange=(action (mut username))}}
+      {{/unless}}
+
+      {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
+      {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
+
+      {{#if wiatForAccountCreation}}
+        {{paper-progress-linear accent=true}}
+      {{/if}}
+
+      {{#form.submit-button
+        raised=true
+        primary=true
+        disabled=wiatForAccountCreation
+      }}
+        Submit
+      {{/form.submit-button}}
+
+    {{/paper-form}}
+
+
+
+    {{#paper-button noink=true primary=true onClick=(action "goToSignIn")}}Sign In{{/paper-button}}
   </div>
-</div>

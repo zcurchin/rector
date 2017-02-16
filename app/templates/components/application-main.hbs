@@ -25,26 +25,50 @@
         open=leftSideBarOpen
         onToggle=(action (mut leftSideBarOpen))
       }}
-        {{#paper-content padding=true}}
-          {{#paper-item}}
-            {{paper-icon "account-circle"}}
-            <p>Profile</p>
-          {{/paper-item}}
+        {{#paper-content}}
+          {{#link-to "dashboard"}}
+            {{#paper-item}}
+              {{paper-icon "dashboard"}}
+              <p>Dashboard</p>
+            {{/paper-item}}
+          {{/link-to}}
 
-          {{#paper-item}}
-            {{paper-icon "grade"}}
-            <p>Grade</p>
-          {{/paper-item}}
+          {{#link-to "profile"}}
+            {{#paper-item}}
+              {{paper-icon "account-circle"}}
+              <p>Profile</p>
+            {{/paper-item}}
+          {{/link-to}}
 
-          {{#paper-item}}
-            {{paper-icon "equalizer"}}
-            <p>Statistics</p>
-          {{/paper-item}}
+          {{#link-to "account"}}
+            {{#paper-item}}
+              {{paper-icon "folder-shared"}}
+              <p>Account</p>
+            {{/paper-item}}
+          {{/link-to}}
 
-          {{#paper-item}}
-            {{paper-icon "settings"}}
-            <p>Settings</p>
-          {{/paper-item}}
+          {{#link-to "grade"}}
+            {{#paper-item}}
+              {{paper-icon "grade"}}
+              <p>Grade</p>
+            {{/paper-item}}
+          {{/link-to}}
+
+          {{#link-to "statistics"}}
+            {{#paper-item}}
+              {{paper-icon "equalizer"}}
+              <p>Statistics</p>
+            {{/paper-item}}
+          {{/link-to}}
+
+          {{#link-to "notifications"}}
+            {{#paper-item}}
+              {{paper-icon "notifications"}}
+              <p>Notifications</p>
+            {{/paper-item}}
+          {{/link-to}}
+
+          {{paper-divider}}
 
           {{#paper-item onClick=(action "signOut")}}
             {{paper-icon "lock"}}
@@ -64,7 +88,7 @@
       {{/paper-sidenav}}
     {{/if}}
 
-    {{#paper-card-content class="flex"}}
+    {{#paper-card-content}}
       {{outlet}}
     {{/paper-card-content}}
 

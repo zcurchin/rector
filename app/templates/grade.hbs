@@ -1,0 +1,26 @@
+<div class="layout-column card">
+  <h3 class="title">Grade</h3>
+
+  {{#if model}}
+    {{#each model as |profile|}}
+      <div class="profile-box layout-row layout-align-start-center">
+        <div class="profile-image">
+          {{#if profile.profile_image}}
+            <img class="flex-none" src="{{profile.profile_image}}">
+          {{else}}
+            {{paper-icon "account-circle"}}
+          {{/if}}
+        </div>
+        <div class="profile-name flex">
+          <h1>{{profile.first_name}} {{profile.last_name}}</h1>
+        </div>
+      </div>
+    {{/each}}
+
+  {{else}}
+    <div class="info-message">
+      There is no users you can grade at this moment. Try again later.
+    </div>
+  {{/if}}
+
+</div>

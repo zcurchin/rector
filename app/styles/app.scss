@@ -26,24 +26,67 @@ md-toolbar:not(.md-menu-toolbar) {
 
 md-sidenav {
   box-shadow: none !important;
+
+  md-content {
+    padding-top: 15px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a.active {
+    md-icon {
+      color: color($accent);
+    }
+
+    p {
+      color: color($accent);
+    }
+  }
 }
 
 .inner-sidenav {
   width: 100%;
   height: 100%;
   padding-top: 64px;
+  overflow-y: scroll !important;
 }
 
 .card {
-  padding: 50px;
-  margin-top: 50px;
+  padding: 30px;
+  margin: 30px;
   background: #FFF;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  max-width: 500px;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #333 !important;
+  }
+
+  p {
+    color: #555 !important;
+    margin-top: 0.8em;
+    margin-bottom: 0;
+  }
 
   .title {
     margin-top: 0;
   }
+
+  .value {
+    color: #111 !important;
+  }
+
+  md-switch {
+    margin-left: 0;
+  }
+}
+
+.card-centered {
+  margin: 50px auto !important;
 }
 
 .login-form {
@@ -64,6 +107,34 @@ md-card-content {
   width: 100%;
   height: 100%;
 }
+
+
+
+// ----------------------------------------------
+// GRADE
+// ----------------------------------------------
+
+.profile-box {
+  border-bottom: 1px solid #DDD;
+  padding: 0.3em 0;
+
+  md-icon {
+    font-size: 3em;
+    height: 1em;
+    color: color($primary, '200');
+  }
+
+  .profile-name {
+    font-size: 0.5em;
+    padding: 0 2em;
+  }
+}
+
+.profile-box:last-child {
+  border-bottom: none;
+}
+
+
 
 // ----------------------------------------------
 // Preloader

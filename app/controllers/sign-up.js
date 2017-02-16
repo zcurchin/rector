@@ -1,72 +1,69 @@
 import Ember from 'ember';
+//import RSVP from 'rsvp';
 
 const {
   Controller,
   inject: { service },
   get,
-  set,
-  run
+  //run,
+  set
 } = Ember;
 
 export default Controller.extend({
-  store: service(),
-  session: service(),
-  firebaseApp: service(),
+  user: service(),
   wiatForAccountCreation: false,
   error_msg: '',
+  createAdmin: false,
 
   actions: {
-    createAccount: function(){
-      var self = this;
-      let auth = this.get('firebaseApp').auth();
-
+    createUser(){
+      let self = this;
       let first_name = this.get('first_name');
       let last_name = this.get('last_name');
+      let username = this.get('username');
       let email = this.get('email');
       let pass = this.get('password');
-
-      if (!email) {
-        set(self, 'error_msg', 'Email address can\'t be blank');
-        return;
-      } else if (!pass) {
-        set(self, 'error_msg', 'Passord can\'t be blank');
-        return;
-      }
+      let createAdmin = this.get('createAdmin');
+      let user = this.get('user');
 
       set(this, 'wiatForAccountCreation', true);
 
-      auth.createUserWithEmailAndPassword(email, pass).then((currentUser) => {
+      let params = {
+        admin: createAdmin,
+        email: email,
+        password: pass,
+        username: username,
+        first_name: first_name,
+        last_name: last_name
+      };
 
-        let user = get(self, 'store').createRecord('user', {
-          auth_uid: currentUser.uid,
-          first_name: first_name,
-          last_name: last_name,
+      user.create(params).then(() => {
+        console.log('# Sign Up : user data created');
+
+        self.get('session').open('firebase', {
+          provider: 'password',
           email: email,
-          job_title: 'boss'
+          password: pass
+
+        }).then(function() {
+          console.log('# Sign Up : user logged in');
+          set(self, 'wiatForAccountCreation', false);
+          self.replaceRoute('dashboard');
+
+        }).catch(function(err){
+          console.log(err);
+          set(self, 'wiatForAccountCreation', false);
+          set(self, 'error_msg', err.message);
         });
 
-        user.save().then((_user) => {
-          // console.log(_user);
-          self.get('session').open('firebase', {
-            provider: 'password',
-            email: email,
-            password: pass
-
-          }).then(function() {
-            set(self, 'wiatForAccountCreation', false);
-            self.transitionToRoute('dashboard');
-
-          }).catch(function(err){
-            set(self, 'wiatForAccountCreation', false);
-            self.set('error_msg', err.message);
-          });
-        });
 
       }).catch((err) => {
+        console.log(err);
         set(self, 'wiatForAccountCreation', false);
         set(self, 'error_msg', err.message);
       });
     },
+
 
     goToSignIn(){
       this.transitionToRoute('sign-in');

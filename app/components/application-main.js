@@ -19,6 +19,7 @@ export default Component.extend({
     });
   },
 
+
   didInsertElement(){
     let self = this;
     let setContainerDims = get(this, 'setContainerDims');
@@ -30,11 +31,11 @@ export default Component.extend({
     });
   },
 
+
   actions: {
     signOut(){
-      this.get('session').close();
       this.get('router').transitionTo('sign-in');
+      this.get('session').close();
     }
   }
-
 });

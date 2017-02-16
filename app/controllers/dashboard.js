@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Controller,
-  inject: { service },
+  //inject: { service },
 } = Ember;
 
 export default Controller.extend({

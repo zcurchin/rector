@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Controller,
   inject: { service },
-  get
+  //get
 } = Ember;
 
 export default Controller.extend({
@@ -24,7 +24,7 @@ export default Controller.extend({
         self.set('password', '');
         self.transitionToRoute('dashboard');
 
-      }).catch(function(err){        
+      }).catch(function(err){
         self.set('error_msg', err.message);
       });
     },

@@ -21,12 +21,7 @@ export default Service.extend({
         let uid = user.uid;
         let tasks = {
           account: self._createAccount(uid, params),
-          profile: self._createProfile(uid, params),
-          invitations: self._createInvitations(uid),
-          publicGrades: self._createPublicGrades(uid),
-          privateGrades: self._createPrivateGrades(uid),
-          checkIns: self._createCheckIns(uid),
-          checkOuts: self._createCheckOuts(uid)
+          profile: self._createProfile(uid, params)
         };
 
         console.log('# User : created : firebase user');
@@ -48,6 +43,7 @@ export default Service.extend({
 
   get(dataKey){
     let uid = get(this, 'session.currentUser.uid');
+    let emailVerified = get(this, 'session.currentUser.emailVerified');
     let firebaseUtil = get(this, 'firebaseUtil');
 
     let dbRef;
@@ -71,7 +67,9 @@ export default Service.extend({
 
     return new RSVP.Promise((resolve, reject) => {
       firebaseUtil.findRecord(dbRef, dbRef + '/' + uid).then(data => {
-        console.log(data);
+        if (dataKey === 'account') {
+          data.email_verified = emailVerified;
+        }
         resolve(data);
 
       }).catch(error => {
@@ -101,9 +99,9 @@ export default Service.extend({
     let userAccounts = firebaseApp.database().ref('userAccounts');
 
     let data = {
-      email: params.email,
-      created_at: Date.now(),
-      updated_at: ''
+      created: Date.now(),
+      updated: '',
+      email: params.email
     };
 
     return userAccounts.child(uid).set(data);
@@ -115,59 +113,20 @@ export default Service.extend({
     let userProfiles = firebaseApp.database().ref('userProfiles');
 
     let data = {
+      created: Date.now(),
+      updated: '',
       first_name: params.first_name,
       last_name: params.last_name,
       username: params.username,
-      created_at: Date.now(),
-      updated_at: '',
+      country: '',
       state: '',
-      zipcode: '',
       city: '',
+      zipcode: '',
       profile_image: '',
       restaurant: ''
     };
 
     return userProfiles.child(uid).set(data);
-  },
-
-
-  _createInvitations(uid){
-    let firebaseApp = get(this, 'firebaseApp');
-    let invitations = firebaseApp.database().ref('invitations');
-
-    return invitations.child(uid).push({ init_data: true });
-  },
-
-
-  _createPublicGrades(uid){
-    let firebaseApp = get(this, 'firebaseApp');
-    let publicGrades = firebaseApp.database().ref('publicGrades');
-
-    return publicGrades.child(uid).push({ init_data: true });
-  },
-
-
-  _createPrivateGrades(uid){
-    let firebaseApp = get(this, 'firebaseApp');
-    let privateGrades = firebaseApp.database().ref('privateGrades');
-
-    return privateGrades.child(uid).push({ init_data: true });
-  },
-
-
-  _createCheckIns(uid){
-    let firebaseApp = get(this, 'firebaseApp');
-    let checkIns = firebaseApp.database().ref('checkIns');
-
-    return checkIns.child(uid).push({ init_data: true });
-  },
-
-
-  _createCheckOuts(uid){
-    let firebaseApp = get(this, 'firebaseApp');
-    let checkOuts = firebaseApp.database().ref('checkOuts');
-
-    return checkOuts.child(uid).push({ init_data: true });
   },
 
 

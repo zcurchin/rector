@@ -9,26 +9,27 @@ const {
 } = Ember;
 
 export default Component.extend({
+  classNames: ['app-container'],
   session: service(),
 
-  setContainerDims(){
-    console.log('# setContainerDims');
-    $('.app-container').css({
-      height: $(window).height(),
-      width: $(window).width()
-    });
-  },
+  // setContainerDims(){
+  //   console.log('# setContainerDims');
+  //   $('.app-container').css({
+  //     height: $(window).height(),
+  //     width: $(window).width()
+  //   });
+  // },
 
 
   didInsertElement(){
     let self = this;
-    let setContainerDims = get(this, 'setContainerDims');
+    //let setContainerDims = get(this, 'setContainerDims');
 
-    setContainerDims();
-
-    $(window).on('resize', () => {
-      run.debounce(self, setContainerDims, 200);
-    });
+    // setContainerDims();
+    //
+    // $(window).on('resize', () => {
+    //   run.debounce(self, setContainerDims, 200);
+    // });
   },
 
 

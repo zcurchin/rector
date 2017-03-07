@@ -1,0 +1,31 @@
+.top-bar {
+  //background: color($primary, '200');
+  background: #FFF;
+  height: 4em;
+  //box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e8e6e6;
+
+  .logo {
+    font-size: 1.5em;
+    font-weight: 700;
+    letter-spacing: -1px;
+    padding: 0 0.5em;
+    display: inline-block;
+    color: color($primary, '300');
+  }
+
+  .menu-btn {
+    md-icon {
+      font-size: 2.5em;
+      display: block;
+      height: 1em;
+      color: rgba(0,0,0,0.5);
+    }
+  }
+
+  .md-button.md-icon-button.menu-btn {
+    padding: 0.3em;
+    width: auto;
+    height: auto;
+  }
+}

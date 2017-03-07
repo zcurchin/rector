@@ -12,7 +12,7 @@ Router.map(function() {
   this.route('dashboard');
   this.route('profile');
   this.route('account');
-  this.route('grade');
+  this.route('grading');
   this.route('statistics');
   this.route('notifications');
 });

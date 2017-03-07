@@ -1,97 +1,91 @@
-<div class="app-container">
+<div class="top-bar layout-row layout-align-start-center">
+  <div class="logo">YoWote</div>
 
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+  <span class="flex"></span>
 
-      <h2>Rector</h2>
-
-      <span class="flex"></span>
-
-      {{#if session.isAuthenticated}}
-        {{#paper-sidenav-toggle name="left" as |toggleAction|}}
-          {{#paper-button iconButton=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
-            {{paper-icon "more-vert"}}
-          {{/paper-button}}
-        {{/paper-sidenav-toggle}}
-      {{/if}}
-
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-
-  {{#paper-sidenav-container class="inner-sidenav"}}
-    {{#if session.isAuthenticated}}
-      {{#paper-sidenav
-        name="left"
-        open=leftSideBarOpen
-        onToggle=(action (mut leftSideBarOpen))
-      }}
-        {{#paper-content}}
-          {{#link-to "dashboard"}}
-            {{#paper-item}}
-              {{paper-icon "dashboard"}}
-              <p>Dashboard</p>
-            {{/paper-item}}
-          {{/link-to}}
-
-          {{#link-to "profile"}}
-            {{#paper-item}}
-              {{paper-icon "account-circle"}}
-              <p>Profile</p>
-            {{/paper-item}}
-          {{/link-to}}
-
-          {{#link-to "account"}}
-            {{#paper-item}}
-              {{paper-icon "folder-shared"}}
-              <p>Account</p>
-            {{/paper-item}}
-          {{/link-to}}
-
-          {{#link-to "grade"}}
-            {{#paper-item}}
-              {{paper-icon "grade"}}
-              <p>Grade</p>
-            {{/paper-item}}
-          {{/link-to}}
-
-          {{#link-to "statistics"}}
-            {{#paper-item}}
-              {{paper-icon "equalizer"}}
-              <p>Statistics</p>
-            {{/paper-item}}
-          {{/link-to}}
-
-          {{#link-to "notifications"}}
-            {{#paper-item}}
-              {{paper-icon "notifications"}}
-              <p>Notifications</p>
-            {{/paper-item}}
-          {{/link-to}}
-
-          {{paper-divider}}
-
-          {{#paper-item onClick=(action "signOut")}}
-            {{paper-icon "lock"}}
-            <p>Sign Out</p>
-          {{/paper-item}}
-          <!-- {{#paper-item as |controls|}}
-            {{paper-icon "network-wifi"}}
-            <p>Wi-Fi</p>
-            {{controls.switch secondary=true value=wifiEnabled onChange=(action (mut wifiEnabled))}}
-          {{/paper-item}}
-          {{#paper-item as |controls|}}
-            {{paper-icon "bluetooth"}}
-            <p>Bluetooth</p>
-            {{controls.switch secondary=true value=bluetoothEnabled onChange=(action (mut bluetoothEnabled))}}
-          {{/paper-item}} -->
-        {{/paper-content}}
-      {{/paper-sidenav}}
-    {{/if}}
-
-    {{#paper-card-content}}
-      {{outlet}}
-    {{/paper-card-content}}
-
-  {{/paper-sidenav-container}}
-
+  {{#if session.isAuthenticated}}
+    {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+      {{#paper-button iconButton=true classNames="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
+        {{paper-icon "more-vert"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+  {{/if}}
 </div>
+
+{{#paper-sidenav-container class="inner-sidenav"}}
+  {{#if session.isAuthenticated}}
+    {{#paper-sidenav
+      name="left"
+      open=leftSideBarOpen
+      onToggle=(action (mut leftSideBarOpen))
+    }}
+      {{#paper-content}}
+        {{#link-to "dashboard"}}
+          {{#paper-item}}
+            {{paper-icon "dashboard"}}
+            <p>Dashboard</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "grading"}}
+          {{#paper-item}}
+            {{paper-icon "grade"}}
+            <p>Grading</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{paper-divider}}
+
+        {{#link-to "profile"}}
+          {{#paper-item}}
+            {{paper-icon "account-circle"}}
+            <p>Profile</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "account"}}
+          {{#paper-item}}
+            {{paper-icon "folder-shared"}}
+            <p>Account</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "statistics"}}
+          {{#paper-item}}
+            {{paper-icon "equalizer"}}
+            <p>Statistics</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "notifications"}}
+          {{#paper-item}}
+            {{paper-icon "notifications"}}
+            <p>Notifications</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{paper-divider}}
+
+        {{#paper-item onClick=(action "signOut")}}
+          {{paper-icon "lock"}}
+          <p>Sign Out</p>
+        {{/paper-item}}
+        <!-- {{#paper-item as |controls|}}
+          {{paper-icon "network-wifi"}}
+          <p>Wi-Fi</p>
+          {{controls.switch secondary=true value=wifiEnabled onChange=(action (mut wifiEnabled))}}
+        {{/paper-item}}
+        {{#paper-item as |controls|}}
+          {{paper-icon "bluetooth"}}
+          <p>Bluetooth</p>
+          {{controls.switch secondary=true value=bluetoothEnabled onChange=(action (mut bluetoothEnabled))}}
+        {{/paper-item}} -->
+      {{/paper-content}}
+    {{/paper-sidenav}}
+  {{/if}}
+
+  {{#paper-card-content}}
+    {{outlet}}
+  {{/paper-card-content}}
+
+{{/paper-sidenav-container}}

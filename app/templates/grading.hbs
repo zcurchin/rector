@@ -1,0 +1,24 @@
+<div class="layout-column card">
+  <div class="card-header">
+    <h3 class="title">Grade Colleague</h3>
+  </div>
+
+  <div class="card-content">
+    {{#if model}}
+      {{#each model as |profile|}}
+        {{gradable-user
+          first_name=profile.first_name
+          last_name=profile.last_name
+          profile_image=profile.profile_image
+          profile_id=profile.id
+          action="gradeUser"}}
+      {{/each}}
+
+    {{else}}
+      <div class="info-message">
+        No gradable users at this moment
+      </div>
+    {{/if}}
+  </div>
+
+</div>

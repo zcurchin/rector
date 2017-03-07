@@ -12,6 +12,7 @@ export default Route.extend({
 
   model(){
     let user = get(this, 'user');
+
     return user.get('account');
   }
 });

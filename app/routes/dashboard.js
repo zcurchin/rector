@@ -12,11 +12,14 @@ export default Route.extend({
 
   model(){
     let user = get(this, 'user');
+    let uid = get(this, 'session.currentUser.uid');
+    let self = this;
 
     return new RSVP.Promise((resolve, reject) => {
       let requests = {
         profile: user.get('profile'),
-        account: user.get('account')
+        account: user.get('account'),
+        grades: self.get('firebaseUtil').findAll('publicGrades/' + uid)
       };
 
       RSVP.hash(requests).then(data => {

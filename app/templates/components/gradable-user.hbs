@@ -1,0 +1,48 @@
+<div class="user-info layout-row layout-align-start-center">
+  <div class="profile-image">
+    {{#if profile_image}}
+      <img class="flex-none" src="{{profile.profile_image}}">
+    {{else}}
+      {{paper-icon "account-circle"}}
+    {{/if}}
+  </div>
+  <div class="profile-name flex">
+    {{first_name}} {{last_name}}
+  </div>
+
+  <!-- <div class="grade-btn" {{action "grade" profile.id}}> -->
+  <div class="grade-btn" {{action "toggleGrading"}}>
+    {{#if selected}}
+      {{paper-icon "close"}}
+    {{else}}
+      {{paper-icon "star"}}
+    {{/if}}
+  </div>
+</div>
+
+{{#if selected}}
+  <div class="grading-box layout-row layout-align-start-center">
+    <div class="star-box grade-{{grade}}">
+      <div class="star-1" {{action "setGrade" 1}}>{{paper-icon "star"}}</div>
+      <div class="star-2" {{action "setGrade" 2}}>{{paper-icon "star"}}</div>
+      <div class="star-3" {{action "setGrade" 3}}>{{paper-icon "star"}}</div>
+      <div class="star-4" {{action "setGrade" 4}}>{{paper-icon "star"}}</div>
+      <div class="star-5" {{action "setGrade" 5}}>{{paper-icon "star"}}</div>
+      <div class="nei {{confirmBtnClass}}" {{action "setGrade" 0}}>{{paper-icon "visibility-off"}}</div>
+    </div>
+
+    <div class="pusher"></div>
+
+    {{#if grade}}
+      <div class="grade-value">{{grade}}</div>
+    {{/if}}
+
+    <div class="confirm-btn {{confirmBtnClass}} " {{action "confirmGrade" profile_id}}>{{paper-icon "check"}}</div>
+  </div>
+
+  {{#if nei}}
+    <div class="nei">
+      I don't have enough informations to grade this user.
+    </div>
+  {{/if}}
+{{/if}}

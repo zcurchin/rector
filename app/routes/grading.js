@@ -1,5 +1,4 @@
 import Ember from 'ember';
-//import RSVP from 'rsvp';
 
 const {
   Route,
@@ -15,10 +14,6 @@ export default Route.extend({
   model(){
     let firebaseApp = get(this, 'firebaseApp');
     let uid = get(this, 'session').get('uid');
-
-    // return new RSVP.Promise((resolve, reject) => {
-    //
-    // });
 
     return firebaseApp.database().ref('userProfiles').once('value').then(snap => {
       let profiles_obj = snap.val();

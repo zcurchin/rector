@@ -2,9 +2,9 @@ import Ember from 'ember';
 
 const {
   Controller,
-  inject: { service },
-  //get
+  inject: { service }
 } = Ember;
+
 
 export default Controller.extend({
   firebaseApp: service(),

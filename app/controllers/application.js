@@ -4,6 +4,7 @@ const {
   Controller
 } = Ember;
 
+
 export default Controller.extend({
   actions: {
     signOut(){

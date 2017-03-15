@@ -9,7 +9,7 @@ export default Ember.Route.extend({
   model: function(){
     //var self = this;
     let isAuthenticated = this.get('session').get('isAuthenticated');
-    console.log('isAuthenticated:', isAuthenticated);
+    console.log('# Route : Application : isAuthenticated:', isAuthenticated);
 
     if (!isAuthenticated) {
       this.replaceWith('sign-in');

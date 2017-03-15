@@ -1,9 +1,5 @@
-<div class="layout-column card">
-  <div class="card-header">
-    <h3 class="title">Grade Colleague</h3>
-  </div>
-
-  <div class="card-content">
+{{#app-page title="Grading"}}
+  {{#app-page-card title="Gradable users"}}
     {{#if model}}
       {{#each model as |profile|}}
         {{gradable-user
@@ -19,6 +15,5 @@
         No gradable users at this moment
       </div>
     {{/if}}
-  </div>
-
-</div>
+  {{/app-page-card}}
+{{/app-page}}

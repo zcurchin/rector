@@ -22,7 +22,7 @@ export default Controller.extend({
       }).then(function() {
         self.set('email', '');
         self.set('password', '');
-        self.transitionToRoute('dashboard');
+        self.replaceRoute('checking');
 
       }).catch(function(err){
         self.set('error_msg', err.message);

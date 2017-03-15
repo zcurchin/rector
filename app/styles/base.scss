@@ -1,0 +1,125 @@
+
+// ----------------------------------------------
+// TOP LEVEL
+// ----------------------------------------------
+
+body {
+  background: #f0f0f0;
+}
+
+html,
+body,
+body > .ember-view ,
+.app-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+
+// ----------------------------------------------
+// APP WRAPPERS
+// ----------------------------------------------
+
+.app-container {
+  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox; /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Chrome */
+  display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -ms-flex-direction: column;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+
+  .inner-sidenav {
+    -webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1; /* OLD - Firefox 19- */
+    -webkit-flex: 1; /* Chrome */
+    -ms-flex: 1; /* IE 10 */
+    flex: 1; /* NEW, */
+  }
+
+  md-card-content {
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+
+// ----------------------------------------------
+// SIDE NAVIGATION
+// ----------------------------------------------
+
+md-sidenav {
+  border-right: 1px solid #e8e6e6;
+
+  md-divider.paper-divider {
+    border-top-color: rgba(0, 0, 0, 0.07);
+  }
+
+  md-content {
+    padding-top: 15px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a.active {
+    md-icon {
+      color: color($primary);
+    }
+
+    p {
+      color: color($accent);
+    }
+  }
+}
+
+
+
+// ----------------------------------------------
+// APP PAGE
+// ----------------------------------------------
+
+.app-page {
+  .app-page-header {
+
+    .app-page-title {
+      font-size: 1.4em;
+      padding: 1em 0.7em;
+    }
+  }
+}
+
+
+// ----------------------------------------------
+// APP PAGE CARD
+// ----------------------------------------------
+
+.app-page-card {
+  padding: 1.4em;
+  background: #FFF;
+  border-radius: 5px;
+  //max-width: 500px;
+  border: 1px solid #e8e6e6;
+  margin: 0 0.5em 1em;
+
+  .card-header {
+
+  }
+
+  .card-title {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+  }
+
+  md-switch {
+    margin-left: 0;
+  }
+}

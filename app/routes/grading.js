@@ -4,7 +4,8 @@ import Ember from 'ember';
 const {
   Route,
   inject: { service },
-  get
+  get,
+  $
 } = Ember;
 
 
@@ -36,7 +37,7 @@ export default Route.extend({
     }).then(profiles_arr => {
       return firebaseApp.database().ref('privateGrades').child(uid).once('value').then(snapshot => {
         let snap = snapshot.val();
-        let privateGrades = $.map(snap, function(grade, index) {
+        let privateGrades = $.map(snap, function(grade) {
           return grade.uid;
         });
 

@@ -134,6 +134,7 @@ export default Service.extend({
   // Create Admin User
   // --------------------------------------------
 
-  _createAdminAccount(auth_uid, email){}
-
+  _createAdminAccount(auth_uid, email){
+    console.log(auth_uid, email);
+  }    
 });

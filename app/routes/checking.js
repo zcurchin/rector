@@ -15,7 +15,7 @@ export default Route.extend({
     let uid = get(this, 'session.currentUser.uid');
     let self = this;
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise(resolve => {
       let requests = {
         profile: user.get('profile'),
         account: user.get('account'),

@@ -20,8 +20,10 @@ export default Controller.extend({
         password: self.get('password')
 
       }).then(function() {
+        console.log('*********');
         self.set('email', '');
         self.set('password', '');
+        self.set('error_msg', '');
         self.replaceRoute('checking');
 
       }).catch(function(err){

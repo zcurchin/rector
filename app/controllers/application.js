@@ -1,15 +1,21 @@
 import Ember from 'ember';
 
 const {
-  Controller
+  Controller,
+  inject: { service },
+  get
 } = Ember;
 
 
 export default Controller.extend({
+  session : service(),
+
+
   actions: {
     signOut(){
-      this.get('session').close();
-      this.transitionToRoute('sign-in');
+      get(this, 'session').close().then(() => {
+        this.transitionToRoute('sign-in');        
+      });
     }
   }
 });

@@ -1,0 +1,19 @@
+
+// ----------------------------------------------
+// SIGN IN
+// ----------------------------------------------
+
+.sign-in {
+  padding: 7em 2em 3em;
+  box-sizing: border-box;
+  max-width: 400px;
+  margin: 0 auto;
+
+  md-input-container {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,146 @@
+
+// ----------------------------------------------
+// GRADEABLE USER
+// ----------------------------------------------
+
+.gradable-user {
+  border-bottom: 1px solid #DDD;
+  padding: 0.3em 0;
+
+  .profile-image {
+    md-icon {
+      font-size: 3em;
+      height: 1em;
+      color: #d3d3d3;
+    }
+  }
+
+  .profile-name {
+    font-size: 1.1em;
+    padding: 0 1em;
+    color: #555;
+  }
+
+  .grade-btn {
+    cursor: pointer;
+    padding: 0.5em 1em;
+    padding-right: 0.5em;
+
+    md-icon {
+      font-size: 2em;
+      height: 1em;
+    }
+  }
+
+  .grading-box {
+    height: 4em;
+    width: 100%;
+  }
+
+  .star-box {
+    display: inline-block;
+    font-size: 3em;
+
+    .nei {
+      margin-left: 0.5em;
+    }
+  }
+
+  .star-box > div {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0 0.1em;
+
+  }
+
+  .star-box.grade-0 {
+    .nei.enabled {
+      md-icon {
+        color: color($primary, '400');
+      }
+    }
+  }
+
+  .star-box.grade-1 {
+    .star-1 {
+      md-icon {
+        color: color($primary, '400');
+      }
+    }
+  }
+
+  .star-box.grade-2 {
+    .star-1, .star-2 {
+      md-icon {
+        color: color($primary, '400');
+      }
+    }
+  }
+
+  .star-box.grade-3 {
+    .star-1, .star-2, .star-3 {
+      md-icon {
+        color: color($primary, '400');
+      }
+    }
+  }
+
+  .star-box.grade-4 {
+    .star-1, .star-2, .star-3, .star-4 {
+      md-icon {
+        color: color($primary, '400');
+      }
+    }
+  }
+
+  .star-box.grade-5 {
+    .star-1, .star-2, .star-3, .star-4, .star-5 {
+      md-icon {
+        color: color($primary, '400');
+      }
+    }
+  }
+
+  .pusher {
+    margin-left: auto;
+  }
+
+  .grade-value {
+    color: #444;
+    font-size: 1.3em;
+    font-weight: 700;
+  }
+
+  .confirm-btn {
+    //margin-left: auto;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    padding-right: 0.5em;
+
+    md-icon {
+      font-size: 2em;
+      height: 1em;
+      color: #51c770;
+      border: 2px solid #51c770;
+      border-radius: 10em;
+      padding: 0.1em;
+    }
+  }
+
+  .confirm-btn.disabled {
+    md-icon {
+      color: #999;
+      border-color: #999;
+    }
+  }
+
+  .nei {
+    font-size: 0.8em;
+    padding: 0.5em;
+    padding-bottom: 1em;
+  }
+}
+
+.gradable-user:last-child {
+  border-bottom: none;
+}

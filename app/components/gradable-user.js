@@ -27,6 +27,7 @@ export default Component.extend({
     }
   }).property('isChanged'),
 
+
   actions: {
     toggleGrading(){
       this.toggleProperty('selected');

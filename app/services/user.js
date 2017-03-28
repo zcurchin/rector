@@ -79,6 +79,15 @@ export default Service.extend({
   },
 
 
+  getEmail(){
+    let email = get(this, 'session.currentUser.email');
+
+    return new RSVP.Promise((resolve) => {
+      resolve(email);
+    });
+  },
+
+
   // --------------------------------------------
   // Create Firebase User
   // --------------------------------------------
@@ -101,7 +110,7 @@ export default Service.extend({
     let data = {
       created: Date.now(),
       updated: '',
-      email: params.email
+      type: params.admin ? 'admin' : 'user'
     };
 
     return userAccounts.child(uid).set(data);
@@ -136,5 +145,26 @@ export default Service.extend({
 
   _createAdminAccount(auth_uid, email){
     console.log(auth_uid, email);
-  }    
+  },
+
+
+  // --------------------------------------------
+  // Update Email
+  // --------------------------------------------
+
+  updateEmail(address){
+    //let self = this;
+    let currentUser = get(this, 'session.currentUser');
+
+    return new RSVP.Promise((resolve, reject) => {
+      currentUser.updateEmail(address).then(data => {
+        console.log('# User : Email Updated :', address);
+        console.log(data);
+        resolve(data);
+
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
 });

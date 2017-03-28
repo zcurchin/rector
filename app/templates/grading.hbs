@@ -1,5 +1,5 @@
 {{#app-page title="Grading"}}
-  {{#app-page-card title="Gradable users"}}
+  {{#app-page-card title="Users to grade" resizeable=true}}
     {{#if model}}
       {{#each model as |profile|}}
         {{gradable-user
@@ -15,5 +15,23 @@
         No gradable users at this moment
       </div>
     {{/if}}
+  {{/app-page-card}}
+
+  {{#app-page-card title="History" resizeable=true}}
+    <!-- {{#if model}}
+      {{#each model as |profile|}}
+        {{gradable-user
+          first_name=profile.first_name
+          last_name=profile.last_name
+          profile_image=profile.profile_image
+          profile_id=profile.id
+          action="gradeUser"}}
+      {{/each}}
+
+    {{else}}
+      <div class="info-message">
+        No gradable users at this moment
+      </div>
+    {{/if}} -->
   {{/app-page-card}}
 {{/app-page}}

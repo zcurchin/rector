@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 const {
   Route,
@@ -13,6 +14,16 @@ export default Route.extend({
   model(){
     let user = get(this, 'user');
 
-    return user.get('account');
+    return new RSVP.Promise(resolve => {
+      let requests = {
+        account: user.get('account'),
+        email: user.getEmail()
+      };
+
+      RSVP.hash(requests).then(data => {
+        console.log(data);
+        resolve(data);
+      });
+    });
   }
 });

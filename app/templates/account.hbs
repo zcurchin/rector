@@ -1,7 +1,45 @@
-<div class="layout-column card">
-  <h3 class="title">Account</h3>
-  <p>created: <span class="value">{{moment-calendar model.created}}</span></p>
-  <p>updated: <span class="value">{{model.updated}}</span></p>
-  <p>verified: <span class="value">{{model.email_verified}}</span></p>
-  <p>email: <span class="value">{{model.email}}</span></p>
-</div>
+{{#app-page title="Account"}}
+  {{#app-page-card
+    title="Info"
+  }}
+    <p>created: <span class="value">{{moment-calendar model.created}}</span></p>
+    {{#if model.updated}}
+      <p>updated: <span class="value">{{model.updated}}</span></p>
+    {{/if}}
+    <p>email: <span class="value">{{model.email}}</span></p>
+
+    {{#if reauth}}
+      <p>Enter your password</p>
+      {{paper-input label="password" type="password" value=password onChange=(action (mut password))}}
+
+      <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
+      <div class="filled-btn" {{action "saveNewEmail"}}>Save</div>
+
+    {{else}}
+      {{#if editEmail}}
+        <div class="edit-email-box">
+          {{paper-input label="New Email Address" type="email" value=newEmail onChange=(action (mut newEmail))}}
+          <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
+          <div class="filled-btn" {{action "saveNewEmail"}}>Save</div>
+        </div>
+
+      {{else}}
+        <div class="outline-btn" {{action "editEmail"}}>Change Email Address</div>
+      {{/if}}
+
+    {{/if}}
+
+  {{/app-page-card}}
+
+  {{#app-page-card title="Email Verification"}}
+    {{#if model.email_verified}}
+      {{paper-icon "check"}}
+      <p class="email-verify-msg">Your email is verified</p>
+    {{else}}
+      <p class="email-verify-msg">Your email address isn't verified</p>
+      <div class="filled-btn" {{action "verifyEmail"}}>
+        Verify Email Address
+      </div>
+    {{/if}}
+  {{/app-page-card}}
+{{/app-page}}

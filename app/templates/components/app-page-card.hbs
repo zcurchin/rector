@@ -1,9 +1,35 @@
-<div class="card-header">
+<div class="card-header layout-row layout-align-start-center">
   {{#if title}}
     <div class="card-title">{{title}}</div>
   {{/if}}
+
+  <span class="flex"></span>
+
+  {{#if headerAction}}
+    <div class="card-header-action">
+      {{paper-icon headerActionIcon}}
+      <span>{{headerActionLabel}}</span> 
+    </div>
+  {{/if}}
+
+  {{#if resizeable}}
+
+    <div class="folding-btn" {{action "toggleFolding"}}>
+      {{paper-icon folding_icon}}
+    </div>
+  {{/if}}
 </div>
 
-<div class="content">
-  {{yield}}
-</div>
+{{#if resizeable}}
+  {{#unless folded}}
+    <div class="card-content">
+      {{yield}}
+    </div>
+  {{/unless}}
+
+{{else}}
+  <div class="card-content">
+    {{yield}}
+  </div>
+
+{{/if}}

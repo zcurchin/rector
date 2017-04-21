@@ -1,32 +1,40 @@
-{{#app-page title="Account"}}
+{{#app-page title="Account" class="account-page"}}
   {{#app-page-card
-    title="Info"
+    header=false
   }}
-    <p>created: <span class="value">{{moment-calendar model.created}}</span></p>
-    {{#if model.updated}}
-      <p>updated: <span class="value">{{model.updated}}</span></p>
-    {{/if}}
-    <p>email: <span class="value">{{model.email}}</span></p>
+    <div class="info-item">created: <span class="value">{{moment-calendar model.created}}</span></div>
+    <div class="info-item">email: <span class="value">{{model.email}}</span></div>
 
-    {{#if reauth}}
-      <p>Enter your password</p>
-      {{paper-input label="password" type="password" value=password onChange=(action (mut password))}}
+    {{#if editEmail}}
+      {{#paper-form onSubmit=(action "saveNewEmail") as |form|}}
+        <div class="inline-form">
+          <div class=title>Change Email Address</div>
+          <div class="form">
+            {{paper-input
+              label="New Email Address"
+              type="email" value=newEmail
+              onChange=(action (mut newEmail))
+              required=true
+            }}
+            {{paper-input
+              label="Password"
+              type="password"
+              value=password
+              onChange=(action (mut password))
+              required=true
+              minlength=6
+            }}
 
-      <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
-      <div class="filled-btn" {{action "saveNewEmail"}}>Save</div>
+            <div class="remote-error">{{error_msg_email}}</div>
+
+            <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
+            <div class="filled-btn" {{action form.onSubmit}}>Save New Email Address</div>
+          </div>
+        </div>
+      {{/paper-form}}
 
     {{else}}
-      {{#if editEmail}}
-        <div class="edit-email-box">
-          {{paper-input label="New Email Address" type="email" value=newEmail onChange=(action (mut newEmail))}}
-          <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
-          <div class="filled-btn" {{action "saveNewEmail"}}>Save</div>
-        </div>
-
-      {{else}}
-        <div class="outline-btn" {{action "editEmail"}}>Change Email Address</div>
-      {{/if}}
-
+      <div class="outline-btn" {{action "editEmail"}}>Change Email Address</div>
     {{/if}}
 
   {{/app-page-card}}

@@ -1,18 +1,15 @@
 
 // ----------------------------------------------
-// SIGN IN
+// SIGN UP
 // ----------------------------------------------
 
-.sign-in {
-  padding: 3em 1em 3em;
-  box-sizing: border-box;
-  max-width: 400px;
-  margin: 0 auto;
+.sign-up-form {
+  margin: 1em 0.5em 4em;
 
   .filled-btn,
   .outline-btn {
     width: 16em;
-    margin: 1em auto;
+    margin: 0.5em auto;
     display: block;
     text-align: center;
   }

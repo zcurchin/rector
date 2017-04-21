@@ -20,11 +20,11 @@ export default Controller.extend({
         password: self.get('password')
 
       }).then(function() {
-        console.log('*********');
+        //console.log('*********');
         self.set('email', '');
         self.set('password', '');
         self.set('error_msg', '');
-        self.replaceRoute('checking');
+        self.replaceRoute('profile');
 
       }).catch(function(err){
         self.set('error_msg', err.message);
@@ -33,6 +33,10 @@ export default Controller.extend({
 
     signUp(){
       this.transitionToRoute('sign-up');
+    },
+
+    forgottenPassword(){
+      this.transitionToRoute('forgot-password');
     }
   }
 });

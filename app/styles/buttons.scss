@@ -1,0 +1,41 @@
+
+// ----------------------------------------------
+// BUTTONS
+// ----------------------------------------------
+
+.outline-btn, .filled-btn {
+  font-size: 1em;
+  padding: 0.5em 0.8em;
+  display: inline-block;
+  border-radius: 3px;
+  border: 1px solid color($primary, '300');
+  box-sizing: border-box;
+  margin: 0.75em 0;
+
+  &:hover {
+    cursor: pointer;
+    border-color: color($primary, '500');
+  }
+}
+
+.outline-btn.w100, .filled-btn.w100 {
+  width: 100%;
+  text-align: center;
+}
+
+.outline-btn {
+  color: color($primary);
+
+  &:hover {
+    color: color($primary, '500');
+  }
+}
+
+.filled-btn {
+  background: color($primary, '300');
+  color: #FFF;
+
+  &:hover {
+    background: color($primary, '500');
+  }
+}

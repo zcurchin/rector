@@ -16,6 +16,7 @@ Router.map(function() {
   this.route('statistics');
   this.route('notifications');
   this.route('ranking');
+  this.route('forgot-password');
 });
 
 export default Router;

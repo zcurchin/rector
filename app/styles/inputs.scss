@@ -1,0 +1,50 @@
+
+// ----------------------------------------------
+// INPUTS
+// ----------------------------------------------
+
+md-input-container.md-default-theme {
+  margin: 1em 0 0;
+  width: 100%;
+  padding: 0;
+
+  label {
+    color: #666;
+    font-size: 1.1em;
+  }
+
+  .md-input {
+    color: #333;
+    font-size: 1.1em;
+  }
+
+  [ng-message] {
+    font-size: 0.8em;
+    line-height: 1em;
+    padding-top: 0.8em;
+  }
+
+  .md-errors-spacer {
+    min-height: 2em;
+  }
+}
+
+.remote-error {
+  color: color($warn);
+  box-sizing: border-box;
+  min-height: 3.2em;
+  font-size: 0.9em;
+  text-align: center;
+  padding: 1em;
+}
+
+// Fix for counter in inputs
+
+.md-char-counter {
+  display: none;
+}
+
+md-input-container.md-input-focused .md-char-counter,
+md-input-container.md-input-invalid .md-char-counter {
+  display: block;
+}

@@ -15,6 +15,7 @@ export default Component.extend({
   folding_icon: 'expand-less',
   headerAction: null,
   headerActionLabel: null,
+  header: true,
 
   actions: {
     toggleFolding(){

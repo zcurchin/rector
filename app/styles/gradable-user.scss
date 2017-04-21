@@ -24,10 +24,10 @@
   .grade-btn {
     cursor: pointer;
     padding: 0.5em 1em;
-    padding-right: 0.5em;
+    padding-right: 0;
 
     md-icon {
-      font-size: 2em;
+      font-size: 1.8em;
       height: 1em;
     }
   }
@@ -39,7 +39,7 @@
 
   .star-box {
     display: inline-block;
-    font-size: 3em;
+    //font-size: 3em;
 
     .nei {
       margin-left: 0.5em;
@@ -115,7 +115,7 @@
     //margin-left: auto;
     cursor: pointer;
     padding: 0.5em 1em;
-    padding-right: 0.5em;
+    padding-right: 0;
 
     md-icon {
       font-size: 2em;

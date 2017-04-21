@@ -14,8 +14,12 @@ export default Controller.extend({
   actions: {
     signOut(){
       get(this, 'session').close().then(() => {
-        this.transitionToRoute('sign-in');        
+        this.transitionToRoute('sign-in');
       });
+    },
+
+    goToCreateAccount(){
+      this.transitionToRoute('sign-up');
     }
   }
 });

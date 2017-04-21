@@ -1,42 +1,30 @@
+{{#app-page-card title="Create Account" class="sign-up-form"}}
+  {{#paper-form onSubmit=(action "createUser") as |form|}}
+    {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
+    {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
 
-  <div class="layout-column card card-centered">
-    <h3 class="title">Create Account</h3>
+    {{#unless createAdmin}}
+      {{paper-input required=true label="Username" type="text" value=username onChange=(action (mut username))}}
+    {{/unless}}
 
-    {{#if error_msg}}
-      <!-- {{paper-icon "error" size=24}} -->
-      <h5>{{error_msg}}</h5>
+    {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
+    {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
+
+    {{#if wiatForAccountCreation}}
+      {{paper-progress-linear accent=true}}
     {{/if}}
 
-    {{#paper-form onSubmit=(action "createUser") as |form|}}
+    {{#paper-switch value=createAdmin onChange=(action (mut createAdmin))}}
+      Administrator
+    {{/paper-switch}}
 
-      {{#paper-switch value=createAdmin onChange=(action (mut createAdmin))}}
-        Create restaurant admin account
-      {{/paper-switch}}
+    {{#if createAdmin}}
+      <p class="info-text">You are about to create administrator account which is meant for restaurant owners. Leave this unchecked if you want to create the regular account. </p>
+    {{/if}}
 
-      {{#unless createAdmin}}
-      {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
-      {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
-        {{paper-input required=true label="Username" type="text" value=username onChange=(action (mut username))}}
-      {{/unless}}
+    <div class="remote-error">{{error_msg}}</div>
 
-      {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
-      {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
+    <div class="filled-btn" {{action form.onSubmit}}>Submit</div>
 
-      {{#if wiatForAccountCreation}}
-        {{paper-progress-linear accent=true}}
-      {{/if}}
-
-      {{#form.submit-button
-        raised=true
-        primary=true
-        disabled=wiatForAccountCreation
-      }}
-        Submit
-      {{/form.submit-button}}
-
-    {{/paper-form}}
-
-
-
-    {{#paper-button noink=true primary=true onClick=(action "goToSignIn")}}Sign In{{/paper-button}}
-  </div>
+  {{/paper-form}}
+{{/app-page-card}}

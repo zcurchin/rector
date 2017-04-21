@@ -9,6 +9,13 @@
         {{paper-icon "more-vert"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
+
+  {{else}}
+    {{#if createAccount}}
+      <div class="outline-btn" {{action "goToCreateAccount"}}>Create Account</div>
+    {{else}}
+      <div class="outline-btn" {{action "goToSignIn"}}>Sign In</div>
+    {{/if}}
   {{/if}}
 </div>
 

@@ -1,7 +1,7 @@
 
 $primary: 'deep-orange';
-$accent: "red";
-$warn: "pink";
+$accent: "pink";
+$warn: "red";
 
 @import 'ember-paper';
 
@@ -10,4 +10,9 @@ $warn: "pink";
 @import 'content-preloader';
 @import 'gradable-user';
 @import 'sign-in';
+@import 'sign-up';
 @import 'account';
+@import 'inputs';
+@import 'buttons';
+
+@import 'media-queries';

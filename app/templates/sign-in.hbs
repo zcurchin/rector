@@ -1,13 +1,28 @@
 
 <div class="sign-in">
-  {{paper-input label="email" type="email" value=email onChange=(action (mut email))}}
-  {{paper-input label="password" type="password" value=password onChange=(action (mut password))}}
+  {{#paper-form onSubmit=(action "signIn") as |form|}}
 
-  {{#if error_msg}}
-    <!-- {{paper-icon "error" size=24}} -->
-    <h5>{{error_msg}}</h5>
-  {{/if}}
+    {{paper-input
+      label="email"
+      type="email"
+      value=email
+      required=true
+      onChange=(action (mut email))
+    }}
 
-  {{#paper-button raised=true primary=true onClick=(action "signIn")}}Sign In{{/paper-button}}
-  {{#paper-button noink=true primary=true onClick=(action "signUp")}}Create Account{{/paper-button}}
+    {{paper-input
+      label="password"
+      type="password"
+      value=password
+      required=true
+      minlength=6
+      onChange=(action (mut password))
+    }}
+
+    <div class="remote-error">{{error_msg}}</div>
+
+    <div class="filled-btn" {{action form.onSubmit}}>Sign In</div>
+
+    <div class="outline-btn" {{action "forgottenPassword"}}>Forgotten Password</div>
+  {{/paper-form}}
 </div>

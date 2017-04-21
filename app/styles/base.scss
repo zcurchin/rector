@@ -4,7 +4,7 @@
 // ----------------------------------------------
 
 body {
-  background: #f0f0f0;
+  background: #f5f5f5;
 }
 
 html,
@@ -62,18 +62,30 @@ button.md-primary.md-raised {
 
 md-sidenav {
   border-right: 1px solid #e8e6e6;
+  margin-top: 4em;
 
   md-divider.paper-divider {
     border-top-color: rgba(0, 0, 0, 0.07);
   }
 
   md-content {
-    padding-top: 4.5em;
+    padding-top: 1em;
+  }
+
+  button p {
+    padding-top: 0.2em;
+    font-size: 1.1em;
+    color: #666;
   }
 
   a {
-    color: inherit;
+    color: #666;
     text-decoration: none;
+
+    p {
+      padding-top: 0.2em;
+      font-size: 1.1em;
+    }
   }
 
   a.active {
@@ -82,9 +94,13 @@ md-sidenav {
     }
 
     p {
-      color: color($accent);
+      color: color($primary);
     }
   }
+}
+
+md-sidenav.md-locked-open {
+  margin-top: 0;
 }
 
 
@@ -94,13 +110,14 @@ md-sidenav {
 // ----------------------------------------------
 
 .app-page {
-  padding: 4em 0;
+  padding-bottom: 4em;
 
   .app-page-header {
 
     .app-page-title {
       font-size: 1.2em;
       padding: 1em 0.7em;
+      color: #888;
     }
   }
 }
@@ -123,8 +140,9 @@ md-sidenav {
 
     .folding-btn md-icon {
       font-size: 2.5em;
-      color: #999;
+      color: #888;
       padding: 0.2em;
+      padding-right: 0.26em;
       line-height: 0.7em;
 
       &:hover {
@@ -157,13 +175,13 @@ md-sidenav {
   }
 
   .card-title {
-    font-size: 1.1em;
+    font-size: 1em;
     margin-left: 1em;
-    color: #444;
+    color: #888;
   }
 
   .card-content {
-    padding: 1.4em;
+    padding: 1em;
   }
 
   md-switch {
@@ -174,35 +192,46 @@ md-sidenav {
 
 
 // ----------------------------------------------
-// BUTTONS
+// CARD INFO
 // ----------------------------------------------
 
-.outline-btn, .filled-btn {
-  font-size: 1em;
-  padding: 0.4em 0.5em;
-  display: inline-block;
-  border-radius: 3px;
-  border: 1px solid color($primary, '300');
+.info-text {
+  margin-bottom: 2em;
+  color: #777;
+}
 
-  &:hover {
-    cursor: pointer;
-    border-color: color($primary, '500');
+
+.inline-form {
+  background: #f9f9f9;
+  padding: 0 0 1em;;
+  border: 1px solid #f0f0f0;
+
+  .title {
+    color: #666;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 1em;
+    background: #f0f0f0;
+  }
+
+  .form {
+    padding: 1em;
   }
 }
 
-.outline-btn {
-  color: color($primary, '300');
 
-  &:hover {
-    color: color($primary, '500');
-  }
-}
 
-.filled-btn {
-  background: color($primary, '300');
-  color: #FFF;
+// ----------------------------------------------
+// INFO ITEMS
+// ----------------------------------------------
 
-  &:hover {
-    background: color($primary, '500');
+.info-item {
+  font-size: 1.1em;
+  color: #888;
+  padding-bottom: 0.8em;
+
+  span {
+    //font-size: 1.1em;
+    color: #111;
   }
 }

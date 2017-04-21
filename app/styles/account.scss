@@ -3,6 +3,13 @@
 // ACCOUNT PAGE
 // ----------------------------------------------
 
+.account-page {
+  .remote-error {
+    text-align: left;
+    padding-left: 0;
+  }
+}
+
 .email-verify-msg {
   margin-bottom: 2.5em;
 }

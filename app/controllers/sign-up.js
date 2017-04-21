@@ -46,7 +46,7 @@ export default Controller.extend({
         }).then(function() {
           console.log('# Sign Up : user logged in');
           set(self, 'wiatForAccountCreation', false);
-          self.replaceRoute('dashboard');
+          self.replaceRoute('profile');
 
         }).catch(function(err){
           console.log(err);

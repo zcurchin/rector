@@ -1,21 +1,114 @@
 {{#app-page title="Profile"}}
-  {{#app-page-card title="Email Verification"}}
-    {{#if model.email_verified}}
-    {{else}}
-      <p>Your email address isn't verified</p>
-    {{/if}}
+  {{#app-page-card
+    header=false
+  }}
+    <div class="profile-intro layout-row layout-align-start-center">
+      {{#if model.profile.profile_image}}
+        <img src="{{model.profile.profile_image}}" alt="">
+      {{else}}
+      <div class="profile-image">
+        {{paper-icon "account-circle"}}
+      </div>
+      {{/if}}
+
+      <div class="profile-name">
+        <h1>{{model.profile.first_name}} {{model.profile.last_name}}</h1>
+      </div>
+
+      <span class="flex"></span>
+
+      <div class="outline-btn" {{action "editProfile"}}>Edit</div>
+    </div>
   {{/app-page-card}}
 
-  {{#app-page-card title="Info" resizeable=true}}
-    <p>created: <span class="value">{{moment-calendar model.created}}</span></p>
-    <p>updated: <span class="value">{{model.updated}}</span></p>
-    <p>first name: <span class="value">{{model.first_name}}</span></p>
-    <p>last name: <span class="value">{{model.last_name}}</span></p>
-    <p>username: <span class="value">{{model.username}}</span></p>
-    <p>country: <span class="value">{{model.country}}</span></p>
-    <p>state: <span class="value">{{model.state}}</span></p>
-    <p>city: <span class="value">{{model.city}}</span></p>
-    <p>zipcode: <span class="value">{{model.zipcode}}</span></p>
-    <p>profile_image: <span class="value">{{model.profile_image}}</span></p>
+  {{#app-page-card
+    title="Your Grade"
+    resizeable=true
+    info="This is your public profile information which is visible by all users. If you want to include details in your profile, edit those below."
+  }}
+    <div class="main-grade layout-row layout-align-start-center">
+      <div class="grade-avg-box">
+        <div class="grade">{{grade-html "avg" model.grades}}</div>
+        <div class="label">Average</div>
+      </div>
+
+      <span class="flex"></span>
+
+      <div class="grade-total-box">
+        <div class="label">Total</div>
+        <div class="grade">{{grade-html "total" model.grades}}</div>
+      </div>
+    </div>
+
+    <div class="grade-details">
+      <div class="individual-grade-box layout-row layout-align-start-center">
+        <div class="grade-index">5</div>
+        <div class="star-box">
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+        </div>
+        <span class="flex"></span>
+        <div class="number-of-grades">{{grade-html "5" model.grades}}</div>
+      </div>
+
+      <div class="individual-grade-box layout-row layout-align-start-center">
+        <div class="grade-index">4</div>
+        <div class="star-box">
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+        </div>
+        <span class="flex"></span>
+        <div class="number-of-grades">{{grade-html "4" model.grades}}</div>
+      </div>
+
+      <div class="individual-grade-box layout-row layout-align-start-center">
+        <div class="grade-index">3</div>
+        <div class="star-box">
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+        </div>
+        <span class="flex"></span>
+        <div class="number-of-grades">{{grade-html "3" model.grades}}</div>
+      </div>
+
+      <div class="individual-grade-box layout-row layout-align-start-center">
+        <div class="grade-index">2</div>
+        <div class="star-box">
+          {{paper-icon "star"}}
+          {{paper-icon "star"}}
+        </div>
+        <span class="flex"></span>
+        <div class="number-of-grades">{{grade-html "2" model.grades}}</div>
+      </div>
+
+      <div class="individual-grade-box layout-row layout-align-start-center">
+        <div class="grade-index">1</div>
+        <div class="star-box">
+          {{paper-icon "star"}}
+        </div>
+        <span class="flex"></span>
+        <div class="number-of-grades">{{grade-html "1" model.grades}}</div>
+      </div>
+    </div>
+  {{/app-page-card}}
+
+  {{#app-page-card
+    title="Personal Info"
+    resizeable=true
+    info="This is your public profile information which is visible by all users. If you want to include details in your profile, edit those below."
+  }}
+    <p class="label">First Name: <span class="value">{{model.profile.first_name}}</span></p>
+    <p class="label">Last Name: <span class="value">{{model.profile.last_name}}</span></p>
+    <p class="label">Username: <span class="value">{{model.profile.username}}</span></p>
+    <p class="label">Country: <span class="value">{{model.profile.country}}</span></p>
+    <p class="label">State: <span class="value">{{model.profile.state}}</span></p>
+    <p class="label">City: <span class="value">{{model.profile.city}}</span></p>
+    <p class="label">Zipcode: <span class="value">{{model.profile.zipcode}}</span></p>
   {{/app-page-card}}
 {{/app-page}}

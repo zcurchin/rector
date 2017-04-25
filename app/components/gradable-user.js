@@ -44,6 +44,7 @@ export default Component.extend({
     },
 
     setGrade(gradeValue){
+      console.log(gradeValue);
       set(this, 'grade', gradeValue);
       set(this, 'isChanged', true);
 

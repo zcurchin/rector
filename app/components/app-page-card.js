@@ -12,7 +12,8 @@ export default Component.extend({
   title: null,
   resizeable: null,
   folded: false,
-  folding_icon: 'expand-less',
+  info: null,
+  info_on: false,
   headerAction: null,
   headerActionLabel: null,
   header: true,
@@ -20,16 +21,14 @@ export default Component.extend({
   actions: {
     toggleFolding(){
       this.toggleProperty('folded');
+    },
 
-      if (get(this, 'folded')) {
-        set(this, 'folding_icon', 'expand-more');
-      } else {
-        set(this, 'folding_icon', 'expand-less');
-      }
+    toggleInfo(){
+      this.toggleProperty('info_on');
     },
 
     headerAction(){
       console.log('LLLLLLLLOOOOOLLLLLLL');
-    }
+    }    
   }
 });

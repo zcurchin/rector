@@ -35,14 +35,20 @@
   .grading-box {
     height: 4em;
     width: 100%;
+    margin: 1em 0;
   }
 
   .star-box {
     display: inline-block;
     //font-size: 3em;
 
-    .nei {
-      margin-left: 0.5em;
+    md-icon {
+      font-size: 1.6em;
+      padding: 0.2em;
+    }
+
+    .nei-icon {
+      margin-left: 0.7em;
     }
   }
 
@@ -106,7 +112,7 @@
   }
 
   .grade-value {
-    color: #444;
+    color: #51c770;
     font-size: 1.3em;
     font-weight: 700;
   }
@@ -114,7 +120,7 @@
   .confirm-btn {
     //margin-left: auto;
     cursor: pointer;
-    padding: 0.5em 1em;
+    padding: 0.5em 0.7em;
     padding-right: 0;
 
     md-icon {
@@ -135,9 +141,11 @@
   }
 
   .nei {
-    font-size: 0.8em;
-    padding: 0.5em;
-    padding-bottom: 1em;
+    font-size: 1em;
+    line-height: 1.5em;
+    padding: 0 5em 2em 0.5em;
+    padding-bottom: 2em;
+    padding-right: 5em;
   }
 }
 

@@ -1,0 +1,93 @@
+
+// ----------------------------------------------
+// PROFILE PAGE
+// ----------------------------------------------
+
+.profile-intro .outline-btn {
+  padding: 0.5em 1.5em;
+}
+
+.profile-image {
+  display: inline-block;
+  margin-right: 1em;
+
+  md-icon {
+    font-size: 4em;
+    height: 1em;
+    color: #888;
+  }
+}
+
+.profile-name {
+  display: inline-block;
+
+  h1 {
+    font-size: 1.2em;
+    color: #333;
+    font-weight: 500;
+    padding-right: 0.5em;
+  }
+}
+
+.main-grade {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 0.5em 0.46em 1.2em;
+
+  div {
+    display: inline-block;
+  }
+
+  .label {
+    color: #888;
+    font-size: 0.9em;
+    margin-left: 0.7em;
+  }
+
+  .grade {
+    font-size: 2em;
+    color: #444;
+  }
+
+  .grade-total-box {
+    .label {
+      margin-left: 0;
+      margin-right: 0.7em;
+    }
+
+    .grade {
+      color: #888;
+    }
+  }
+}
+
+.grade-details {
+  padding: 0 0.66em;
+
+  .individual-grade-box {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    padding: 0.6em 0;
+  }
+
+  .individual-grade-box:last-child {
+    border: none;
+  }
+
+  .grade-index {
+    color: #888;
+    margin-right: 0.5em;
+  }
+
+  .star-box {
+    md-icon {
+      color: #888;
+      font-size: 1.2em;
+      height: 1em;
+      padding: 0 0.2em;
+    }
+  }
+
+  .number-of-grades {
+    color: #888;
+    font-weight: 500;
+  }
+}

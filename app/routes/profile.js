@@ -29,9 +29,7 @@ export default Route.extend({
     });
   },
 
-  actions: {
-    editProfile(){
-      this.transitionTo('account');
-    }
+  deactivate(){
+    this.controller.set('editingProfile', false);
   }
 });

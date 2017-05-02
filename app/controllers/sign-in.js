@@ -9,10 +9,13 @@ const {
 export default Controller.extend({
   firebaseApp: service(),
   error_msg: '',
+  preloader: false,
 
   actions: {
     signIn() {
       var self = this;
+
+      self.set('preloader', true);
 
       this.get('session').open('firebase', {
         provider: 'password',
@@ -24,9 +27,13 @@ export default Controller.extend({
         self.set('email', '');
         self.set('password', '');
         self.set('error_msg', '');
-        self.replaceRoute('profile');
+
+        self.set('preloader', false);
+
+        self.replaceRoute('checking');
 
       }).catch(function(err){
+        self.set('preloader', false);
         self.set('error_msg', err.message);
       });
     },

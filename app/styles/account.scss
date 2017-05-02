@@ -10,13 +10,51 @@
   }
 }
 
-.email-verify-msg {
-  margin-bottom: 2.5em;
-}
-
 .edit-email-box {
   md-input-container {
     margin-bottom: 0;
     width: 100%;
   }
+}
+
+.email-verification-msg {
+  .inner {
+    margin-bottom: 2em;
+    //border: 1px solid $color-green;
+    display: inline-block;
+    border-radius: 5px;
+    //padding: 0.5em;
+  }
+
+  md-icon {
+    color: $color-green;
+    margin-right: 0.3em;
+  }
+
+  p {
+    display: inline-block;
+    color: $color-green;
+    margin: 0.3em 0.5em 0 0;
+  }
+}
+
+.email-verification-msg.unverified {
+  .inner {
+    //border: 1px solid $color-alert;
+  }
+
+  md-icon {
+    color: $color-alert;
+  }
+
+  p {
+    color: $color-alert;
+  }
+}
+
+.account-email {
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #333;
+  padding: 0.5em 0.16em;
 }

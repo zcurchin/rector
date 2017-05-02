@@ -12,10 +12,23 @@ const {
 export default Controller.extend({
   user: service(),
   firebaseApp: service(),
+  session: service(),
+
+  currentEmail: '',
+  emailVerified: false,
   editEmail: false,
   newEmail: '',
+  verifyEmailSent: false,
+
+  newPassword: '',
+  editPassword: false,
   password: '',
-  error_msg_email: '',
+  passwordChanged: false,
+
+  error_msg: '',
+  success_msg: '',
+  preloader: false,
+  preloader2: false,
 
 
   loginUser(){
@@ -24,14 +37,8 @@ export default Controller.extend({
     let pass = get(this, 'password');
     let email = get(this, 'session.currentUser.email');
     let emailVerified = get(this, 'session.currentUser.emailVerified');
-    console.log(emailVerified);
 
     return new RSVP.Promise((resolve, reject) => {
-
-      if (!emailVerified) {
-        reject('Your email address is not verified. Verify your email address in order to complete this task.');
-      }
-
       firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
         resolve();
       }).catch((error) => {
@@ -40,33 +47,116 @@ export default Controller.extend({
     });
   },
 
+  clearEmailForm(){
+    this.set('newEmail', '');
+    this.set('password', '');
+    this.set('success_msg', '');
+    this.set('error_msg', '');
+    this.set('editEmail', false);
+  },
+
+  clearPasswordForm(){
+    this.set('newPassword', '');
+    this.set('password', '');
+    this.set('success_msg', '');
+    this.set('error_msg', '');
+    this.set('passwordChanged', false);
+    this.set('editPassword', false);
+  },
+
+  clearForms(){
+    this.clearEmailForm();
+    this.clearPasswordForm();
+  },
+
   actions: {
+    // EMAIL
     editEmail(){
       this.set('editEmail', true);
+      this.clearPasswordForm();
+    },
+
+    verifyEmail(){
+      let self = this;
+      let user = get(this, 'session.currentUser');
+
+      set(self, 'preloader2', true);
+
+      user.sendEmailVerification().then(() => {
+        set(self, 'preloader2', false);
+        set(self, 'verifyEmailSent', true);
+      }).catch(error => {
+        set(self, 'preloader2', false);
+        console.log(error.message);
+      });
     },
 
     cancelEditEmail(){
-      this.set('editEmail', false);
-      this.set('newEmail', '');
-      this.set('error_msg_email', '');
-      this.set('password', '');
+      this.clearEmailForm();
     },
 
     saveNewEmail(){
+      let self = this;
       let user = get(this, 'session.currentUser');
       let newEmail = get(this, 'newEmail');
 
+      set(this, 'preloader', true);
+
       this.loginUser().then(() => {
         user.updateEmail(newEmail).then(data => {
-          console.log(data);
+          let msg = 'You successfully changed your email address.';
+          set(self, 'preloader', false);
+          set(self, 'currentEmail', user.email);
+          set(self, 'emailVerified', user.emailVerified);
 
         }).catch(err => {
-          console.log(err);
-          set(this, 'error_msg_email', err);
+          set(self, 'preloader', false);
+          set(self, 'error_msg', err);
         });
 
       }).catch(err => {
-        set(this, 'error_msg_email', err);
+        set(self, 'preloader', false);
+        set(self, 'error_msg', err);
+      });
+    },
+
+    // PAASWORD
+    forgotPassword(){
+      this.transitionToRoute('forgot-password');
+    },
+
+    editPassword(){
+      this.set('editPassword', true);
+      this.clearEmailForm();
+    },
+
+    cancelEditPassword(){
+      this.clearPasswordForm();
+    },
+
+    saveNewPassword(){
+      let self = this;
+      let user = get(this, 'session.currentUser');
+      let newPassword = get(this, 'newPassword');
+
+      set(this, 'preloader', true);
+
+      this.loginUser().then(() => {
+        user.updatePassword(newPassword).then(data => {
+          set(self, 'password', '');
+          set(self, 'newPassword', '');
+          set(self, 'preloader', false);
+          set(self, 'passwordChanged', true);
+          set(self, 'success_msg', 'You successfully changed you password');
+
+        }).catch(err => {
+          set(self, 'preloader', false);
+          set(self, 'error_msg', err);
+        });
+
+      }).catch(err => {
+        set(self, 'preloader', false);
+        set(self, 'error_msg', err);
       });
     }
   }

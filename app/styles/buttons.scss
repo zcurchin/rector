@@ -11,6 +11,8 @@
   border: 1px solid color($primary, '300');
   box-sizing: border-box;
   margin: 0.75em 0;
+  min-width: 5em;
+  text-align: center;
 
   &:hover {
     cursor: pointer;

@@ -3,9 +3,9 @@ import RSVP from 'rsvp';
 
 
 export default Ember.Route.extend({
-  model(){
-    return new RSVP.Promise(() => {
-
-    });
-  }
+  // model(){
+  //   return new RSVP.Promise(() => {
+  //
+  //   });
+  // }
 });

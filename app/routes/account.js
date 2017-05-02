@@ -14,16 +14,19 @@ export default Route.extend({
   model(){
     let user = get(this, 'user');
 
-    return new RSVP.Promise(resolve => {
-      let requests = {
-        account: user.get('account'),
-        email: user.getEmail()
-      };
+    return user.get('account');
+  },
 
-      RSVP.hash(requests).then(data => {
-        console.log(data);
-        resolve(data);
-      });
-    });
+  setupController(controller, model){
+    this._super(controller, model);
+    let email = get(this, 'session.currentUser.email');
+    let verified = get(this, 'session.currentUser.emailVerified');
+
+    controller.set('currentEmail', email);
+    controller.set('emailVerified', verified);
+  },
+
+  deactivate(){
+    this.controller.clearForms();
   }
 });

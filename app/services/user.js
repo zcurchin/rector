@@ -42,7 +42,16 @@ export default Service.extend({
 
 
   get(dataKey){
-    let uid = get(this, 'session.currentUser.uid');
+    let session = get(this, 'session');
+    let currentUser = session.get('currentUser');
+    let auth = session.get('isAuthenticated');
+    let uid = currentUser.uid;
+
+    console.log('### UID : ', uid);
+    console.log('### isAuthenticated : ', auth);
+    //
+    // debugger;
+
     let emailVerified = get(this, 'session.currentUser.emailVerified');
     let firebaseUtil = get(this, 'firebaseUtil');
 
@@ -67,6 +76,8 @@ export default Service.extend({
 
     return new RSVP.Promise((resolve, reject) => {
       firebaseUtil.findRecord(dbRef, dbRef + '/' + uid).then(data => {
+        console.log(data);
+
         if (dataKey === 'account') {
           data.email_verified = emailVerified;
         }

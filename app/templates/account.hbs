@@ -1,53 +1,133 @@
 {{#app-page title="Account" class="account-page"}}
   {{#app-page-card
-    header=false
+    title="Email Address"
   }}
-    <div class="info-item">created: <span class="value">{{moment-calendar model.created}}</span></div>
-    <div class="info-item">email: <span class="value">{{model.email}}</span></div>
+    <div class="account-email">{{currentEmail}}</div>
 
-    {{#if editEmail}}
-      {{#paper-form onSubmit=(action "saveNewEmail") as |form|}}
+    {{#if emailVerified}}
+      <div class="email-verification-msg">
+        <div class="inner">
+          {{paper-icon "verified-user"}}
+          <p>Your email is verified</p>
+        </div>
+      </div>
+
+      {{#if editEmail}}
+        {{#paper-form onSubmit=(action "saveNewEmail") as |form|}}
+          <div class="inline-form">
+            <div class="form">
+              {{paper-input
+                label="New Email Address"
+                type="email" value=newEmail
+                onChange=(action (mut newEmail))
+                required=true
+              }}
+              {{paper-input
+                label="Password"
+                type="password"
+                value=password
+                onChange=(action (mut password))
+                required=true
+                minlength=6
+              }}
+
+              {{#if error_msg}}
+                <div class="message-box error">
+                  {{paper-icon "error"}}
+                  <div class="message">{{error_msg}}</div>
+                </div>
+              {{/if}}
+
+              <div class="preloader {{if preloader 'visible' 'hidden'}}">
+                {{paper-progress-linear}}
+              </div>
+
+              <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
+              <div class="filled-btn" {{action form.onSubmit}}>Save New Email Address</div>
+            </div>
+          </div>
+        {{/paper-form}}
+
+      {{else}}
+        <div class="outline-btn" {{action "editEmail"}}>Change Email Address</div>
+      {{/if}}
+
+    {{else}}
+      <div class="email-verification-msg unverified">
+        <div class="inner">
+          {{paper-icon "error"}}
+          <p>Your email address isn't verified</p>
+        </div>
+      </div>
+
+      <div class="preloader {{if preloader2 'visible' 'hidden'}}">
+        {{paper-progress-linear}}
+      </div>
+
+      {{#if verifyEmailSent}}
+        <div class="card-info.no-border">
+          We sent you a email. Go to your email and complete verification proccess.
+        </div>
+      {{else}}
+        <div class="outline-btn" {{action "verifyEmail"}}>Verify Email Address</div>
+      {{/if}}
+    {{/if}}
+  {{/app-page-card}}
+
+
+  {{#app-page-card title="Password"}}
+    {{#if editPassword}}
+      {{#paper-form onSubmit=(action "saveNewPassword") as |form|}}
         <div class="inline-form">
-          <div class=title>Change Email Address</div>
           <div class="form">
             {{paper-input
-              label="New Email Address"
-              type="email" value=newEmail
-              onChange=(action (mut newEmail))
-              required=true
-            }}
-            {{paper-input
-              label="Password"
+              label="Old Password"
               type="password"
               value=password
               onChange=(action (mut password))
               required=true
               minlength=6
             }}
+            {{paper-input
+              label="New Password"
+              type="password"
+              value=newPassword
+              onChange=(action (mut newPassword))
+              required=true
+              minlength=6
+            }}
 
-            <div class="remote-error">{{error_msg_email}}</div>
+            {{#if error_msg}}
+              <div class="message-box error">
+                {{paper-icon "error"}}
+                <div class="message">{{error_msg}}</div>
+              </div>
+            {{/if}}
 
-            <div class="outline-btn" {{action "cancelEditEmail"}}>Cancel</div>
-            <div class="filled-btn" {{action form.onSubmit}}>Save New Email Address</div>
+            {{#if success_msg}}
+              <div class="message-box success">
+                {{paper-icon "check-circle"}}
+                <div class="message">{{success_msg}}</div>
+              </div>
+            {{/if}}
+
+            <div class="preloader {{if preloader 'visible' 'hidden'}}">
+              {{paper-progress-linear}}
+            </div>
+
+            {{#if passwordChanged}}
+              <div class="filled-btn" {{action "cancelEditPassword"}}>OK</div>
+            {{else}}
+              <div class="outline-btn" {{action "cancelEditPassword"}}>Cancel</div>
+              <div class="filled-btn" {{action form.onSubmit}}>Save New Password</div>
+            {{/if}}
           </div>
         </div>
       {{/paper-form}}
 
     {{else}}
-      <div class="outline-btn" {{action "editEmail"}}>Change Email Address</div>
-    {{/if}}
-
-  {{/app-page-card}}
-
-  {{#app-page-card title="Email Verification"}}
-    {{#if model.email_verified}}
-      {{paper-icon "check"}}
-      <p class="email-verify-msg">Your email is verified</p>
-    {{else}}
-      <p class="email-verify-msg">Your email address isn't verified</p>
-      <div class="filled-btn" {{action "verifyEmail"}}>
-        Verify Email Address
-      </div>
+      <div class="outline-btn" {{action "editPassword"}}>Change Password</div>
+      <div class="outline-btn" {{action "forgotPassword"}}>I Forgot My Password</div>
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}

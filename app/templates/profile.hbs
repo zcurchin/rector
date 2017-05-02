@@ -1,10 +1,13 @@
 {{#app-page title="Profile"}}
   {{#app-page-card
     header=false
+    class="profile-card"
   }}
-    <div class="profile-intro layout-row layout-align-start-center">
+    <div class="profile-intro">
       {{#if model.profile.profile_image}}
-        <img src="{{model.profile.profile_image}}" alt="">
+        <div class="profile-image">
+          <img src="{{model.profile.profile_image}}" alt="">
+        </div>
       {{else}}
       <div class="profile-image">
         {{paper-icon "account-circle"}}
@@ -14,10 +17,6 @@
       <div class="profile-name">
         <h1>{{model.profile.first_name}} {{model.profile.last_name}}</h1>
       </div>
-
-      <span class="flex"></span>
-
-      <div class="outline-btn" {{action "editProfile"}}>Edit</div>
     </div>
   {{/app-page-card}}
 
@@ -106,9 +105,99 @@
     <p class="label">First Name: <span class="value">{{model.profile.first_name}}</span></p>
     <p class="label">Last Name: <span class="value">{{model.profile.last_name}}</span></p>
     <p class="label">Username: <span class="value">{{model.profile.username}}</span></p>
-    <p class="label">Country: <span class="value">{{model.profile.country}}</span></p>
-    <p class="label">State: <span class="value">{{model.profile.state}}</span></p>
-    <p class="label">City: <span class="value">{{model.profile.city}}</span></p>
-    <p class="label">Zipcode: <span class="value">{{model.profile.zipcode}}</span></p>
+
+    {{#if model.profile.country}}
+      <p class="label">Country: <span class="value">{{model.profile.country}}</span></p>
+    {{/if}}
+
+    {{#if model.profile.state}}
+      <p class="label">State: <span class="value">{{model.profile.state}}</span></p>
+    {{/if}}
+
+    {{#if model.profile.city}}
+      <p class="label">City: <span class="value">{{model.profile.city}}</span></p>
+    {{/if}}
+
+    {{#if model.profile.zipcode}}
+      <p class="label">Zipcode: <span class="value">{{model.profile.zipcode}}</span></p>
+    {{/if}}
   {{/app-page-card}}
+
+  {{#app-page-card
+    title="Edit Profile"
+    resizeable=true
+  }}
+    {{#if editingProfile}}
+      {{#paper-form onSubmit=(action "saveProfile") as |form|}}
+        <div class="inline-form">
+          <div class="form">
+            {{paper-input
+              label="First Name"
+              type="text"
+              value=firstName
+              onChange=(action (mut first_name))
+              required=true
+            }}
+            {{paper-input
+              label="Last Name"
+              type="text"
+              value=lastName
+              onChange=(action (mut last_name))
+              required=true
+            }}
+            {{paper-input
+              label="Username"
+              type="text"
+              value=username
+              onChange=(action (mut username))
+              required=true
+            }}
+            {{paper-input
+              label="Country"
+              type="text"
+              value=country
+              onChange=(action (mut country))
+            }}
+            {{paper-input
+              label="State"
+              type="text"
+              value=state
+              onChange=(action (mut state))
+            }}
+            {{paper-input
+              label="City"
+              type="text"
+              value=city
+              onChange=(action (mut city))
+            }}
+            {{paper-input
+              label="Zipcode"
+              type="text"
+              value=zipcode
+              onChange=(action (mut zipcode))
+            }}
+
+            {{#if error_msg}}
+              <div class="message-box error">
+                {{paper-icon "error"}}
+                <div class="message">{{error_msg}}</div>
+              </div>
+            {{/if}}
+
+            <div class="preloader {{if preloader 'visible' 'hidden'}}">
+              {{paper-progress-linear}}
+            </div>
+
+            <div class="outline-btn" {{action "cancelEditProfile"}}>Cancel</div>
+            <div class="filled-btn" {{action form.onSubmit}}>Save Changes</div>
+          </div>
+        </div>
+      {{/paper-form}}
+    {{else}}
+      <div class="outline-btn" {{action "editProfilePicture"}}>Change Profile Picture</div>
+      <div class="outline-btn" {{action "editProfile"}}>Edit Personal Info</div>
+    {{/if}}
+
+  {{/app-page-card}}
+
 {{/app-page}}

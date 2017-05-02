@@ -19,7 +19,13 @@
       onChange=(action (mut password))
     }}
 
-    <div class="remote-error">{{error_msg}}</div>
+    {{#if error_msg}}
+      <div class="remote-error">{{error_msg}}</div>
+    {{/if}}
+
+    <div class="preloader {{if preloader 'visible' 'hidden'}}">
+      {{paper-progress-linear}}
+    </div>
 
     <div class="filled-btn" {{action form.onSubmit}}>Sign In</div>
 

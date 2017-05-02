@@ -29,13 +29,23 @@ md-input-container.md-default-theme {
   }
 }
 
-.remote-error {
-  color: color($warn);
-  box-sizing: border-box;
-  min-height: 3.2em;
-  font-size: 0.9em;
-  text-align: center;
-  padding: 1em;
+md-input-container.md-default-theme.md-input-invalid [ng-message] {
+  color: $color-alert;
+}
+
+md-input-container.md-default-theme.md-input-invalid {
+  label {
+    color: $color-alert;
+  }
+  .md-input {
+    border-color: $color-alert;
+  }
+}
+
+md-input-container.md-default-theme.md-input-invalid.md-input-focused {
+  label {
+    color: $color-alert;
+  }
 }
 
 // Fix for counter in inputs

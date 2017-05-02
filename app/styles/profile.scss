@@ -3,29 +3,38 @@
 // PROFILE PAGE
 // ----------------------------------------------
 
-.profile-intro .outline-btn {
-  padding: 0.5em 1.5em;
+.profile-intro .profile-image {
+  width: 8em;
+  height: 8em;  
 }
 
 .profile-image {
-  display: inline-block;
-  margin-right: 1em;
+  margin: 0 auto;
+  overflow: hidden;
 
   md-icon {
-    font-size: 4em;
+    font-size: 8em;
     height: 1em;
-    color: #888;
+    color: #d9d9d9;
+  }
+
+  img {
+    width: 8em;
+    height: 8em;
+    border-radius: 10em;
   }
 }
 
 .profile-name {
-  display: inline-block;
+  display: block;
 
   h1 {
     font-size: 1.2em;
     color: #333;
     font-weight: 500;
-    padding-right: 0.5em;
+    padding: 1em;
+    text-align: center;
+    margin: 0;
   }
 }
 
@@ -46,6 +55,7 @@
   .grade {
     font-size: 2em;
     color: #444;
+    font-weight: 500;
   }
 
   .grade-total-box {
@@ -55,7 +65,7 @@
     }
 
     .grade {
-      color: #888;
+        color: #888;
     }
   }
 }
@@ -79,7 +89,7 @@
 
   .star-box {
     md-icon {
-      color: #888;
+      color: #dadada;
       font-size: 1.2em;
       height: 1em;
       padding: 0 0.2em;

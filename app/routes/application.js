@@ -7,15 +7,15 @@ export default Ember.Route.extend({
   },
 
 
-  model: function(){
-    //var self = this;
-    let isAuthenticated = this.get('session').get('isAuthenticated');
-    console.log('# Route : Application : isAuthenticated:', isAuthenticated);
-
-    if (!isAuthenticated) {
-      this.replaceWith('sign-in');
-    }
-  },
+  // model: function(){
+  //   //var self = this;
+  //   // let isAuthenticated = this.get('session').get('isAuthenticated');
+  //   // console.log('# Route : Application : isAuthenticated:', isAuthenticated);
+  //   //
+  //   // if (!isAuthenticated) {
+  //   //   this.replaceWith('sign-in');
+  //   // }
+  // },
 
 
   afterModel: function(model, transition) {
@@ -23,8 +23,11 @@ export default Ember.Route.extend({
     let isAuthenticated = this.get('session').get('isAuthenticated');
     console.log('# Route : Application : target :', target);
 
-    if (isAuthenticated && (target === 'index' || target === 'sign-in' || target === 'sign-up')) {
-      this.replaceWith('profile');
+    if (!isAuthenticated) {
+      this.replaceWith('sign-in');
+
+    } else if (isAuthenticated && (target === 'index' || target === 'sign-in' || target === 'sign-up')) {
+      this.replaceWith('checking');
     }
   }
 });

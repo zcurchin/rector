@@ -9,7 +9,7 @@ const {
 
 export default Controller.extend({
   user: service(),
-  wiatForAccountCreation: false,
+  preloader: false,
   error_msg: '',
   createAdmin: false,
 
@@ -24,7 +24,7 @@ export default Controller.extend({
       let createAdmin = this.get('createAdmin');
       let user = this.get('user');
 
-      set(this, 'wiatForAccountCreation', true);
+      set(this, 'preloader', true);
 
       let params = {
         admin: createAdmin,
@@ -45,19 +45,19 @@ export default Controller.extend({
 
         }).then(function() {
           console.log('# Sign Up : user logged in');
-          set(self, 'wiatForAccountCreation', false);
+          set(self, 'preloader', false);
           self.replaceRoute('checking');
 
         }).catch(function(err){
           console.log(err);
-          set(self, 'wiatForAccountCreation', false);
+          set(self, 'preloader', false);
           set(self, 'error_msg', err.message);
         });
 
 
       }).catch((err) => {
         console.log(err);
-        set(self, 'wiatForAccountCreation', false);
+        set(self, 'preloader', false);
         set(self, 'error_msg', err.message);
       });
     },

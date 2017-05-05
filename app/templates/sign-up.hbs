@@ -10,9 +10,9 @@
     {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
     {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
 
-    {{#if wiatForAccountCreation}}
-      {{paper-progress-linear accent=true}}
-    {{/if}}
+    <div class="preloader {{if preloader 'visible' 'hidden'}}">
+      {{paper-progress-linear}}
+    </div>
 
     {{#paper-switch value=createAdmin onChange=(action (mut createAdmin))}}
       Administrator

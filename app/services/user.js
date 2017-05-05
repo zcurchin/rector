@@ -17,19 +17,26 @@ export default Service.extend({
     let self = this;
 
     return new RSVP.Promise((resolve, reject) => {
-      self._createFirebaseUser(params.email, params.password).then((user) => {
-        let uid = user.uid;
-        let tasks = {
-          account: self._createAccount(uid, params),
-          profile: self._createProfile(uid, params)
-        };
-
-        console.log('# User : created : firebase user');
-
-        return RSVP.hash(tasks);
+      self.isUsernameTaken(params.username).then(() => {
+        console.log('##### 1 : isUsernameTaken');
+        return true;
 
       }).then(() => {
-        resolve();
+        console.log('##### 2 : _createFirebaseUser');
+
+        return self._createFirebaseUser(params.email, params.password).then((user) => {
+          let uid = user.uid;
+          let tasks = {
+            account: self._createAccount(uid, params),
+            profile: self._createProfile(uid, params)
+          };
+
+          console.log('##### 3 : created : firebase user');
+
+          return RSVP.hash(tasks).then(() => {
+            resolve();
+          });
+        });
 
       }).catch(error => {
         reject(error);
@@ -46,13 +53,6 @@ export default Service.extend({
     let currentUser = session.get('currentUser');
     let auth = session.get('isAuthenticated');
     let uid = currentUser.uid;
-
-    console.log('### UID : ', uid);
-    console.log('### isAuthenticated : ', auth);
-    //
-    // debugger;
-
-    let emailVerified = get(this, 'session.currentUser.emailVerified');
     let firebaseUtil = get(this, 'firebaseUtil');
 
     let dbRef;
@@ -76,25 +76,11 @@ export default Service.extend({
 
     return new RSVP.Promise((resolve, reject) => {
       firebaseUtil.findRecord(dbRef, dbRef + '/' + uid).then(data => {
-        console.log(data);
-
-        if (dataKey === 'account') {
-          data.email_verified = emailVerified;
-        }
         resolve(data);
 
       }).catch(error => {
         reject(error);
       });
-    });
-  },
-
-
-  getEmail(){
-    let email = get(this, 'session.currentUser.email');
-
-    return new RSVP.Promise((resolve) => {
-      resolve(email);
     });
   },
 
@@ -175,6 +161,27 @@ export default Service.extend({
 
       }).catch(error => {
         reject(error);
+      });
+    });
+  },
+
+  // --------------------------------------------
+  // Helpers
+  // --------------------------------------------
+
+  isUsernameTaken(username){
+    let firebaseApp = get(this, 'firebaseApp');
+    let userProfiles = firebaseApp.database().ref('userProfiles');
+
+    return new RSVP.Promise((resolve, reject) => {
+      userProfiles.orderByChild('username').equalTo(username).once('value').then(d => {
+        if (d.val()) {
+          console.log('--- isUsernameTaken : ', true);
+          reject({ message: 'This username is already taken' });
+        } else {
+          console.log('--- isUsernameTaken : ', false);
+          resolve();
+        }
       });
     });
   }

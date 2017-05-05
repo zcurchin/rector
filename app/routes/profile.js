@@ -31,5 +31,7 @@ export default Route.extend({
 
   deactivate(){
     this.controller.set('editingProfile', false);
+    this.controller.set('preloader', false);
+    this.controller.set('error_msg', '');
   }
 });

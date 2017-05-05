@@ -8,38 +8,53 @@ const {
 } = Ember;
 
 export default Controller.extend({
+  user: service(),
   firebaseApp: service(),
 
   editingProfile: false,
 
-  firstName: '',
-  lastName: '',
-  username: '',
-  country: '',
-  state: '',
-  city: '',
-  zipcode: '',
+  personalInfoProps: [
+    'first_name',
+    'last_name',
+    'username',
+    'country',
+    'state',
+    'city',
+    'zipcode'
+  ],
+
+  error_msg: '',
+  preloader: false,
 
   populateFields(){
-    let model = this.get('model');
-    this.set('firstName', model.profile.first_name);
-    this.set('lastName', model.profile.last_name);
-    this.set('username', model.profile.username);
-    this.set('country', model.profile.country);
-    this.set('state', model.profile.state);
-    this.set('city', model.profile.city);
-    this.set('zipcode', model.profile.zipcode);
+    let self = this;
+    let model = this.get('model.profile');
+
+    this.personalInfoProps.forEach(prop => {
+      self.set(prop, model[prop]);
+    });
+  },
+
+
+  resetFields(){
 
   },
 
-  resetFields(){
-    this.set('firstName', '');
-    this.set('lastName', '');
-    this.set('username', '');
-    this.set('country', '');
-    this.set('state', '');
-    this.set('city', '');
-    this.set('zipcode', '');
+  updateUserProfile(data){
+    let self = this;
+    let uid = get(this, 'session.currentUser.uid');
+    let firebaseApp = get(this, 'firebaseApp');
+
+    set(this, 'preloader', true);
+
+    firebaseApp.database().ref('userProfiles/'+ uid).update(data).then(() => {
+      set(self, 'preloader', false);
+      set(self, 'editingProfile', false);
+
+    }).catch(error => {
+      set(self, 'preloader', false);
+      set(self, 'error_msg', error);
+    });
   },
 
   actions: {
@@ -49,26 +64,44 @@ export default Controller.extend({
     },
 
     saveProfile(){
-      let user = get(this, 'session.currentUser');
-      let firebase = get(this, 'firebaseApp');
+      let self = this;
+      let user = get(this, 'user');
+      let model = this.get('model.profile');
+      let propsChanged = [];
+      let propsToUpdate = {};
 
-      console.log(user.uid);
+      this.personalInfoProps.forEach(prop => {
+        if (model[prop] !== self[prop]) { propsChanged.push(prop); }
+      });
 
-      this.get('firstName');
-      this.get('lastName');
-      this.get('username');
-      this.get('country');
-      this.get('state');
-      this.get('city');
-      this.get('zipcode');
+      propsChanged.forEach(prop => {
+        propsToUpdate[prop] = self[prop];
+      });
 
-      // firebase.database().ref().update({
-      //   'userAccounts/'
-      // });
+      console.log(propsChanged);
+      console.log(propsToUpdate);
+
+      if (propsChanged.length === 0) {
+        set(self, 'preloader', false);
+        set(self, 'editingProfile', false);
+
+      } else if (propsChanged.indexOf('username') !== -1) {
+        user.isUsernameTaken(self.username).then(() => {
+          // username if available
+          self.updateUserProfile(propsToUpdate);
+
+        }).catch(error => {
+          set(self, 'error_msg', error.message);
+        });
+
+      } else {
+        self.updateUserProfile(propsToUpdate);
+      }
     },
 
     cancelEditProfile(){
       this.set('editingProfile', false);
+      this.set('error_msg', '');
     },
 
     editProfilePicture(){

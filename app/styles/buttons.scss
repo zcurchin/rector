@@ -20,6 +20,11 @@
   }
 }
 
+.outline-btn.full-width, .filled-btn.full-width {
+  width: 100%;
+  min-width: 100%;
+}
+
 .outline-btn.w100, .filled-btn.w100 {
   width: 100%;
   text-align: center;

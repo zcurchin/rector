@@ -4,6 +4,7 @@ $accent: "pink";
 $warn: "red";
 
 $color-green: #3eba96;
+$color-green-light: #defff6;
 $color-alert: #e072ba;
 
 @import 'ember-paper';
@@ -19,5 +20,6 @@ $color-alert: #e072ba;
 @import 'buttons';
 
 @import 'profile';
+@import 'checking';
 
 @import 'media-queries';

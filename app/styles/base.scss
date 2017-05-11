@@ -16,6 +16,15 @@ body > .ember-view ,
   overflow: hidden;
 }
 
+// body {
+//   background-color: #ddd;
+// }
+
+// body > .ember-view {
+//   max-width: 1200px;
+//   margin: 0 auto;
+// }
+
 button.md-primary.md-raised {
   font-size: 1em;
   box-shadow: none !important;
@@ -116,7 +125,7 @@ md-sidenav.md-locked-open {
   .app-page-header {
 
     .app-page-title {
-      font-size: 1.4em;
+      font-size: 1.3em;
       padding: 1em 0.7em;
       color: #888;
     }
@@ -167,12 +176,16 @@ md-sidenav.md-locked-open {
     font-weight: 500;
   }
 
-  .card-info {
+  .card-info, .info-message {
     color: #656565;
-    padding: 1.4em 1.5em 1.4em;
     margin: 0;
     line-height: 1.4em;
+    padding: 0.5em;
+  }
+
+  .card-info {
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    padding: 1.4em 1.5em 1.4em;
   }
 
   .card-content {

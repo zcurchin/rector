@@ -1,5 +1,98 @@
 {{#app-page title="Check In/Out"}}
-  {{#app-page-card header=false}}
-    Soon
+  {{#app-page-card
+    title="Status"
+    resizeable=true
+    info="This is your current check in status..."
+  }}
+    {{#if checkedIn}}
+      <div class="checkin-status-box">
+        <div class="header layout-row layout-align-start-center">
+          <div class="title">Checked In</div>
+          <span class="flex"></span>
+          <div class="status-icon">
+            {{paper-icon "alarm-on"}}
+          </div>
+        </div>
+        <div class="meta-box">
+          <div class="from-now">{{moment-from-now checkedIn}}</div>
+          <div class="full-time">{{moment-format checkedIn "dddd, MMMM Do, h:mm a"}}</div>
+        </div>
+      </div>
+      <div class="outline-btn full-width" {{action "checkOut"}}>Check Out</div>
+    {{/if}}
+
+    {{#if checkedOut}}
+      <div class="checkin-status-box out">
+        <div class="header layout-row layout-align-start-center">
+          <div class="title">Checked Out</div>
+          <span class="flex"></span>
+          <div class="status-icon">
+            {{paper-icon "alarm-off"}}
+          </div>
+        </div>
+
+        {{#if checkedOut_value}}
+          <div class="meta-box">
+            <div class="from-now">{{moment-from-now checkedOut}}</div>
+            <div class="full-time">{{moment-format checkedOut "dddd, MMMM Do, h:mm a"}}</div>
+          </div>
+        {{/if}}
+      </div>
+
+      {{#unless checkInEdit}}
+        <div class="filled-btn full-width" {{action "checkInEdit"}}>Check In</div>
+      {{/unless}}
+
+
+      {{#if checkInEdit}}
+        {{#paper-form onSubmit=(action "checkIn") as |form|}}
+          <div class="inline-form">
+            <div class="form">
+              <p>Specify hours after you will be automaticaly checked out</p>
+
+              {{paper-input
+                label="Check Out After (hours)"
+                type="number"
+                value=checkOutHours_input
+                onChange=(action (mut checkOutHours_input))
+                required=true
+              }}
+
+              {{#if error_msg}}
+                <div class="message-box error">
+                  {{paper-icon "error"}}
+                  <div class="message">{{error_msg}}</div>
+                </div>
+              {{/if}}
+
+              <div class="preloader {{if preloader 'visible' 'hidden'}}">
+                {{paper-progress-linear}}
+              </div>
+
+              <div class="outline-btn" {{action "checkInEditCancel"}}>Cancel</div>
+              <div class="filled-btn" {{action form.onSubmit}}>Check In</div>
+            </div>
+          </div>
+        {{/paper-form}}
+      {{/if}}
+
+    {{else}}
+
+    {{/if}}
+
+  {{/app-page-card}}
+
+  {{#app-page-card
+    title="History"
+    resizeable=true
+    info="This is history of check ins..."
+  }}
+    {{#if checkIns}}
+      {{#each model as |check|}}
+        <p>{{moment-format check.in "dddd, MMMM Do, h:mm:ss a"}}</p>
+      {{/each}}
+    {{else}}
+      <div class="info-message">You don't have any check in yet.</div>
+    {{/if}}
   {{/app-page-card}}
 {{/app-page}}

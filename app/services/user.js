@@ -13,6 +13,8 @@ export default Service.extend({
   firebaseApp: service(),
   firebaseUtil: service(),
 
+  restaurant: '',
+
   create(params){
     let self = this;
 
@@ -82,6 +84,76 @@ export default Service.extend({
         reject(error);
       });
     });
+  },
+
+
+  // --------------------------------------------
+  // Checking
+  // --------------------------------------------
+
+  checkIn(checkOut){
+    let self = this;
+    let firebaseApp = get(this, 'firebaseApp');
+    let checkIns = firebaseApp.database().ref('checkIns');
+    let uid = get(this, 'session.currentUser.uid');
+
+    let data = {
+      in: Date.now(),
+      out: 1494018844923,
+      restaurant: self.restaurant
+    };
+
+    self.getLastCheckIn().then(data => {
+      console.log(data.val());
+    });
+
+    self.getCheckIns().then(data => {
+      console.log(data.val());
+    });
+
+    return checkIns.child(uid).push(data);
+  },
+
+
+  checkOut(){
+    this.getLastCheckIn().then(data => {
+      let uid = get(this, 'session.currentUser.uid');
+      let checkIn_id = Object.keys(data.val())[0];
+      let firebaseApp = get(this, 'firebaseApp');
+      let checkInRef = firebaseApp.database().ref('checkIns/'+uid+'/'+checkIn_id);
+
+      checkInRef.update({
+        in: 'World'
+      });
+
+
+      //console.log(Object.keys(data.val())[0]);
+      // data.ref().set({
+      //   hallo: 'World'
+      // }).then(() => {
+      //   console.log('FFFF');
+      // });
+    });
+  },
+
+
+  getCheckIns(){
+    let firebaseApp = get(this, 'firebaseApp');
+    let uid = get(this, 'session.currentUser.uid');
+    let checkIns = firebaseApp.database().ref('checkIns');
+    let userCheckins = checkIns.child(uid);
+
+    return userCheckins.orderByKey().once('value');
+  },
+
+
+  getLastCheckIn(){
+    let firebaseApp = get(this, 'firebaseApp');
+    let uid = get(this, 'session.currentUser.uid');
+    let checkIns = firebaseApp.database().ref('checkIns');
+    let userCheckins = checkIns.child(uid);
+
+    return userCheckins.orderByKey().limitToLast(1).once('value');
   },
 
 

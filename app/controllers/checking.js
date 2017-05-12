@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 const {
   Controller,
@@ -16,18 +17,23 @@ export default Controller.extend({
   checkedOut: false,
   checkInEdit: false,
   checkedOut_value: false,
-
-  checkOutTime_clock: null,
+  checkOutTime: null,
 
   checkOutHours_input: null,
+
   onCheckOutHoursChange: observer('checkOutHours_input', function(){
-    let checkOutHours_input = this.get('checkOutHours_input');
-    console.log(checkOutHours_input);
-    let milisHours = checkOutHours_input * (60000 * 60);
+    let checkOutHours_input = get(this, 'checkOutHours_input');
+    let milisHours = parseFloat(checkOutHours_input ) * (60000 * 60);
     let now = Date.now();
     let checkOutTime = now + milisHours;
+    console.log(checkOutTime);
 
-    set(this, 'checkOutTime_clock', this.get('checkOutTime'));
+    let time = moment(checkOutTime).format('hh:mm');
+
+    console.log(time);
+
+
+    set(this, 'checkOutTime', time);
   }),
 
 

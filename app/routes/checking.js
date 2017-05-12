@@ -37,9 +37,7 @@ export default Route.extend({
     let checkIns = [];
 
     if (!model) {
-      //controller.set('checkedOut', true);
-      //controller.set('checkedOut_value', false);
-      // return;
+      controller.set('checkedOut', true);      
 
     } else {
       keys.forEach((key, index) => {

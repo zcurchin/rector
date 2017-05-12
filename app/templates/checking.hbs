@@ -19,9 +19,8 @@
         </div>
       </div>
       <div class="outline-btn full-width" {{action "checkOut"}}>Check Out</div>
-    {{/if}}
 
-    {{#if checkedOut}}
+    {{else}}
       <div class="checkin-status-box out">
         <div class="header layout-row layout-align-start-center">
           <div class="title">Checked Out</div>
@@ -58,6 +57,13 @@
                 required=true
               }}
 
+              {{#if checkOutTime}}
+                <div class="checkout-time">
+                  <div>Auto Check Out at: </div>
+                  <div>{{checkOutTime}}</div>
+                </div>
+              {{/if}}
+
               {{#if error_msg}}
                 <div class="message-box error">
                   {{paper-icon "error"}}
@@ -76,8 +82,6 @@
         {{/paper-form}}
       {{/if}}
 
-    {{else}}
-
     {{/if}}
 
   {{/app-page-card}}
@@ -92,7 +96,7 @@
         <p>{{moment-format check.in "dddd, MMMM Do, h:mm:ss a"}}</p>
       {{/each}}
     {{else}}
-      <div class="info-message">You don't have any check in yet.</div>
+      <div class="info-message">No history available</div>
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}

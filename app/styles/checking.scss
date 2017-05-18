@@ -5,17 +5,16 @@
 
 .checkin-status-box {
   border-radius: 10px;
-  border: 2px solid $color-green-light;
   overflow: hidden;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
 
   .header {
-    background-color: $color-green-light;
+    background-color: #c5faec;
     padding: 1em;
 
     .title {
       color: $color-green;
-      font-size: 1.2em;
+      font-size: 1.4em;
       font-weight: 500;
       margin-bottom: 0;
     }
@@ -28,39 +27,84 @@
   }
 
   .meta-box {
+    background-color: $color-green-light;
     padding: 1em;
 
     .from-now {
       color: $color-green;
-      font-size: 1.1em;
-      margin-bottom: 1em
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
     }
 
     .full-time {
-      color: #999;
+      color: $color-green;
       font-size: 0.9em;
+      margin-bottom: 0.5em;
     }
   }
 }
 
 .checkin-status-box.out {
-  border-color: #f5f5f5;
-
   .header {
-    background-color: #f5f5f5;
+    background-color: #eeeeee;
 
     .title {
-      color: #bababa;
+      color: #888;
     }
 
     md-icon {
       color: #bababa;
     }
+  }
 
-    .meta-box {
-      .from-now {
-        color: #999;
+  .meta-box {
+    background-color: #f5f5f5;
+
+    .from-now {
+      color: #888;
+    }
+
+    .full-time {
+      color: #999;
+    }
+  }
+}
+
+.checkin-history-list {
+  .checkin-history-item {
+    padding: 0.8em 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .header {
+      margin-bottom: 1em;
+
+      span {
+        display: inline-block;
+        color: #444;
+      }
+
+      .hours {
+        margin-left: auto;
+        color: #888;
       }
     }
+
+    .checked-in, .checked-out {
+      color: #888;
+      margin-bottom: 0.5em;
+
+      md-icon {
+        opacity: 0.5;
+        margin-right: 0.4em;
+      }
+    }
+  }
+
+  .checkin-history-item:last-child {
+    border: none;
   }
 }

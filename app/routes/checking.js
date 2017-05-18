@@ -4,7 +4,8 @@ import RSVP from 'rsvp';
 const {
   Route,
   inject: { service },
-  get
+  get,
+  Array
 } = Ember;
 
 
@@ -18,7 +19,7 @@ export default Route.extend({
 
     return new RSVP.Promise((resolve, reject) => {
       user.getCheckIns().then(data => {
-        console.log(data.val());
+        //console.log(data.val());
 
         if (data.val()) {
           console.log(data.val());
@@ -33,29 +34,44 @@ export default Route.extend({
 
   setupController(controller, model){
     console.log('# setupController : model :', model);
-    let keys = Object.keys(model);
-    let checkIns = [];
 
     if (!model) {
-      controller.set('checkedOut', true);      
+      controller.set('checkedIn', false);
 
     } else {
+      let keys = Object.keys(model);
+      let history = [];
+
       keys.forEach((key, index) => {
+
         if (index === keys.length - 1) {
           let lastCheckIn = model[key];
+          console.log('### LAST');
 
-          if (lastCheckIn.out >= Date.now()) {
-            controller.set('checkedIn', false);
-            controller.set('checkedOut', model[key].out);
-          } else {
+          if (lastCheckIn.out > Date.now()) {
+            console.log('### CHECKED IN');
             controller.set('checkedIn', model[key].in);
-            controller.set('checkedOut', false);
+
+          } else {
+            console.log('### CHECKED OUT');
+            controller.set('checkedIn', false);
+            controller.set('checkedOut_value', model[key].out);
+            history.push(model[key]);
           }
+
+        } else {
+          console.log('### NOT LAST');
+          history.push(model[key]);
         }
-        checkIns.push(model[key]);
       });
 
-      controller.set('model', checkIns);
+      controller.set('history', history.reverse());
     }
+  },
+
+  deactivate(){
+    let controller = get(this, 'controller');
+    controller.set('confirmCheckOut', false);
+    controller.closeCheckInForm();
   }
 });

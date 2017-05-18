@@ -99,40 +99,24 @@ export default Service.extend({
 
     let data = {
       in: Date.now(),
-      out: 1494018844923,
+      out: checkOut,
       restaurant: self.restaurant
     };
-
-    self.getLastCheckIn().then(data => {
-      console.log(data.val());
-    });
-
-    self.getCheckIns().then(data => {
-      console.log(data.val());
-    });
 
     return checkIns.child(uid).push(data);
   },
 
 
   checkOut(){
-    this.getLastCheckIn().then(data => {
+    return this.getLastCheckIn().then(data => {
       let uid = get(this, 'session.currentUser.uid');
       let checkIn_id = Object.keys(data.val())[0];
       let firebaseApp = get(this, 'firebaseApp');
       let checkInRef = firebaseApp.database().ref('checkIns/'+uid+'/'+checkIn_id);
 
-      checkInRef.update({
-        in: 'World'
+      return checkInRef.update({
+        out: Date.now()
       });
-
-
-      //console.log(Object.keys(data.val())[0]);
-      // data.ref().set({
-      //   hallo: 'World'
-      // }).then(() => {
-      //   console.log('FFFF');
-      // });
     });
   },
 

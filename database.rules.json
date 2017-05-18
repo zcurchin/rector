@@ -3,8 +3,22 @@
     ".read": "auth != null",
     ".write": "auth != null",
 
-    "users": {
+    "userAccounts": {
       ".indexOn": "auth_uid"
+    },
+    "userProfiles": {
+      ".read": true,
+    	".indexOn": "username"
+    },
+    "privateGrades": {
+      "$uid": {
+        ".indexOn": "timestamp"
+      }
+    },
+    "checkIns": {
+      "$uid": {
+        ".indexOn": "in"
+      }
     }
   }
 }

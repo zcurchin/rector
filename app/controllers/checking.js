@@ -6,47 +6,70 @@ const {
   inject: { service },
   set,
   get,
-  observer
+  observer,
+  computed,
+  Array
 } = Ember;
 
 
 export default Controller.extend({
   user: service(),
+  preloader: false,
+  checkout_preloader: false,
 
   checkedIn: false,
-  checkedOut: false,
   checkInEdit: false,
+  confirmCheckOut: false,
   checkedOut_value: false,
-  checkOutTime: null,
 
-  checkOutHours_input: null,
+  checkOutHours: 6,
+  checkOutTime: computed('checkOutHours', function(){
+    let checkOutMilis = this.getCheckOutMilis();
+    let time = moment(checkOutMilis).format('hh:mm a');
 
-  onCheckOutHoursChange: observer('checkOutHours_input', function(){
-    let checkOutHours_input = get(this, 'checkOutHours_input');
-    let milisHours = parseFloat(checkOutHours_input ) * (60000 * 60);
-    let now = Date.now();
-    let checkOutTime = now + milisHours;
-    console.log(checkOutTime);
-
-    let time = moment(checkOutTime).format('hh:mm');
-
-    console.log(time);
-
-
-    set(this, 'checkOutTime', time);
+    return time;
   }),
+
+  history: [],
+  updateHistory: function(type, obj){
+    let history = get(this, 'history');
+
+    if (type === 'checkOut') {
+      history.unshiftObject(obj);
+    }
+  },
+
+
+  getCheckOutMilis(){
+    let checkOutHours = get(this, 'checkOutHours');
+    let milisHours = parseFloat(checkOutHours) * (60000 * 60);
+    let now = Date.now();
+    let checkOutMilis = now + milisHours;
+
+    return checkOutMilis;
+  },
+
+
+  closeCheckInForm(){
+    set(this, 'checkInEdit', false);
+    set(this, 'preloader', false);
+    set(this, 'checkOutHours', 6);
+  },
 
 
   actions: {
     checkIn(){
+      let self = this;
       let user = this.get('user');
-      let checkOutHours = get(this, 'checkOutHours');
+      let checkOutMilis = this.getCheckOutMilis();
+      let now = Date.now();
+      set(self, 'preloader', true);
 
-      console.log(checkOutHours);
+      user.checkIn(checkOutMilis).then(() => {
+        self.closeCheckInForm();
 
-      // user.checkIn().then(() => {
-      //   console.log('# checked In');
-      // });
+        set(self, 'checkedIn', now);
+      });
     },
 
     checkInEdit(){
@@ -54,13 +77,36 @@ export default Controller.extend({
     },
 
     checkInEditCancel(){
-      set(this, 'checkInEdit', false);
+      this.closeCheckInForm();
+    },
+
+    openConfirmCheckOut(){
+      set(this, 'confirmCheckOut', true);
+    },
+
+    cancelCheckOut(){
+      set(this, 'confirmCheckOut', false);
     },
 
     checkOut(){
+      let self = this;
       let user = this.get('user');
+      let checkedIn = this.get('checkedIn');
+      let now = Date.now();
 
-      user.checkOut();
+      set(this, 'checkout_preloader', true);
+
+      user.checkOut().then(() => {
+        set(self, 'checkedIn', false);
+        set(self, 'checkout_preloader', false);
+        set(self, 'confirmCheckOut', false);
+        set(self, 'checkedOut_value', now);
+
+        self.updateHistory('checkOut', {
+          in: checkedIn,
+          out: now
+        });
+      });
     }
   }
 });

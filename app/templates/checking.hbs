@@ -18,7 +18,25 @@
           <div class="full-time">{{moment-format checkedIn "dddd, MMMM Do, h:mm a"}}</div>
         </div>
       </div>
-      <div class="outline-btn full-width" {{action "checkOut"}}>Check Out</div>
+
+      {{#unless confirmCheckOut}}        
+        <div class="filled-btn center" {{action "openConfirmCheckOut"}}>Check Out</div>
+      {{/unless}}
+
+      {{#if confirmCheckOut}}
+        <div class="inline-form">
+          <div class="form">
+            <p class="info">Please confir that you want to check out right now.</p>
+
+            <div class="preloader {{if checkout_preloader 'visible' 'hidden'}}">
+              {{paper-progress-linear}}
+            </div>
+
+            <div class="outline-btn" {{action "cancelCheckOut"}}>Cancel</div>
+            <div class="filled-btn" {{action "checkOut"}}>Check Out Now</div>
+          </div>
+        </div>
+      {{/if}}
 
     {{else}}
       <div class="checkin-status-box out">
@@ -32,37 +50,33 @@
 
         {{#if checkedOut_value}}
           <div class="meta-box">
-            <div class="from-now">{{moment-from-now checkedOut}}</div>
-            <div class="full-time">{{moment-format checkedOut "dddd, MMMM Do, h:mm a"}}</div>
+            <div class="from-now">{{moment-from-now checkedOut_value}}</div>
+            <div class="full-time">{{moment-format checkedOut_value "dddd, MMMM Do, h:mm a"}}</div>
           </div>
         {{/if}}
       </div>
 
       {{#unless checkInEdit}}
-        <div class="filled-btn full-width" {{action "checkInEdit"}}>Check In</div>
+        <div class="filled-btn center" {{action "checkInEdit"}}>Check In</div>
       {{/unless}}
-
 
       {{#if checkInEdit}}
         {{#paper-form onSubmit=(action "checkIn") as |form|}}
           <div class="inline-form">
             <div class="form">
-              <p>Specify hours after you will be automaticaly checked out</p>
+              <p class="info">Specify in how hours you want to be automatically checked out</p>
 
               {{paper-input
                 label="Check Out After (hours)"
                 type="number"
-                value=checkOutHours_input
-                onChange=(action (mut checkOutHours_input))
+                value=checkOutHours
+                onChange=(action (mut checkOutHours))
                 required=true
               }}
 
-              {{#if checkOutTime}}
-                <div class="checkout-time">
-                  <div>Auto Check Out at: </div>
-                  <div>{{checkOutTime}}</div>
-                </div>
-              {{/if}}
+              <div class="checkout-time">
+                <div class="info">Check Out at: <span>{{checkOutTime}}</span></div>
+              </div>
 
               {{#if error_msg}}
                 <div class="message-box error">
@@ -83,7 +97,6 @@
       {{/if}}
 
     {{/if}}
-
   {{/app-page-card}}
 
   {{#app-page-card
@@ -91,10 +104,13 @@
     resizeable=true
     info="This is history of check ins..."
   }}
-    {{#if checkIns}}
-      {{#each model as |check|}}
-        <p>{{moment-format check.in "dddd, MMMM Do, h:mm:ss a"}}</p>
+    {{#if history.length}}
+    <div class="checkin-history-list">
+      {{#each history as |check|}}
+        {{checkin-history-item check=check}}
       {{/each}}
+    </div>
+
     {{else}}
       <div class="info-message">No history available</div>
     {{/if}}

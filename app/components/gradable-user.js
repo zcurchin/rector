@@ -14,6 +14,7 @@ export default Component.extend({
   selected: false,
   isChanged: false,
   nei: false,
+  preloader: false,
 
   confirmBtnClass: computed('isChanged', function () {
     let isChanged = get(this, 'isChanged');

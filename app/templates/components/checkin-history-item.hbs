@@ -1,0 +1,18 @@
+<div class="header layout-row layout-align-start-center">
+  <span class="date">{{moment-format check.in "dddd, MMMM Do"}}</span>
+  <span class="hours">{{hours}}</span>
+</div>
+
+{{#unless folded}}
+  <div class="checked-in">
+    <span>{{paper-icon "alarm-on"}}</span>
+    <span>Checked in at</span>
+    <span>{{moment-format check.in "h:mm a"}}</span>
+  </div>
+
+  <div class="checked-out">
+    <span>{{paper-icon "alarm-off"}}</span>
+    <span>Checked out at</span>
+    <span>{{moment-format check.out "h:mm a"}}</span>
+  </div>
+{{/unless}}

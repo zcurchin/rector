@@ -9,38 +9,39 @@ const {
 
 export default Controller.extend({
   firebaseApp: service(),
+  //session: service(),
+  preloader: false,
 
   actions: {
     gradeUser(uid, grade){
-      console.log('# GRADE : ', uid, grade);
-
-      let model = get(this, 'model');
-
-      model.forEach((profile) => {
-        if (profile.id === uid) {
-          model.removeObject(profile);
-        }
-      });
-
       let myuid = get(this, 'session.currentUser.uid');
       let firebaseApp = get(this, 'firebaseApp');
       let publicGrades = firebaseApp.database().ref('publicGrades').child(uid);
       let privateGrades = firebaseApp.database().ref('privateGrades').child(myuid);
+      let now = Date.now();
+      let gradableUsers = get(this, 'model').gradableUsers;
+      let history = get(this, 'model').history;
 
-      // firebaseApp.database().ref('publicGrades').child(uid).once('value').then(snapshot => {
-      //   var value = snapshot.val();
-      //   console.log(value);
-      // });
+      console.log('# GRADE : ', uid, grade, myuid);
+
+      gradableUsers.forEach((profile) => {
+        if (profile.id === uid) {
+          gradableUsers.removeObject(profile);
+          profile.grade_value = grade;
+          profile.grade_timestamp = now;
+          history.unshiftObject(profile);
+        }
+      });
 
       let public_data = {
-        timestamp: Date.now(),
+        timestamp: now,
         value: grade
       };
 
       publicGrades.push(public_data);
 
       let private_data = {
-        timestamp: Date.now(),
+        timestamp: now,
         value: grade,
         uid: uid
       };

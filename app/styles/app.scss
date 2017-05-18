@@ -11,8 +11,9 @@ $color-alert: #e072ba;
 
 @import 'base';
 @import 'top-bar';
+@import 'forms';
 @import 'content-preloader';
-@import 'gradable-user';
+@import 'grading';
 @import 'sign-in';
 @import 'sign-up';
 @import 'account';

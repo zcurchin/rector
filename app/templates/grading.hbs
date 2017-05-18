@@ -1,8 +1,13 @@
 {{#app-page title="Grading"}}
-  {{#app-page-card title="Users to grade" resizeable=true}}
-    {{#if model}}
-      {{#each model as |profile|}}
+  {{#app-page-card
+    title="Users to grade"
+    resizeable=true
+    info="Those are available users that you can grade at the moment."
+  }}
+    {{#if model.gradableUsers}}
+      {{#each model.gradableUsers as |profile|}}
         {{gradable-user
+          preloader=preloader
           first_name=profile.first_name
           last_name=profile.last_name
           profile_image=profile.profile_image
@@ -17,21 +22,44 @@
     {{/if}}
   {{/app-page-card}}
 
-  {{#app-page-card title="History" resizeable=true}}
-    <!-- {{#if model}}
-      {{#each model as |profile|}}
-        {{gradable-user
-          first_name=profile.first_name
-          last_name=profile.last_name
-          profile_image=profile.profile_image
-          profile_id=profile.id
-          action="gradeUser"}}
+  {{#app-page-card
+    title="Today's History"
+    resizeable=true
+    info="Those are grades you gave recently."
+  }}
+    {{#if model.history}}
+      {{#each model.history as |user|}}
+        <div class="history-item layout-row layout-align-start-center">
+          <div class="avatar">
+            {{#if user.profile_image}}
+              <img class="flex-none" src="{{user.profile_image}}">
+            {{else}}
+              {{paper-icon "account-circle"}}
+            {{/if}}
+          </div>
+
+          <div class="user-info-box">
+            <p class="name">{{user.first_name}} {{user.last_name}}</p>
+            <p class="date">at {{moment-format user.grade_timestamp "h:mm a"}}</p>
+          </div>
+
+          {{#if user.grade_value}}
+            <div class="grade-value number">
+              {{user.grade_value}}
+            </div>
+          {{else}}
+            <div class="grade-value">
+              {{paper-icon "visibility-off"}}
+            </div>
+          {{/if}}
+
+        </div>
       {{/each}}
 
     {{else}}
       <div class="info-message">
-        No gradable users at this moment
+        You didn't grade anyone so far.
       </div>
-    {{/if}} -->
+    {{/if}}
   {{/app-page-card}}
 {{/app-page}}

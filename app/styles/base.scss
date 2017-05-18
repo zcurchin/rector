@@ -142,7 +142,7 @@ md-sidenav.md-locked-open {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #e8e6e6;
-  margin: 0 0.5em 0.5em;
+  margin: 0 0.5em 1.5em;
 
   .card-header {
     height: 4em;
@@ -206,78 +206,6 @@ md-sidenav.md-locked-open {
     margin-left: 0;
   }
 }
-
-
-// ----------------------------------------------
-// FORM
-// ----------------------------------------------
-
-.inline-form {
-  padding: 0 0 1em;;
-  border: 2px solid color($primary, "100");
-  border-radius: 5px;
-
-  .form {
-    padding: 1em;
-  }
-}
-
-.message-box {
-  position: relative;
-  margin-bottom: 1em;
-
-  md-icon {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .message {
-    display: inline-block;
-    margin-left: 2em;
-    padding-top: 0.1em;
-  }
-}
-
-.message-box.error {
-  md-icon {
-    color: $color-alert;
-  }
-
-  .message {
-    color: $color-alert;
-  }
-}
-
-.message-box.success {
-  md-icon {
-    color: $color-green;
-  }
-
-  .message {
-    color: $color-green;
-  }
-}
-
-.preloader {
-  margin-top: 0.5em;
-}
-
-.preloader.visible {
-  opacity: 1;
-}
-
-.preloader.hidden {
-  opacity: 0;
-}
-
-.remote-error {
-  color: $color-alert;
-  text-align: center;
-  padding: 1em;
-}
-
 
 
 // ----------------------------------------------

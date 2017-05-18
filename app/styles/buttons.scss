@@ -20,6 +20,12 @@
   }
 }
 
+.outline-btn.center, .filled-btn.center {
+  margin: 1em auto;
+  width: 10em;
+  display: block;
+}
+
 .outline-btn.full-width, .filled-btn.full-width {
   width: 100%;
   min-width: 100%;

@@ -1,5 +1,13 @@
 {{#app-page-card title="Create Account" class="sign-up-form"}}
   {{#paper-form onSubmit=(action "createUser") as |form|}}
+    {{#paper-switch value=createAdmin onChange=(action (mut createAdmin))}}
+      Administrator
+    {{/paper-switch}}
+
+    {{#if createAdmin}}
+      <p class="info-text">You are about to create administrator account which is meant for restaurant owners. Leave this unchecked if you want to create the regular account. </p>
+    {{/if}}
+
     {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
     {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
 
@@ -13,14 +21,6 @@
     <div class="preloader {{if preloader 'visible' 'hidden'}}">
       {{paper-progress-linear}}
     </div>
-
-    {{#paper-switch value=createAdmin onChange=(action (mut createAdmin))}}
-      Administrator
-    {{/paper-switch}}
-
-    {{#if createAdmin}}
-      <p class="info-text">You are about to create administrator account which is meant for restaurant owners. Leave this unchecked if you want to create the regular account. </p>
-    {{/if}}
 
     <div class="remote-error">{{error_msg}}</div>
 

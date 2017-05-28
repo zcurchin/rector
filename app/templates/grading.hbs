@@ -4,20 +4,26 @@
     resizeable=true
     info="Those are available users that you can grade at the moment."
   }}
-    {{#if model.gradableUsers}}
-      {{#each model.gradableUsers as |profile|}}
-        {{gradable-user
-          preloader=preloader
-          first_name=profile.first_name
-          last_name=profile.last_name
-          profile_image=profile.profile_image
-          profile_id=profile.id
+    {{#if model.myTodayCheckins}}
+      {{#if model.gradableUsers}}
+        {{#each model.gradableUsers as |profile|}}
+          {{gradable-user
+            preloader=preloader
+            first_name=profile.first_name
+            last_name=profile.last_name
+            profile_image=profile.profile_image
+            profile_id=profile.id
           action="gradeUser"}}
-      {{/each}}
+        {{/each}}
 
+        {{else}}
+          <div class="info-message">
+            No gradable users at this moment
+          </div>
+        {{/if}}
     {{else}}
       <div class="info-message">
-        No gradable users at this moment
+        You didn't checked in today. In order to grade other users you have to be checked in today at least once.
       </div>
     {{/if}}
   {{/app-page-card}}

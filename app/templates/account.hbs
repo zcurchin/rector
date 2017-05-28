@@ -74,60 +74,61 @@
     {{/if}}
   {{/app-page-card}}
 
+  {{#if emailVerified}}
+    {{#app-page-card title="Password"}}
+      {{#if editPassword}}
+        {{#paper-form onSubmit=(action "saveNewPassword") as |form|}}
+          <div class="inline-form">
+            <div class="form">
+              {{paper-input
+                label="Old Password"
+                type="password"
+                value=password
+                onChange=(action (mut password))
+                required=true
+                minlength=6
+              }}
+              {{paper-input
+                label="New Password"
+                type="password"
+                value=newPassword
+                onChange=(action (mut newPassword))
+                required=true
+                minlength=6
+              }}
 
-  {{#app-page-card title="Password"}}
-    {{#if editPassword}}
-      {{#paper-form onSubmit=(action "saveNewPassword") as |form|}}
-        <div class="inline-form">
-          <div class="form">
-            {{paper-input
-              label="Old Password"
-              type="password"
-              value=password
-              onChange=(action (mut password))
-              required=true
-              minlength=6
-            }}
-            {{paper-input
-              label="New Password"
-              type="password"
-              value=newPassword
-              onChange=(action (mut newPassword))
-              required=true
-              minlength=6
-            }}
+              {{#if error_msg}}
+                <div class="message-box error">
+                  {{paper-icon "error"}}
+                  <div class="message">{{error_msg}}</div>
+                </div>
+              {{/if}}
 
-            {{#if error_msg}}
-              <div class="message-box error">
-                {{paper-icon "error"}}
-                <div class="message">{{error_msg}}</div>
+              {{#if success_msg}}
+                <div class="message-box success">
+                  {{paper-icon "check-circle"}}
+                  <div class="message">{{success_msg}}</div>
+                </div>
+              {{/if}}
+
+              <div class="preloader {{if preloader 'visible' 'hidden'}}">
+                {{paper-progress-linear}}
               </div>
-            {{/if}}
 
-            {{#if success_msg}}
-              <div class="message-box success">
-                {{paper-icon "check-circle"}}
-                <div class="message">{{success_msg}}</div>
-              </div>
-            {{/if}}
-
-            <div class="preloader {{if preloader 'visible' 'hidden'}}">
-              {{paper-progress-linear}}
+              {{#if passwordChanged}}
+                <div class="filled-btn" {{action "cancelEditPassword"}}>OK</div>
+              {{else}}
+                <div class="outline-btn" {{action "cancelEditPassword"}}>Cancel</div>
+                <div class="filled-btn" {{action form.onSubmit}}>Save New Password</div>
+              {{/if}}
             </div>
-
-            {{#if passwordChanged}}
-              <div class="filled-btn" {{action "cancelEditPassword"}}>OK</div>
-            {{else}}
-              <div class="outline-btn" {{action "cancelEditPassword"}}>Cancel</div>
-              <div class="filled-btn" {{action form.onSubmit}}>Save New Password</div>
-            {{/if}}
           </div>
-        </div>
-      {{/paper-form}}
+        {{/paper-form}}
 
-    {{else}}
-      <div class="outline-btn" {{action "editPassword"}}>Change Password</div>
-      <div class="outline-btn" {{action "forgotPassword"}}>I Forgot My Password</div>
-    {{/if}}
-  {{/app-page-card}}
+      {{else}}
+        <div class="outline-btn" {{action "editPassword"}}>Change Password</div>
+        <div class="outline-btn" {{action "forgotPassword"}}>I Forgot My Password</div>
+      {{/if}}
+    {{/app-page-card}}
+  {{/if}}
 {{/app-page}}

@@ -13,6 +13,8 @@ export default Controller.extend({
 
   editingProfile: false,
 
+  showDialog: false,
+
   personalInfoProps: [
     'first_name',
     'last_name',
@@ -105,9 +107,10 @@ export default Controller.extend({
     },
 
     editProfilePicture(){
-      let model = this.get('model');
+      // let model = this.get('model');
+      // set(model, 'profile.profile_image', 'http://lorempixel.com/400/200');
 
-      set(model, 'profile.profile_image', 'http://lorempixel.com/400/200');
+      set(this, 'showDialog', true);
     }
   }
 });

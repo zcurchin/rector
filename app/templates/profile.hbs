@@ -201,3 +201,28 @@
   {{/app-page-card}}
 
 {{/app-page}}
+
+
+<!-- DIALOG -->
+
+{{#if showDialog}}
+  {{#paper-dialog class="flex-90" parent="#body" clickOutsideToClose=true}}
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>Change Profile Picture</h2>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true}}{{paper-icon icon="close"}}{{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+
+    {{#paper-dialog-content}}
+        {{avatar-cropper}}
+    {{/paper-dialog-content}}
+
+    <!-- {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{#paper-button}}Cancel{{/paper-button}}
+      {{#paper-button}}OK{{/paper-button}}
+    {{/paper-dialog-actions}} -->
+  {{/paper-dialog}}
+{{/if}}

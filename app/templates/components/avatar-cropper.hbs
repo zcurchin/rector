@@ -1,3 +1,9 @@
 <div class="cropper-container">
   <img src="icons/android-chrome-512x512.png" alt="">
 </div>
+
+{{#if croppedAvatar}}
+  {{croppedAvatar}}
+{{/if}}
+<div class="outline-btn" {{action "rotate"}}>Rotate</div>
+<div class="outline-btn" {{action "getCroppedAvatar"}}>Get Data</div>

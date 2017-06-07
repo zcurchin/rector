@@ -3,16 +3,19 @@ import Ember from 'ember';
 
 const {
   inject: { service },
-  get
+  get,
+  set
 } = Ember;
 
 export default imageCropper.extend({
+  avatar: service(),
   firebaseApp: service(),
 
-  //override default options of cropper
+  classNames: ['avatar-cropper-box'],
+
+  // cropper js options
   aspectRatio: 1,
-  minCropBoxWidth: 400,
-  minCropBoxHeight: 400,
+  autoCropArea: 1,
   cropperContainer: '.cropper-container > img',
   previewClass: '.img-preview',
   cropBoxMovable: false,
@@ -20,13 +23,22 @@ export default imageCropper.extend({
   toggleDragModeOnDblclick: false,
   dragMode: 'move',
 
-  croppedAvatar: null,
+  error_msg: false,
+  success_msg: false,
+  uploading: false,
+
+  savingImage: false,
+  savedImageSuccess: false,
+  savedImageFail: false,
+
 
   actions: {
-    getCroppedAvatar: function() {
+    saveImage: function() {
       let container = this.$(this.get('cropperContainer'));
       let firebaseApp = get(this, 'firebaseApp');
       let storageRef = firebaseApp.storage().ref();
+
+      set(this, 'savingImage', true);
 
       let croppedImage = container.cropper('getCroppedCanvas', {
         width: 400,
@@ -44,7 +56,7 @@ export default imageCropper.extend({
         // mountainsRef.name === mountainImagesRef.name            // true
         // mountainsRef.fullPath === mountainImagesRef.fullPath    // false
         mountainsRef.put(blob).then(function(snapshot) {
-          console.log('Uploaded a blob or file!');
+          console.log(snapshot);
         });
 
       });
@@ -52,9 +64,26 @@ export default imageCropper.extend({
       this.set('croppedAvatar', croppedImage);
     },
 
-    rotate(){
+
+    rotate(direction){
       let container = this.$(this.get('cropperContainer'));
-      container.cropper('rotate', 15);
+
+      if (direction === 'right') {
+        container.cropper('rotate', 15);
+      } else {
+        container.cropper('rotate', -15);
+      }
+    },
+
+
+    zoom(direction){
+      let container = this.$(this.get('cropperContainer'));
+
+      if (direction === 'in') {
+        container.cropper('zoom', 0.1);
+      } else {
+        container.cropper('zoom', -0.1);
+      }
     }
   }
 });

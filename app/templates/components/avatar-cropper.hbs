@@ -1,9 +1,26 @@
-<div class="cropper-container">
-  <img src="icons/android-chrome-512x512.png" alt="">
-</div>
+{{#if savingImage}}
+  <p>Saving your profile image</p>
+  {{paper-progress-linear}}
 
-{{#if croppedAvatar}}
-  {{croppedAvatar}}
+{{else}}
+  <div class="cropper-container">
+    <img src="{{avatar.uploadedImageDataURL}}" alt="">
+  </div>
+
+  <div class="cropp-ctrls layout-row layout-align-center-center">
+    <div class="ctrl-btn" {{action "rotate" "left"}}>
+      {{paper-icon "rotate-left"}}
+    </div>
+    <div class="ctrl-btn" {{action "rotate" "right"}}>
+      {{paper-icon "rotate-right"}}
+    </div>
+    <div class="ctrl-btn" {{action "zoom" "in"}}>
+      {{paper-icon "zoom-in"}}
+    </div>
+    <div class="ctrl-btn" {{action "zoom" "out"}}>
+      {{paper-icon "zoom-out"}}
+    </div>
+  </div>
+
+  <div class="filled-btn" {{action "saveImage"}}>Save Image</div>
 {{/if}}
-<div class="outline-btn" {{action "rotate"}}>Rotate</div>
-<div class="outline-btn" {{action "getCroppedAvatar"}}>Get Data</div>

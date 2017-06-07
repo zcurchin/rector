@@ -10,10 +10,10 @@ const {
 export default Controller.extend({
   user: service(),
   firebaseApp: service(),
+  avatar: service(),
 
   editingProfile: false,
-
-  showDialog: false,
+  showAvatarDialog: false,
 
   personalInfoProps: [
     'first_name',
@@ -42,6 +42,7 @@ export default Controller.extend({
 
   },
 
+
   updateUserProfile(data){
     let self = this;
     let uid = get(this, 'session.currentUser.uid');
@@ -59,11 +60,50 @@ export default Controller.extend({
     });
   },
 
+
+  handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');
+          document.getElementById('list').insertBefore(span, null);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+    //document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  },
+
+
   actions: {
     editProfile(){
       this.set('editingProfile', true);
       this.populateFields();
     },
+
+
+    cancelEditProfile(){
+      this.set('editingProfile', false);
+      this.set('error_msg', '');
+    },
+
 
     saveProfile(){
       let self = this;
@@ -101,16 +141,11 @@ export default Controller.extend({
       }
     },
 
-    cancelEditProfile(){
-      this.set('editingProfile', false);
-      this.set('error_msg', '');
-    },
 
-    editProfilePicture(){
-      // let model = this.get('model');
-      // set(model, 'profile.profile_image', 'http://lorempixel.com/400/200');
+    editAvatar(){
+      let avatar = get(this, 'avatar');
 
-      set(this, 'showDialog', true);
+      avatar.open();
     }
   }
 });

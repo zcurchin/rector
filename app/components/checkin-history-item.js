@@ -2,8 +2,7 @@ import Ember from 'ember';
 import moment from 'moment';
 
 const {
-  Component,
-  $
+  Component
 } = Ember;
 
 export default Component.extend({
@@ -14,12 +13,10 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    const profile = this.get('data');
+
     let check = this.get('check');
     let miliseconds_delta = check.out - check.in;
     let hours = miliseconds_delta / (1000*60*60);
-
-    //console.log(moment.duration(hours, 'hours').humanize());
 
     this.set('hours', moment.duration(hours, 'hours').humanize());
   },

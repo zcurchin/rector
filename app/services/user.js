@@ -53,7 +53,6 @@ export default Service.extend({
   get(dataKey){
     let session = get(this, 'session');
     let currentUser = session.get('currentUser');
-    let auth = session.get('isAuthenticated');
     let uid = currentUser.uid;
     let firebaseUtil = get(this, 'firebaseUtil');
 

@@ -32,11 +32,10 @@ export default Controller.extend({
 
 
   loginUser(){
-    let self = this;
     let firebase = get(this, 'firebaseApp');
     let pass = get(this, 'password');
     let email = get(this, 'session.currentUser.email');
-    let emailVerified = get(this, 'session.currentUser.emailVerified');
+    //let emailVerified = get(this, 'session.currentUser.emailVerified');
 
     return new RSVP.Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
@@ -103,8 +102,8 @@ export default Controller.extend({
       set(this, 'preloader', true);
 
       this.loginUser().then(() => {
-        user.updateEmail(newEmail).then(data => {
-          let msg = 'You successfully changed your email address.';
+        user.updateEmail(newEmail).then(() => {
+          //let msg = 'You successfully changed your email address.';
           set(self, 'preloader', false);
           set(self, 'currentEmail', user.email);
           set(self, 'emailVerified', user.emailVerified);
@@ -142,7 +141,7 @@ export default Controller.extend({
       set(this, 'preloader', true);
 
       this.loginUser().then(() => {
-        user.updatePassword(newPassword).then(data => {
+        user.updatePassword(newPassword).then(() => {
           set(self, 'password', '');
           set(self, 'newPassword', '');
           set(self, 'preloader', false);

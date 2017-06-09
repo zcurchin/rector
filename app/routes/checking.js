@@ -4,8 +4,7 @@ import RSVP from 'rsvp';
 const {
   Route,
   inject: { service },
-  get,
-  Array
+  get
 } = Ember;
 
 
@@ -14,13 +13,9 @@ export default Route.extend({
 
   model(){
     let user = get(this, 'user');
-    let uid = get(this, 'session.currentUser.uid');
-    let self = this;
 
     return new RSVP.Promise((resolve, reject) => {
       user.getCheckIns().then(data => {
-        //console.log(data.val());
-
         if (data.val()) {
           console.log(data.val());
           resolve(data.val());
@@ -28,9 +23,12 @@ export default Route.extend({
         } else {
           resolve(false);
         }
+      }).catch(error => {
+        reject(error);
       });
     });
   },
+
 
   setupController(controller, model){
     console.log('# setupController : model :', model);
@@ -68,6 +66,7 @@ export default Route.extend({
       controller.set('history', history.reverse());
     }
   },
+
 
   deactivate(){
     let controller = get(this, 'controller');

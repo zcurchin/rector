@@ -60,7 +60,7 @@ export default imageCropper.extend({
         });
       }
 
-      let croppedImage = container.cropper('getCroppedCanvas', {
+      container.cropper('getCroppedCanvas', {
         width: 400,
         height: 400
 
@@ -76,15 +76,15 @@ export default imageCropper.extend({
           profileRef.update({
             profile_image: snapshot.downloadURL
 
-          }).then(function(data){
+          }).then(function(){
             set(self, 'savingSuccess', true);
             self.sendAction('action', snapshot.downloadURL);
 
-          }).catch(function(error){
+          }).catch(function(){
             set(self, 'savingFail', true);
           });
 
-        }).catch(function(error){
+        }).catch(function(){
           set(self, 'savingFail', true);
         });
 

@@ -18,13 +18,15 @@ export function gradeHtml(params) {
   let total_grades = valid_grades.length;
   let avg_grade = sum ? roundToTwo(sum / valid_grades.length) : 0;
 
+  let return_value = null;
+
   switch (type) {
     case 'avg':
-      return avg_grade;
+      return_value = avg_grade;
     break;
 
     case 'total':
-      return total_grades;
+      return_value = total_grades;
     break;
 
     case '5':
@@ -33,7 +35,7 @@ export function gradeHtml(params) {
       }).map(grade => {
         return grade.value;
       });
-      return fives.length;
+      return_value = fives.length;
     break;
 
     case '4':
@@ -42,7 +44,7 @@ export function gradeHtml(params) {
       }).map(grade => {
         return grade.value;
       });
-      return fours.length;
+      return_value = fours.length;
     break;
 
     case '3':
@@ -51,7 +53,7 @@ export function gradeHtml(params) {
       }).map(grade => {
         return grade.value;
       });
-      return trees.length;
+      return_value = trees.length;
     break;
 
     case '2':
@@ -60,7 +62,7 @@ export function gradeHtml(params) {
       }).map(grade => {
         return grade.value;
       });
-      return twos.length;
+      return_value = twos.length;
     break;
 
     case '1':
@@ -69,9 +71,11 @@ export function gradeHtml(params) {
       }).map(grade => {
         return grade.value;
       });
-      return ones.length;
+      return_value = ones.length;
     break;
   }
+
+  return return_value;
 }
 
 export default Ember.Helper.helper(gradeHtml);

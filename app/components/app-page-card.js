@@ -1,9 +1,7 @@
 import Ember from 'ember';
 
 const {
-  Component,
-  get,
-  set
+  Component
 } = Ember;
 
 
@@ -25,10 +23,6 @@ export default Component.extend({
 
     toggleInfo(){
       this.toggleProperty('info_on');
-    },
-
-    headerAction(){
-      console.log('LLLLLLLLOOOOOLLLLLLL');
-    }    
+    }
   }
 });

@@ -6,9 +6,7 @@ const {
   inject: { service },
   set,
   get,
-  observer,
-  computed,
-  Array
+  computed
 } = Ember;
 
 

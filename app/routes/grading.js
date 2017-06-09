@@ -6,8 +6,7 @@ const {
   Route,
   inject: { service },
   get,
-  $,
-  run
+  $
 } = Ember;
 
 
@@ -98,7 +97,7 @@ export default Route.extend({
       // CONSTRUCT GRADABLE USERS
       // ----------------------------------------
 
-      return new RSVP.Promise((resolve, reject) => {
+      return new RSVP.Promise((resolve) => {
         let gradableUsers = [];
         let gradableUsersReady = false;
         let now = Date.now();
@@ -232,13 +231,16 @@ export default Route.extend({
     date.setHours(0,0,0,0);
     let start = date.getTime();
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       refcheckIns.orderByChild('in').startAt(start).once('value').then(snapshot => {
         let snap = snapshot.val();
         let checkIns = $.map(snap, function(checkIn) {
           return checkIn;
         });
         resolve(checkIns);
+
+      }).catch(error => {
+        console.log(error);
       });
     });
   }

@@ -90,6 +90,10 @@ md-dialog .md-dialog-content {
   height: 280px;
 }
 
+.cropper-modal {
+  opacity: .76;
+}
+
 .avatar-cropper-box .filled-btn {
   width: 11em;
   margin: 1em auto 1.8em;
@@ -113,4 +117,32 @@ md-dialog .md-dialog-content {
 
 .uploading-box {
   height: 280px;
+}
+
+.avatar-save-box {
+  height: 250px;
+  box-sizing: border-box;
+  padding: 2em;
+
+  md-icon {
+    font-size: 3.4em;
+    height: 1em;
+    display: block;
+    width: 1em;
+    padding: 0.4em 0 0.2em 0;
+  }
+
+  .success {
+    md-icon {
+      color: $color-green;
+    }
+  }
+
+
+  p {
+    color: #666;
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    text-align: center;
+  }
 }

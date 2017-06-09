@@ -1,6 +1,22 @@
-{{#if savingImage}}
-  <p>Saving your profile image</p>
-  {{paper-progress-linear}}
+{{#if savingAvatar}}
+  <div class="avatar-save-box">
+    {{#if savingSuccess}}
+      <div class="success">
+        {{paper-icon "check"}}
+        <p>Successfully saved profile image</p>
+      </div>
+
+    {{else if savingFail}}
+      {{paper-icon "error-outline"}}
+      <p>Failed to save profile image. Try again later.</p>
+
+
+    {{else}}
+      <p>Saving your profile image</p>
+      {{paper-progress-linear}}
+    {{/if}}
+
+  </div>
 
 {{else}}
   <div class="cropper-container">

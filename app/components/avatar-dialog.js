@@ -14,6 +14,10 @@ export default Component.extend({
     close(){
       let avatar = get(this, 'avatar');
       avatar.close();
+    },
+
+    onAvatarChanged(data){
+      this.sendAction('action', data);
     }
   }
 });

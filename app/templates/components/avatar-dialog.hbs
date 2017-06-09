@@ -14,7 +14,7 @@
 
     {{#paper-dialog-content}}
       {{#if avatar.showCropper}}
-        {{avatar-cropper}}
+        {{avatar-cropper action="onAvatarChanged"}}
       {{else}}
         {{avatar-upload-box}}
       {{/if}}

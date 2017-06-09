@@ -146,6 +146,12 @@ export default Controller.extend({
       let avatar = get(this, 'avatar');
 
       avatar.open();
+    },
+
+
+    onAvatarChanged(data){
+      let model = this.get('model');
+      set(this, 'model.profile.profile_image', data);
     }
   }
 });

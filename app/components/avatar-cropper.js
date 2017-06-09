@@ -10,6 +10,7 @@ const {
 export default imageCropper.extend({
   avatar: service(),
   firebaseApp: service(),
+  session: service(),
 
   classNames: ['avatar-cropper-box'],
 
@@ -27,41 +28,67 @@ export default imageCropper.extend({
   success_msg: false,
   uploading: false,
 
-  savingImage: false,
-  savedImageSuccess: false,
-  savedImageFail: false,
-
+  savingAvatar: false,
+  savingSuccess: false,
+  savingFail: false,
 
   actions: {
     saveImage: function() {
+      let self = this;
+      let session = get(this, 'session');
+      let currentUser = session.get('currentUser');
       let container = this.$(this.get('cropperContainer'));
       let firebaseApp = get(this, 'firebaseApp');
       let storageRef = firebaseApp.storage().ref();
 
-      set(this, 'savingImage', true);
+      set(this, 'savingAvatar', true);
+
+      if (!HTMLCanvasElement.prototype.toBlob) {
+        Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+          value: function(callback) {
+
+            let binStr = atob( this.toDataURL('image/jpeg', 0.6).split(',')[1] );
+            let len = binStr.length;
+            let arr = new Uint8Array(len);
+
+            for (let i = 0; i < len; i++ ) {
+              arr[i] = binStr.charCodeAt(i);
+            }
+
+            callback(new Blob([arr], {type: 'image/jpeg' }));
+          }
+        });
+      }
 
       let croppedImage = container.cropper('getCroppedCanvas', {
         width: 400,
         height: 400
 
       }).toBlob(function(blob){
-        console.log(blob);
-        // Create a reference to 'mountains.jpg'
-        var mountainsRef = storageRef.child('mountains.png');
+        var avatarRef = storageRef.child('avatars/'+currentUser.uid+'.jpg');
+        var metadata = {
+          contentType: 'image/jpeg',
+        };
 
-        // Create a reference to 'images/mountains.jpg'
-        //var mountainImagesRef = storageRef.child('images/mountains.jpg');
+        avatarRef.put(blob, metadata).then(function(snapshot) {
+          let profileRef = firebaseApp.database().ref('userProfiles/' + currentUser.uid);
 
-        // While the file names are the same, the references point to different files
-        // mountainsRef.name === mountainImagesRef.name            // true
-        // mountainsRef.fullPath === mountainImagesRef.fullPath    // false
-        mountainsRef.put(blob).then(function(snapshot) {
-          console.log(snapshot);
+          profileRef.update({
+            profile_image: snapshot.downloadURL
+
+          }).then(function(data){
+            set(self, 'savingSuccess', true);
+            self.sendAction('action', snapshot.downloadURL);
+
+          }).catch(function(error){
+            set(self, 'savingFail', true);
+          });
+
+        }).catch(function(error){
+          set(self, 'savingFail', true);
         });
 
-      });
-
-      this.set('croppedAvatar', croppedImage);
+      }, 'image/jpeg', 0.6);
     },
 
 

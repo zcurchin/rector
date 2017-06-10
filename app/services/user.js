@@ -47,9 +47,6 @@ export default Service.extend({
   },
 
 
-  destroy(){},
-
-
   get(dataKey){
     let session = get(this, 'session');
     let currentUser = session.get('currentUser');
@@ -77,7 +74,21 @@ export default Service.extend({
 
     return new RSVP.Promise((resolve, reject) => {
       firebaseUtil.findRecord(dbRef, dbRef + '/' + uid).then(data => {
-        resolve(data);
+
+        if (dataKey === 'publicGrades') {
+          let _data = [];
+
+          Object.keys(data).forEach(key => {
+            if (key.indexOf('-') !== -1) {
+              _data.push(data[key]);
+            }
+          });
+
+          resolve(_data);
+
+        } else {
+          resolve(data);
+        }
 
       }).catch(error => {
         reject(error);
@@ -219,6 +230,7 @@ export default Service.extend({
       });
     });
   },
+
 
   // --------------------------------------------
   // Helpers

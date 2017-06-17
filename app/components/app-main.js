@@ -2,11 +2,13 @@ import Ember from 'ember';
 
 const {
   Component,
-  inject: { service }
+  inject: { service },
+  get
 } = Ember;
 
 export default Component.extend({
   session: service(),
+  paperSidenav: service(),
   createAccount: true,
 
   classNames: ['app-container'],
@@ -21,6 +23,11 @@ export default Component.extend({
         height: this.$('.inner-sidenav').height()
       });
     });
+  },
+
+  swipeRight(){
+    let paperSidenav = get(this, 'paperSidenav');
+    paperSidenav.toggle('left-sidenav');
   },
 
   actions: {

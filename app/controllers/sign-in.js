@@ -2,28 +2,30 @@ import Ember from 'ember';
 
 const {
   Controller,
-  inject: { service }
+  inject: { service },
+  get
 } = Ember;
 
 
 export default Controller.extend({
+  session: service(),
   firebaseApp: service(),
   error_msg: '',
   preloader: false,
 
   actions: {
     signIn() {
-      var self = this;
+      let self = this;
+      let session = get(this, 'session');
 
       self.set('preloader', true);
 
-      this.get('session').open('firebase', {
+      session.open('firebase', {
         provider: 'password',
         email: self.get('email'),
         password: self.get('password')
 
       }).then(function() {
-        //console.log('*********');
         self.set('email', '');
         self.set('password', '');
         self.set('error_msg', '');
@@ -33,6 +35,8 @@ export default Controller.extend({
         self.replaceRoute('checking');
 
       }).catch(function(err){
+        console.log(err);
+
         self.set('preloader', false);
         self.set('error_msg', err.message);
       });

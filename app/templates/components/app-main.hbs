@@ -4,7 +4,7 @@
   <span class="flex"></span>
 
   {{#if session.isAuthenticated}}
-    {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+    {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
       {{#paper-button iconButton=true classNames="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
         {{paper-icon "more-vert"}}
       {{/paper-button}}
@@ -22,7 +22,7 @@
 {{#paper-sidenav-container class="inner-sidenav"}}
   {{#if session.isAuthenticated}}
     {{#paper-sidenav
-      name="left"
+      name="left-sidenav"
       open=leftSideBarOpen
       onToggle=(action (mut leftSideBarOpen))
     }}

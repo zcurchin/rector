@@ -19,8 +19,8 @@ export default Controller.extend({
       });
     },
 
-    goToCreateAccount(){
-      this.transitionToRoute('sign-up');
+    signUpRestaurant(){
+      this.transitionToRoute('sign-up-restaurant');
     }
   }
 });

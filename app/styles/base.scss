@@ -138,8 +138,8 @@ md-sidenav.md-locked-open {
 
     .app-page-title {
       font-size: 1.3em;
-      padding: 1em 0.7em;
-      color: #888;
+      padding: 1.6em 1em;
+      color: #666;
     }
   }
 }
@@ -189,7 +189,7 @@ md-sidenav.md-locked-open {
   }
 
   .card-info, .info-message {
-    color: #656565;
+    color: #777;
     margin: 0;
     line-height: 1.4em;
     padding: 0.5em;
@@ -219,7 +219,15 @@ md-sidenav.md-locked-open {
   }
 }
 
+.app-page-card.form {
+  padding-left: 0.5em;
+  padding-right: 0.7em;
 
+  .card-info {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 // ----------------------------------------------
 // INFO ITEMS
 // ----------------------------------------------

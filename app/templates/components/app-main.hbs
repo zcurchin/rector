@@ -11,10 +11,10 @@
     {{/paper-sidenav-toggle}}
 
   {{else}}
-    {{#if createAccount}}
-      <div class="outline-btn" {{action "goToCreateAccount"}}>Create Account</div>
+    {{#if homePage}}
+      <div class="text-btn" {{action "signUpRestaurant"}}>Sign Up Restaurant</div>
     {{else}}
-      <div class="outline-btn" {{action "goToSignIn"}}>Sign In</div>
+      <div class="text-btn" {{action "goToSignIn"}}>Sign In</div>
     {{/if}}
   {{/if}}
 </div>

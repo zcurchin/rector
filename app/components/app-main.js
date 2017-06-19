@@ -3,13 +3,14 @@ import Ember from 'ember';
 const {
   Component,
   inject: { service },
-  get
+  get,
+  set
 } = Ember;
 
 export default Component.extend({
   session: service(),
   paperSidenav: service(),
-  createAccount: true,
+  homePage: true,
 
   classNames: ['app-container'],
 
@@ -35,15 +36,15 @@ export default Component.extend({
       this.sendAction('action');
     },
 
-    goToCreateAccount(){
+    signUpRestaurant(){
       let router = this.get('router');
-      this.toggleProperty('createAccount');
-      router.transitionTo('sign-up');
+      set(this, 'createAccount', false);
+      router.transitionTo('sign-up-restaurant');
     },
 
     goToSignIn(){
       let router = this.get('router');
-      this.toggleProperty('createAccount');
+      set(this, 'createAccount', true);
       router.transitionTo('sign-in');
     }
   }

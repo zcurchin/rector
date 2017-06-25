@@ -3,13 +3,14 @@ import Ember from 'ember';
 const {
   Controller,
   inject: { service },
+  set,
   get
 } = Ember;
 
 
 export default Controller.extend({
-  session : service(),
-
+  session: service(),
+  homePage: true,
 
   actions: {
     signOut(){
@@ -21,6 +22,12 @@ export default Controller.extend({
 
     signUpRestaurant(){
       this.transitionToRoute('sign-up-restaurant');
+      set(this, 'homePage', false);
+    },
+
+    goToSignIn(){
+      this.transitionToRoute('sign-in');
+      set(this, 'homePage', true);
     }
   }
 });

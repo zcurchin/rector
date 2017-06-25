@@ -10,7 +10,7 @@ const {
 export default Component.extend({
   session: service(),
   paperSidenav: service(),
-  homePage: true,
+  homePage: null,
 
   classNames: ['app-container'],
 
@@ -33,19 +33,15 @@ export default Component.extend({
 
   actions: {
     signOut(){
-      this.sendAction('action');
+      this.sendAction('signOut');
     },
 
     signUpRestaurant(){
-      let router = this.get('router');
-      set(this, 'createAccount', false);
-      router.transitionTo('sign-up-restaurant');
+      this.sendAction('signUpRestaurant');
     },
 
     goToSignIn(){
-      let router = this.get('router');
-      set(this, 'createAccount', true);
-      router.transitionTo('sign-in');
+      this.sendAction('goToSignIn');
     }
   }
 });

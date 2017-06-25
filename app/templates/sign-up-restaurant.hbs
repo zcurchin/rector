@@ -1,9 +1,8 @@
 {{#app-page title="Sign Up Restaurant" class="centered"}}
-  {{#app-page-card title="Admin Account"}}
+  {{#app-page-card title="Administrator Account"}}
     {{#paper-form onSubmit=(action "signUpRestaurant") as |form|}}
       {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
       {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
-      {{paper-input required=true label="Username" type="text" value=username onChange=(action (mut username))}}
       {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
       {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
 
@@ -13,7 +12,7 @@
 
       <div class="remote-error">{{error_msg}}</div>
 
-      <div class="filled-btn centered" {{action form.onSubmit}}>Submit</div>
+      <div class="filled-btn centered" {{action form.onSubmit}}>Create Account</div>
       <div class="outline-btn centered" {{action "cancel"}}>Cancel</div>
 
     {{/paper-form}}

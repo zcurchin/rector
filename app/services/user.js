@@ -172,13 +172,16 @@ export default Service.extend({
 
     let data = {
       created: Date.now(),
-      updated: '',
       type: params.admin ? 'admin' : 'user'
     };
 
     return userAccounts.child(uid).set(data);
   },
 
+
+  // --------------------------------------------
+  // Create Profile
+  // --------------------------------------------
 
   _createProfile(uid, params){
     let firebaseApp = get(this, 'firebaseApp');

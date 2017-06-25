@@ -19,9 +19,6 @@ export default Controller.extend({
       this.transitionToRoute('sign-in');
       let app_ctrl = get(this, 'app_controler');
       set(app_ctrl, 'homePage', true);
-      console.log(app_ctrl);
-      //this.app_controler.set(this.app_controler, 'homePage', true);
-      //set(this.app_controler, 'homePage', true);
     }
   }
 });

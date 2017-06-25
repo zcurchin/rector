@@ -63,7 +63,7 @@ export default Controller.extend({
     },
 
 
-    goToSignIn(){
+    cancelSignUp(){
       this.transitionToRoute('sign-in');
     }
   }

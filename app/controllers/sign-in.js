@@ -44,7 +44,7 @@ export default Controller.extend({
 
     signUp(){
       this.transitionToRoute('sign-up');
-    },
+    },    
 
     forgottenPassword(){
       this.transitionToRoute('forgot-password');

@@ -5,9 +5,12 @@
 
   {{#if session.isAuthenticated}}
     {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
-      {{#paper-button iconButton=true classNames="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
+      <!-- {{#paper-button iconButton=true class="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
         {{paper-icon "more-vert"}}
-      {{/paper-button}}
+      {{/paper-button}} -->
+      <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
+        {{paper-icon "more-vert"}}
+      </div>
     {{/paper-sidenav-toggle}}
 
   {{else}}

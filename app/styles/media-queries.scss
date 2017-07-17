@@ -30,13 +30,15 @@
     }
   }
 
-  .app-page-card {
+  .app-page-card,
+  .yesterday-grading-box {
     margin: 0 1.5em 1.5em;
   }
 }
 
 @media (min-width: 960px) {
-  .app-page-card {
+  .app-page-card,
+  .yesterday-grading-box {
     max-width: 600px;
   }
 

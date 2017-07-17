@@ -1,3 +1,44 @@
+// ----------------------------------------------
+// YESTERDAY BOX
+// ----------------------------------------------
+
+.yesterday-grading-box {
+  background: $color-alert;
+  margin: 0 0.5em 1em;
+  padding: 0.8em 1em;
+  color: #FFF;
+  font-size: 1.1em;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  p {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 0.8em;
+    line-height: 1.6;
+  }
+
+  .toggle-btn {
+    cursor: pointer;
+  }
+
+  .yesterday {
+    font-weight: 500;
+    font-size: 1.1em;
+  }
+
+  md-icon {
+    color: #FFF;
+    font-size: 1.9em;
+    padding-left: 0.6em;
+    height: 1em;
+    opacity: 0.8;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 
 // ----------------------------------------------
 // GRADEABLE USER
@@ -17,7 +58,7 @@
     }
 
     md-icon {
-      font-size: 3em;
+      font-size: 4em;
       height: 1em;
       color: #d3d3d3;
     }
@@ -63,7 +104,7 @@
   .star-box > div {
     display: inline-block;
     cursor: pointer;
-    padding: 0 0.1em;
+    padding: 0;
 
   }
 

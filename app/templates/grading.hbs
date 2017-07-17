@@ -1,10 +1,32 @@
 {{#app-page title="Grading"}}
+  {{#if yesterday}}
+    <div class="yesterday-grading-box">
+      <div class="layout-row layout-align-start-center">
+        <div class="yesterday">For Yesterday</div>
+        <span class="flex"></span>
+        <div>{{yesterday}}</div>
+        <div class="toggle-btn" {{action "toggleYesterdayInfo"}}>
+          {{#if yesterdayInfo}}
+            {{paper-icon "info"}}
+          {{else}}
+            {{paper-icon "info-outline"}}
+          {{/if}}
+        </div>
+      </div>
+
+      {{#if yesterdayInfo}}
+        <p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus lacus non ipsum consequat dapibus. In tempor eros a arcu fringilla pretium. Cras facilisis lobortis erat, eu semper ante vestibulum in. Etiam et libero tortor.</p>
+      {{/if}}
+    </div>
+
+  {{/if}}
   {{#app-page-card
     title="Users to grade"
     resizeable=true
     info="Those are available users that you can grade at the moment."
   }}
-    {{#if model.myTodayCheckins}}
+    {{#if model.checkedInToday}}
       {{#if model.gradableUsers}}
         {{#each model.gradableUsers as |profile|}}
           {{gradable-user

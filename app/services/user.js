@@ -47,10 +47,10 @@ export default Service.extend({
   },
 
 
-  get(dataKey){
+  get(dataKey, _uid){
     let session = get(this, 'session');
     let currentUser = session.get('currentUser');
-    let uid = currentUser.uid;
+    let uid = _uid || currentUser.uid;
     let firebaseUtil = get(this, 'firebaseUtil');
 
     let dbRef;

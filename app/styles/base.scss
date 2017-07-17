@@ -16,6 +16,15 @@ body > .ember-view ,
   overflow: hidden;
 }
 
+
+// ----------------------------------------------
+// OVERRIDES
+// ----------------------------------------------
+
+md-icon[md-font-icon] {
+  line-height: 1em;
+}
+
 // body > .ember-view {
 //   background: url(images/yograde_signin_poster.jpg) no-repeat center center fixed;
 //   -webkit-background-size: cover;
@@ -137,6 +146,7 @@ md-sidenav.md-locked-open {
 .app-page {
   padding-bottom: 4em;
   min-height: 100%;
+  box-sizing: border-box;
 
   .app-page-header {
 

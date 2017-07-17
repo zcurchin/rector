@@ -11,6 +11,8 @@ export default Controller.extend({
   firebaseApp: service(),
   //session: service(),
   preloader: false,
+  yesterday: false,
+  yesterdayInfo: false,
 
   actions: {
     gradeUser(uid, grade){
@@ -47,6 +49,11 @@ export default Controller.extend({
       };
 
       privateGrades.push(private_data);
+    },
+
+
+    toggleYesterdayInfo(){
+      this.toggleProperty('yesterdayInfo');
     }
   }
 });

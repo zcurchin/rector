@@ -31,6 +31,8 @@ export default Route.extend({
 
 
   setupController(controller, model){
+    this._super(controller, model);
+    
     console.log('# setupController : model :', model);
 
     if (!model) {

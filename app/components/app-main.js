@@ -10,7 +10,6 @@ const {
 export default Component.extend({
   session: service(),
   paperSidenav: service(),
-  homePage: null,
 
   classNames: ['app-container'],
 

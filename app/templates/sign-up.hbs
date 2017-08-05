@@ -1,21 +1,19 @@
-{{#app-page title="Sign Up" class="centered"}}
-  {{#app-page-card header=false}}
-    {{#paper-form onSubmit=(action "createUser") as |form|}}
-      {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
-      {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
-      {{paper-input required=true label="Username" type="text" value=username onChange=(action (mut username))}}
-      {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
-      {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
+<div class="gate-title">Sign Up</div>
+<div class="form">
+  {{#paper-form onSubmit=(action "createUser") as |form|}}
+    {{paper-input required=true label="First Name" type="text" value=first_name onChange=(action (mut first_name))}}
+    {{paper-input required=true label="Last Name" type="text" value=last_name onChange=(action (mut last_name))}}
+    {{paper-input required=true label="Username" type="text" value=username onChange=(action (mut username))}}
+    {{paper-input required=true label="E-mail" type="email" value=email onChange=(action (mut email))}}
+    {{paper-input required=true label="Password" type="password" value=password onChange=(action (mut password))}}
 
-      <div class="preloader {{if preloader 'visible' 'hidden'}}">
-        {{paper-progress-linear}}
-      </div>
+    <div class="preloader {{if preloader 'visible' 'hidden'}}">
+      {{paper-progress-linear}}
+    </div>
 
-      <div class="remote-error">{{error_msg}}</div>
+    <div class="remote-error">{{error_msg}}</div>
 
-      <div class="filled-btn centered" {{action form.onSubmit}}>Create Account</div>
-      <div class="outline-btn centered" {{action "cancelSignUp"}}>Cancel</div>
-
-    {{/paper-form}}
-  {{/app-page-card}}
-{{/app-page}}
+    <div class="filled-btn centered" {{action form.onSubmit}}>Create Account</div>
+  {{/paper-form}}
+</div>
+<div class="outline-btn centered" {{action "cancelSignUp"}}>Cancel</div>

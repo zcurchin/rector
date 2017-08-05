@@ -161,7 +161,7 @@
   }
 
   .grade-value {
-    color: #51c770;
+    color: $color-green;
     font-size: 1.3em;
     font-weight: 700;
   }
@@ -175,8 +175,8 @@
     md-icon {
       font-size: 2em;
       height: 1em;
-      color: #51c770;
-      border: 2px solid #51c770;
+      color: $color-green;
+      border: 2px solid $color-green;
       border-radius: 10em;
       padding: 0.1em;
     }
@@ -184,8 +184,8 @@
 
   .confirm-btn.disabled {
     md-icon {
-      color: #999;
-      border-color: #999;
+      color: #d7d7d7;
+      border-color: #d7d7d7;
     }
   }
 

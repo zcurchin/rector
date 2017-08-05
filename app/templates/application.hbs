@@ -1,8 +1,14 @@
-{{#app-main
-  homePage=homePage
-  signOut="signOut"
-  signUpRestaurant="signUpRestaurant"
-  goToSignIn="goToSignIn"
-}}
-  {{outlet}}
-{{/app-main}}
+{{#if session.isAuthenticated}}
+  {{#app-main
+    signOut="signOut"
+    signUpRestaurant="signUpRestaurant"
+    goToSignIn="goToSignIn"
+  }}
+    {{outlet}}
+  {{/app-main}}
+
+{{else}}
+  <div class="gate-page">
+    {{outlet}}
+  </div>
+{{/if}}

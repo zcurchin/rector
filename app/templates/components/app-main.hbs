@@ -1,103 +1,95 @@
 <div class="top-bar layout-row layout-align-start-center">
-  <div class="logo">YoGrade</div>
+  <img class="logo" src="assets/images/yograde_logo.svg">
 
   <span class="flex"></span>
 
-  {{#if session.isAuthenticated}}
-    {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
-      <!-- {{#paper-button iconButton=true class="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
-        {{paper-icon "more-vert"}}
-      {{/paper-button}} -->
-      <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
-        {{paper-icon "more-vert"}}
-      </div>
-    {{/paper-sidenav-toggle}}
-
-  {{else}}
-    {{#if homePage}}
-      <div class="text-btn" {{action "signUpRestaurant"}}>Sign Up Restaurant</div>
-    {{else}}
-      <div class="text-btn" {{action "goToSignIn"}}>Sign In</div>
-    {{/if}}
-  {{/if}}
+  {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
+    <!-- {{#paper-button iconButton=true class="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
+      {{paper-icon "more-vert"}}
+    {{/paper-button}} -->
+    <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
+      {{paper-icon "more-vert"}}
+    </div>
+  {{/paper-sidenav-toggle}}
 </div>
 
 {{#paper-sidenav-container class="inner-sidenav"}}
-  {{#if session.isAuthenticated}}
-    {{#paper-sidenav
-      name="left-sidenav"
-      open=leftSideBarOpen
-      onToggle=(action (mut leftSideBarOpen))
-    }}
-      {{#paper-content}}
-        {{#link-to "checking"}}
-          {{#paper-item}}
-            {{paper-icon "alarm-on"}}
-            <p>Check In/Out</p>
-          {{/paper-item}}
-        {{/link-to}}
 
-        {{#link-to "grading"}}
-          {{#paper-item}}
-            {{paper-icon "grade"}}
-            <p>Grading</p>
-          {{/paper-item}}
-        {{/link-to}}
+  {{#paper-sidenav
+    name="left-sidenav"
+    open=leftSideBarOpen
+    onToggle=(action (mut leftSideBarOpen))
+  }}
 
-        {{#link-to "ranking"}}
-          {{#paper-item}}
-            {{paper-icon "equalizer"}}
-            <p>Ranking</p>
-          {{/paper-item}}
-        {{/link-to}}
-
-        {{#link-to "notifications"}}
-          {{#paper-item}}
-            {{paper-icon "notifications"}}
-            <p>Notifications</p>
-          {{/paper-item}}
-        {{/link-to}}
-
-        {{paper-divider}}
-
-        {{#link-to "profile"}}
-          {{#paper-item}}
-            {{paper-icon "account-circle"}}
-            <p>Profile</p>
-          {{/paper-item}}
-        {{/link-to}}
-
-        {{#link-to "account"}}
-          {{#paper-item}}
-            {{paper-icon "folder-shared"}}
-            <p>Account</p>
-          {{/paper-item}}
-        {{/link-to}}
-
-        <!-- {{#link-to "user-restaurants"}}
-          {{#paper-item}}
-            {{paper-icon "store-mall-directory"}}
-            <p>Restaurants</p>
-          {{/paper-item}}
-        {{/link-to}} -->
-
-        <!-- {{#link-to "statistics"}}
-          {{#paper-item}}
-            {{paper-icon "timeline"}}
-            <p>Statistics</p>
-          {{/paper-item}}
-        {{/link-to}} -->
-
-        {{paper-divider}}
-
-        {{#paper-item onClick=(action "signOut")}}
-          {{paper-icon "lock"}}
-          <p>Sign Out</p>
+    {{#paper-content}}
+      {{#link-to "checking"}}
+        {{#paper-item}}
+          {{paper-icon "alarm-on"}}
+          <p>Check In/Out</p>
         {{/paper-item}}
+      {{/link-to}}
 
-      {{/paper-content}}
-    {{/paper-sidenav}}
-  {{/if}}
+      {{#link-to "grading"}}
+        {{#paper-item}}
+          {{paper-icon "grade"}}
+          <p>Grading</p>
+        {{/paper-item}}
+      {{/link-to}}
+
+      {{#link-to "ranking"}}
+        {{#paper-item}}
+          {{paper-icon "equalizer"}}
+          <p>Ranking</p>
+        {{/paper-item}}
+      {{/link-to}}
+
+      {{#link-to "notifications"}}
+        {{#paper-item}}
+          {{paper-icon "notifications"}}
+          <p>Notifications</p>
+        {{/paper-item}}
+      {{/link-to}}
+
+      {{paper-divider}}
+
+      {{#link-to "profile"}}
+        {{#paper-item}}
+          {{paper-icon "account-circle"}}
+          <p>Profile</p>
+        {{/paper-item}}
+      {{/link-to}}
+
+      {{#link-to "account"}}
+        {{#paper-item}}
+          {{paper-icon "folder-shared"}}
+          <p>Account</p>
+        {{/paper-item}}
+      {{/link-to}}
+
+      <!-- {{#link-to "user-restaurants"}}
+        {{#paper-item}}
+          {{paper-icon "store-mall-directory"}}
+          <p>Restaurants</p>
+        {{/paper-item}}
+      {{/link-to}} -->
+
+      <!-- {{#link-to "statistics"}}
+        {{#paper-item}}
+          {{paper-icon "timeline"}}
+          <p>Statistics</p>
+        {{/paper-item}}
+      {{/link-to}} -->
+
+      {{paper-divider}}
+
+      {{#paper-item onClick=(action "signOut")}}
+        {{paper-icon "lock"}}
+        <p>Sign Out</p>
+      {{/paper-item}}
+
+    {{/paper-content}}
+  {{/paper-sidenav}}
+
 
   {{#paper-card-content}}
     {{outlet}}

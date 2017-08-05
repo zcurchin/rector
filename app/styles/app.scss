@@ -10,11 +10,11 @@ $color-alert: #e072ba;
 @import 'ember-paper';
 
 @import 'base';
+@import 'gate';
 @import 'top-bar';
 @import 'forms';
 @import 'content-preloader';
 @import 'grading';
-@import 'sign-in';
 @import 'account';
 @import 'inputs';
 @import 'buttons';

@@ -44,7 +44,11 @@ export default Controller.extend({
 
     signUp(){
       this.transitionToRoute('sign-up');
-    },    
+    },
+
+    signUpRestaurant(){
+      this.transitionToRoute('sign-up-restaurant');
+    },
 
     forgottenPassword(){
       this.transitionToRoute('forgot-password');

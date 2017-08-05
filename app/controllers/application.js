@@ -10,7 +10,7 @@ const {
 
 export default Controller.extend({
   session: service(),
-  homePage: true,
+  atGate: true,
 
   actions: {
     signOut(){
@@ -18,16 +18,6 @@ export default Controller.extend({
       get(this, 'session').close().then(() => {
         window.location.reload();
       });
-    },
-
-    signUpRestaurant(){
-      this.transitionToRoute('sign-up-restaurant');
-      set(this, 'homePage', false);
-    },
-
-    goToSignIn(){
-      this.transitionToRoute('sign-in');
-      set(this, 'homePage', true);
     }
   }
 });

@@ -1,36 +1,37 @@
-
 <div class="sign-in">
+  <img src="assets/images/yograde_logo.svg" class="logo" />
   {{#paper-form onSubmit=(action "signIn") as |form|}}
+    <div class="form">
+      {{paper-input
+        label="email"
+        type="email"
+        value=email
+        required=true
+        onChange=(action (mut email))
+      }}
 
-    {{paper-input
-      label="email"
-      type="email"
-      value=email
-      required=true
-      onChange=(action (mut email))
-    }}
+      {{paper-input
+        label="password"
+        type="password"
+        value=password
+        required=true
+        minlength=6
+        onChange=(action (mut password))
+      }}
 
-    {{paper-input
-      label="password"
-      type="password"
-      value=password
-      required=true
-      minlength=6
-      onChange=(action (mut password))
-    }}
+      {{#if error_msg}}
+        <div class="remote-error">{{error_msg}}</div>
+      {{/if}}
 
-    {{#if error_msg}}
-      <div class="remote-error">{{error_msg}}</div>
-    {{/if}}
+      <div class="preloader {{if preloader 'visible' 'hidden'}}">
+        {{paper-progress-linear}}
+      </div>
 
-    <div class="preloader {{if preloader 'visible' 'hidden'}}">
-      {{paper-progress-linear}}
+      <div class="filled-btn centered" {{action form.onSubmit}}>Sign In</div>
+      <div class="text-btn centered" {{action "forgottenPassword"}}>Forgot Password?</div>
     </div>
-
-    <div class="filled-btn centered" {{action form.onSubmit}}>Sign In</div>
-
-    <div class="outline-btn centered" {{action "signUp"}}>Sign Up</div>
-
-    <div class="text-btn centered" {{action "forgottenPassword"}}>Forgot Password</div>
   {{/paper-form}}
+
+  <div class="outline-btn centered" {{action "signUp"}}>Sign Up</div>
+  <div class="outline-btn centered" {{action "signUpRestaurant"}}>Sign Up Business</div>
 </div>

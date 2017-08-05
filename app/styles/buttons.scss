@@ -7,16 +7,16 @@
   font-size: 1.1em;
   padding: 0.66em 0.8em;
   display: inline-block;
-  border-radius: 3px;
-  border: 1px solid color($primary, '300');
+  border: 1px solid color($warn);
   box-sizing: border-box;
   margin: 0.75em 0;
   min-width: 5em;
   text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
-    border-color: color($primary, '500');
+    border-color: color($warn);
   }
 }
 
@@ -24,7 +24,7 @@
 .filled-btn.centered,
 .text-btn.centered {
   width: 15em;
-  margin: 1.7em auto;
+  margin: 1.4em auto;
   display: block;
 }
 
@@ -48,16 +48,20 @@
   color: color($primary);
 
   &:hover {
-    color: color($primary, '500');
+    color: color($primary);
   }
 }
 
+.filled-btn, .outline-btn {
+  font-weight: 500;
+}
+
 .filled-btn {
-  background: color($primary, '300');
+  background: color($primary);
   color: #FFF;
 
   &:hover {
-    background: color($primary, '500');
+    background: color($primary);
   }
 }
 

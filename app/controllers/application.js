@@ -10,13 +10,14 @@ const {
 
 export default Controller.extend({
   session: service(),
-  atGate: true,
 
   actions: {
     signOut(){
-      this.transitionToRoute('sign-in');
       get(this, 'session').close().then(() => {
-        window.location.reload();
+        this.transitionToRoute('sign-in');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
     }
   }

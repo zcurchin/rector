@@ -12,6 +12,8 @@ export default Controller.extend({
   firebaseApp: service(),
   avatar: service(),
 
+  editPersonalInfo: false,
+  editingAvatar: false,
   editingProfile: false,
   showAvatarDialog: false,
 
@@ -25,8 +27,12 @@ export default Controller.extend({
     'zipcode'
   ],
 
-  error_msg: '',
-  preloader: false,
+  waiting: false,
+  waitingSuccess: false,
+  waitingError: false,
+  waitingErrorMsg: '',
+  waitingSuccessMsg: 'Successfully saved personal info',
+
 
   populateFields(){
     let self = this;
@@ -43,29 +49,48 @@ export default Controller.extend({
     let uid = get(this, 'session.currentUser.uid');
     let firebaseApp = get(this, 'firebaseApp');
 
-    set(this, 'preloader', true);
+    set(self, 'waiting', true);
+    set(self, 'waitingError', false);
+    set(self, 'waitingSuccess', false);
 
     firebaseApp.database().ref('userProfiles/'+ uid).update(data).then(() => {
-      set(self, 'preloader', false);
-      set(self, 'editingProfile', false);
+      set(self, 'waitingSuccess', true);
 
     }).catch(error => {
-      set(self, 'preloader', false);
-      set(self, 'error_msg', error);
+      set(self, 'waitingErrorMsg', error);
+      set(self, 'waitingError', true);
     });
+  },
+
+
+  closeWaiting(){
+    set(this, 'waiting', false);
+    set(this, 'waitingSuccess', false);
+    set(this, 'waitingError', false);
   },
 
 
   actions: {
     editProfile(){
-      this.set('editingProfile', true);
+      this.set('editPersonalInfo', true);
       this.populateFields();
     },
 
 
+    onClosed(){
+      this.closeWaiting();
+    },
+
+
+    closeWaiting(){
+      set(this, 'waiting', false);
+      set(this, 'waitingSuccess', false);
+      set(this, 'waitingError', false);
+    },
+
+
     cancelEditProfile(){
-      this.set('editingProfile', false);
-      this.set('error_msg', '');
+      this.set('editPersonalInfo', false);
     },
 
 
@@ -88,16 +113,21 @@ export default Controller.extend({
       console.log(propsToUpdate);
 
       if (propsChanged.length === 0) {
-        set(self, 'preloader', false);
-        set(self, 'editingProfile', false);
+        set(self, 'waiting', true);
+        set(self, 'waitingError', true);
+        set(self, 'waitingErrorMsg', 'You did not changed anything');
 
       } else if (propsChanged.indexOf('username') !== -1) {
+        set(self, 'waiting', true);
+
         user.isUsernameTaken(self.username).then(() => {
           // username if available
-          self.updateUserProfile(propsToUpdate);
+          return self.updateUserProfile(propsToUpdate);
 
         }).catch(error => {
-          set(self, 'error_msg', error.message);
+          set(self, 'waitingSuccess', false);
+          set(self, 'waitingError', true);
+          set(self, 'waitingErrorMsg', error.message);
         });
 
       } else {
@@ -109,6 +139,11 @@ export default Controller.extend({
     editAvatar(){
       let avatar = get(this, 'avatar');
       avatar.open();
+    },
+
+
+    editProfilePicture(){
+      set(this, 'editingAvatar', true);
     },
 
 

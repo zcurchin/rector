@@ -72,33 +72,34 @@
 
 .checkin-history-list {
   .checkin-history-item {
-    padding: 0.8em 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-
-    &:hover {
-      cursor: pointer;
-    }
+    padding: 1.3em 0;
+    border-bottom: 1px solid $color-border;
+    cursor: pointer;
 
     .header {
-      margin-bottom: 1em;
+      color: $color-text;
 
       span {
+        font-size: 1.1em;
         display: inline-block;
-        color: #444;
       }
 
       .hours {
+        font-size: 1em;
         margin-left: auto;
-        color: #888;
       }
     }
 
+    .checked-in {
+      margin-top: 1.5em;
+    }
+
     .checked-in, .checked-out {
-      color: #888;
+      color: lighten($color-text, 20);
       margin-bottom: 0.5em;
 
       md-icon {
-        opacity: 0.5;
+        color: lighten($color-text, 30);
         margin-right: 0.4em;
       }
     }

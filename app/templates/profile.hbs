@@ -128,70 +128,9 @@
     resizeable=true
   }}
     {{#if editingProfile}}
-      {{#paper-form onSubmit=(action "saveProfile") as |form|}}
-        <div class="inline-form">
-          <div class="form">
-            {{paper-input
-              label="First Name"
-              type="text"
-              value=first_name
-              onChange=(action (mut first_name))
-            }}
-            {{paper-input
-              label="Last Name"
-              type="text"
-              value=last_name
-              onChange=(action (mut last_name))
-            }}
-            {{paper-input
-              label="Username"
-              type="text"
-              value=username
-              onChange=(action (mut username))              
-            }}
-            {{paper-input
-              label="Country"
-              type="text"
-              value=country
-              onChange=(action (mut country))
-            }}
-            {{paper-input
-              label="State"
-              type="text"
-              value=state
-              onChange=(action (mut state))
-            }}
-            {{paper-input
-              label="City"
-              type="text"
-              value=city
-              onChange=(action (mut city))
-            }}
-            {{paper-input
-              label="Zipcode"
-              type="text"
-              value=zipcode
-              onChange=(action (mut zipcode))
-            }}
 
-            {{#if error_msg}}
-              <div class="message-box error">
-                {{paper-icon "error"}}
-                <div class="message">{{error_msg}}</div>
-              </div>
-            {{/if}}
-
-            <div class="preloader {{if preloader 'visible' 'hidden'}}">
-              {{paper-progress-linear}}
-            </div>
-
-            <div class="outline-btn" {{action "cancelEditProfile"}}>Cancel</div>
-            <div class="filled-btn" {{action form.onSubmit}}>Save Changes</div>
-          </div>
-        </div>
-      {{/paper-form}}
     {{else}}
-      <div class="outline-btn" {{action "editAvatar"}}>Change Profile Picture</div>
+      <div class="outline-btn" {{action "editProfilePicture"}}>Change Profile Picture</div>
       <div class="outline-btn" {{action "editProfile"}}>Edit Personal Info</div>
     {{/if}}
 
@@ -199,6 +138,115 @@
 
 {{/app-page}}
 
+{{#if editPersonalInfo}}
+  {{#custom-dialog
+    title="Edit Personal Info"
+    info="This is where you edit your profiles personal data"
+    active=editPersonalInfo
+    onClosed=(action "onClosed")
+  }}
+    {{#paper-form onSubmit=(action "saveProfile") as |form|}}
+      {{paper-input
+        label="First Name"
+        type="text"
+        value=first_name
+        onChange=(action (mut first_name))
+      }}
+      {{paper-input
+        label="Last Name"
+        type="text"
+        value=last_name
+        onChange=(action (mut last_name))
+      }}
+      {{paper-input
+        label="Username"
+        type="text"
+        value=username
+        onChange=(action (mut username))
+      }}
+      {{paper-input
+        label="Country"
+        type="text"
+        value=country
+        onChange=(action (mut country))
+      }}
+      {{paper-input
+        label="State"
+        type="text"
+        value=state
+        onChange=(action (mut state))
+      }}
+      {{paper-input
+        label="City"
+        type="text"
+        value=city
+        onChange=(action (mut city))
+      }}
+      {{paper-input
+        label="Zipcode"
+        type="text"
+        value=zipcode
+        onChange=(action (mut zipcode))
+      }}
 
-<!-- SET AVATAR -->
-{{avatar-dialog action="onAvatarChanged"}}
+      {{#if waiting}}
+        <div class="waiting-box layout-row layout-align-center-center">
+          {{#if waitingSuccess}}
+            <div class="message success layout-row layout-align-start-center">
+              {{paper-icon "checked"}}
+              <div class="text">{{waitingSuccessMsg}}</div>
+              <span class="flex"></span>
+              <div class="close-btn" {{action "closeWaiting"}}>
+                {{paper-icon "close"}}
+              </div>
+            </div>
+
+
+          {{else if waitingError}}
+            <div class="message error layout-row layout-align-start-center">
+              {{paper-icon "error"}}
+              <div class="text">{{waitingErrorMsg}}</div>
+              <span class="flex"></span>
+              <div class="close-btn" {{action "closeWaiting"}}>
+                {{paper-icon "close"}}
+              </div>
+            </div>
+
+
+          {{else}}
+            <div class="inline-preloader">
+              <div class="ball1"></div>
+              <div class="ball2"></div>
+              <div class="ball3"></div>
+            </div>
+          {{/if}}
+        </div>
+      {{/if}}
+
+      <div class="buttons-box layout-row layout-align-end-center">
+        {{#if waitingSuccess}}
+          <div class="outline-btn" {{action "cancelEditProfile"}}>OK</div>
+        {{else}}
+          <div class="text-btn" {{action "cancelEditProfile"}}>Cancel</div>
+          <div class="outline-btn" {{action form.onSubmit}}>Save Changes</div>
+        {{/if}}
+
+      </div>
+
+    {{/paper-form}}
+  {{/custom-dialog}}
+{{/if}}
+
+{{#if editingAvatar}}
+  {{#custom-dialog
+    title="Change Profile Picture"
+    active=editingAvatar
+    bottomMargin=false
+  }}
+    {{#if avatar.showCropper}}
+      {{avatar-cropper action="onAvatarChanged"}}
+    {{else}}
+      {{avatar-upload-box}}
+    {{/if}}
+  {{/custom-dialog}}
+{{/if}}

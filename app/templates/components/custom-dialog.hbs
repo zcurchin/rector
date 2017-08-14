@@ -1,0 +1,41 @@
+{{#if active}}
+  {{#paper-dialog
+    class="custom-dialog"
+    onClose=(action "close")
+    clickOutsideToClose=true
+    escapeToClose=true
+  }}
+
+    {{#if header}}
+      <div class="header layout-row layout-align-start-center">
+        {{#if title}}
+          <div class="title">{{title}}</div>
+        {{/if}}
+
+        <span class="flex"></span>
+
+        {{#if info}}
+          <div class="btn" {{action "toggleInfo"}}>
+            {{#if showInfo}}
+              {{paper-icon "info"}}
+            {{else}}
+              {{paper-icon "info-outline"}}
+            {{/if}}
+          </div>
+        {{/if}}
+        <div class="btn" {{action "close"}}>
+          {{paper-icon "close"}}
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="content {{unless bottomMargin 'no-bottom-margin'}}">
+      {{yield}}
+    </div>
+
+    {{#if showInfo}}
+      <p class="info">{{info}}</p>
+    {{/if}}
+
+  {{/paper-dialog}}
+{{/if}}

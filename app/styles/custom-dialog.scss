@@ -1,0 +1,263 @@
+
+// ----------------------------------------------
+// CUSTOM DIALOG
+// ----------------------------------------------
+
+md-backdrop.md-opaque.md-default-theme {
+  background-color: #000;
+  z-index: 200;
+}
+
+.md-dialog-container {
+  z-index: 300;
+}
+
+md-dialog.md-default-theme.custom-dialog {
+  background: #F6F9FC;
+  max-height: 96%;
+  max-width: 400px;
+  margin: 10px;
+
+  .dialog-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .header {
+    height: 4em;
+    background: #FFF;
+    border-bottom: 1px solid $color-border;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+
+    .title {
+      font-size: 1.1em;
+      margin-left: 1em;
+      color: $color-text;
+      font-weight: 500;
+    }
+
+    .btn md-icon {
+      font-size: 2.5em;
+      color: lighten($color-text, 30);
+      padding: 0.2em;
+      padding-right: 0.26em;
+      padding-top: 0.23em;
+      line-height: 0.7em;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-text;
+      }
+    }
+
+    .btn md-icon {
+      font-size: 1.8em;
+      padding-top: 0.4em;
+    }
+  }
+
+  .info {
+    color: lighten($color-text, 10);
+    margin: 0;
+    line-height: 1.6em;
+    padding: 0.5em;
+    border-bottom: 1px solid $color-border;
+    padding: 1.4em 1.5em 1.4em;
+    background: #FFF;
+    position: absolute;
+    top: 4em;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box;
+  }
+
+  .buttons-box {
+    height: 5em;
+    background: #FFF;
+    border-top: 1px solid $color-border;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 0 0.5em;
+
+    .text-btn, .outline-btn {
+      margin: 0 0.5em 0 0;
+      min-width: 7em;
+    }
+  }
+
+  // FORMS
+
+  .content {
+    margin: 4em 0 5em;
+    overflow-y: scroll;
+    //-webkit-overflow-scrolling: touch;
+  }
+
+  .content.no-bottom-margin {
+    margin-bottom: 0;
+  }
+
+  form {
+    padding: 1.5em;
+    padding-bottom: 0;
+    font-size: 1em;
+  }
+
+  .waiting-box {
+    position: absolute;
+    bottom: 5em;
+    left: 0;
+    width: 100%;
+    height: 5em;
+    background: #FFF;
+    border-top: 1px solid $color-border;
+    z-index: 10;
+    min-height: 5em;
+
+    .message {
+      width: 100%;
+
+      md-icon {
+        margin: 0 0.7em;
+        width: 1em;
+        font-size: 2em;
+      }
+
+      .text {
+        padding-top: 0.3em;
+      }
+
+      .close-btn {
+        cursor: pointer;
+
+        md-icon {
+          font-size: 1.5em;
+          height: 1em;
+          padding: 0.5em;
+          padding-bottom: 0.2em;
+          margin: 0;
+        }
+      }
+    }
+
+    .message.error {
+      color: $color-alert;
+
+      md-icon {
+        color: $color-alert;
+      }
+    }
+
+    .message.success {
+      color: $color-green;
+
+      md-icon {
+        color: $color-green;
+      }
+    }
+  }
+}
+
+
+// ----------------------------------------------
+// Avatar Dialog
+// ----------------------------------------------
+
+md-dialog .md-dialog-content {
+  padding: 0;
+}
+
+.avatar-upload-box {
+  padding: 2em;
+
+  p {
+    font-size: 1.1em;
+    text-align: center;
+    margin: 0em;
+  }
+
+  .uploade-file-btn {
+    width: 10em;
+    margin: 2em auto 0;
+    display: block;
+  }
+}
+
+#local_image {
+  opacity: 0;
+  position: absolute;
+  top: -9999px;
+}
+
+.cropper-container {
+  height: 280px;
+}
+
+.cropper-modal {
+  opacity: .76;
+}
+
+.avatar-cropper-box .outline-btn {
+  width: 11em;
+  margin: 1em auto 1.8em;
+  display: block;
+}
+
+.cropp-ctrls {
+  margin: 0.5em 0;
+
+  .ctrl-btn {
+    display: inline-block;
+    cursor: pointer;
+
+    md-icon {
+      font-size: 2.2em;
+      height: 1em;
+      padding: 0.3em 0.6em;
+    }
+  }
+}
+
+
+
+.uploading-box {
+  height: 280px;
+}
+
+.avatar-save-box {
+  height: 250px;
+  box-sizing: border-box;
+  padding: 2em;
+
+  md-icon {
+    font-size: 3.4em;
+    height: 1em;
+    display: block;
+    width: 1em;
+    padding: 0.4em 0 0.2em 0;
+  }
+
+  .success {
+    md-icon {
+      color: $color-green;
+    }
+  }
+
+
+  p {
+    color: #666;
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    text-align: center;
+  }
+}

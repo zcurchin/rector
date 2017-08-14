@@ -3,16 +3,15 @@
 // ----------------------------------------------
 
 .yesterday-grading-box {
-  background: $color-alert;
+  background: lighten($color-alert, 28);
   margin: 0 0.5em 1em;
   padding: 0.8em 1em;
-  color: #FFF;
+  color: darken($color-alert, 32);
   font-size: 1.1em;
   box-sizing: border-box;
   border-radius: 8px;
 
   p {
-    border-top: 1px solid rgba(255,255,255,0.2);
     padding-top: 0.8em;
     line-height: 1.6;
   }
@@ -27,15 +26,12 @@
   }
 
   md-icon {
-    color: #FFF;
+    color: darken($color-alert, 32);
     font-size: 1.9em;
     padding-left: 0.6em;
     height: 1em;
     opacity: 0.8;
-
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 }
 
@@ -45,7 +41,7 @@
 // ----------------------------------------------
 
 .gradable-user {
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid $color-border;
   padding: 0.3em 0;
 
   .profile-image {
@@ -54,20 +50,20 @@
       height: 3.5em;
       border-radius: 10em;
       margin: 0.233em;
-      background: #f5f5f5;
+      background: lighten($color-text, 40);
     }
 
     md-icon {
       font-size: 4em;
       height: 1em;
-      color: #d3d3d3;
+      color: lighten($color-text, 40);
     }
   }
 
   .profile-name {
-    font-size: 1.1em;
+    font-size: 1.2em;
     padding: 0 1em;
-    color: #555;
+    color: darken($color-text, 20);
   }
 
   .grade-btn {
@@ -78,6 +74,7 @@
     md-icon {
       font-size: 1.8em;
       height: 1em;
+      color: color($primary);
     }
   }
 
@@ -94,6 +91,7 @@
     md-icon {
       font-size: 1.6em;
       padding: 0.2em;
+      color: lighten($color-text, 10);
     }
 
     .nei-icon {
@@ -111,7 +109,7 @@
   .star-box.grade-0 {
     .nei-icon.enabled {
       md-icon {
-        color: color($primary, '400');
+        color: color($primary);
       }
     }
   }
@@ -119,7 +117,7 @@
   .star-box.grade-1 {
     .star-1 {
       md-icon {
-        color: color($primary, '400');
+        color: color($primary);
       }
     }
   }
@@ -127,7 +125,7 @@
   .star-box.grade-2 {
     .star-1, .star-2 {
       md-icon {
-        color: color($primary, '400');
+        color: color($primary);
       }
     }
   }
@@ -135,7 +133,7 @@
   .star-box.grade-3 {
     .star-1, .star-2, .star-3 {
       md-icon {
-        color: color($primary, '400');
+        color: color($primary);
       }
     }
   }
@@ -143,7 +141,7 @@
   .star-box.grade-4 {
     .star-1, .star-2, .star-3, .star-4 {
       md-icon {
-        color: color($primary, '400');
+        color: color($primary);
       }
     }
   }
@@ -151,7 +149,7 @@
   .star-box.grade-5 {
     .star-1, .star-2, .star-3, .star-4, .star-5 {
       md-icon {
-        color: color($primary, '400');
+        color: color($primary);
       }
     }
   }
@@ -167,7 +165,6 @@
   }
 
   .confirm-btn {
-    //margin-left: auto;
     cursor: pointer;
     padding: 0.5em 0.7em;
     padding-right: 0;
@@ -175,8 +172,10 @@
     md-icon {
       font-size: 2em;
       height: 1em;
-      color: $color-green;
-      border: 2px solid $color-green;
+      // color: $color-green;
+      // border: 2px solid $color-green;
+      color: #FFF;
+      background-color: $color-green;
       border-radius: 10em;
       padding: 0.1em;
     }
@@ -184,8 +183,9 @@
 
   .confirm-btn.disabled {
     md-icon {
-      color: #d7d7d7;
-      border-color: #d7d7d7;
+      // color: lighten($color-text, 40);
+      // border-color: lighten($color-text, 40);
+      background-color: lighten($color-text, 45);
     }
   }
 
@@ -195,6 +195,7 @@
     padding: 0 5em 2em 0.5em;
     padding-bottom: 2em;
     padding-right: 5em;
+    color: $color-text;
   }
 }
 
@@ -217,20 +218,19 @@
       height: 2.5em;
       border-radius: 10em;
       margin: 0.233em;
-      background: #f5f5f5;
+      background: lighten($color-text, 40);
     }
 
     md-icon {
       font-size: 3em;
       height: 1em;
-      color: #d3d3d3;
+      color: lighten($color-text, 40);
     }
   }
 
   .user-info-box {
-    color: #555;
-    //font-size: 1.1em;
-    margin-left: 0.5em;
+    color: darken($color-text, 20);
+    margin-left: 1em;
 
     .name {
       margin-bottom: 0;
@@ -238,7 +238,7 @@
     }
 
     .date {
-      color: #888;
+      color: $color-text;
       font-size: 0.8em;
       margin-top: 0.2em;
     }
@@ -246,12 +246,12 @@
 
   .grade-value {
     margin-left: auto;
-    color: #999;
+    color: $color-text;
     font-weight: 500;
     font-size: 1.3em;
 
     md-icon {
-      opacity: 0.6;
+      color: lighten($color-text, 15);
     }
   }
 

@@ -58,4 +58,21 @@
     width: 600px;
     margin: 0 auto;
   }
+
+  .app-page-header {
+    display: none;
+  }
+
+  .app-page {
+    padding-top: 2em;
+  }
+
+  md-list-item .md-no-style {
+    padding-top: 0.3em;
+  }
+
+  md-sidenav md-list-item p {
+    padding-top: 0.3em;
+    font-size: 1em;
+  }
 }

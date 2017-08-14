@@ -5,18 +5,24 @@
 
 .outline-btn, .filled-btn, .text-btn {
   font-size: 1.1em;
-  padding: 0.66em 0.8em;
+  padding: 0.7em 1.2em;
   display: inline-block;
-  border: 1px solid color($warn);
+  border: 1px solid transparent;
   box-sizing: border-box;
   margin: 0.75em 0;
   min-width: 5em;
   text-align: center;
   border-radius: 12px;
+  font-weight: 500;
   cursor: pointer;
+}
+
+.outline-btn {
+  border-color: lighten(color($primary), 35);
+  background: #FFF;
 
   &:hover {
-    border-color: color($warn);
+    border-color: color($primary);
   }
 }
 
@@ -52,12 +58,8 @@
   }
 }
 
-.filled-btn, .outline-btn {
-  font-weight: 500;
-}
-
 .filled-btn {
-  background: color($primary);
+  background: lighten(color($primary), 10);
   color: #FFF;
 
   &:hover {

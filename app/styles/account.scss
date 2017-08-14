@@ -23,7 +23,8 @@
     //border: 1px solid $color-green;
     display: inline-block;
     border-radius: 5px;
-    //padding: 0.5em;
+    padding: 0.5em;
+    background-color: lighten($color-green, 45);
   }
 
   md-icon {
@@ -40,7 +41,7 @@
 
 .email-verification-msg.unverified {
   .inner {
-    //border: 1px solid $color-alert;
+    background-color: lighten($color-alert, 30);
   }
 
   md-icon {
@@ -54,7 +55,7 @@
 
 .account-email {
   font-size: 1.2em;
-  font-weight: 500;
-  color: #333;
-  padding: 0.5em 0.16em;
+  font-weight: 400;
+  color: darken($color-text, 25);
+  padding: 1.4em 0.16em;
 }

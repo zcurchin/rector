@@ -16,14 +16,14 @@
   md-icon {
     font-size: 10em;
     height: 1em;
-    color: #d9d9d9;
+    color: lighten($color-text, 40);
   }
 
   img {
     width: 10em;
     height: 10em;
     border-radius: 10em;
-    background: #f5f5f5;
+    background-color: lighten($color-text, 40);
   }
 }
 
@@ -32,7 +32,7 @@
 
   h1 {
     font-size: 1.6em;
-    color: #444;
+    color: darken($color-text, 20);
     font-weight: 400;
     padding: 1em;
     text-align: center;
@@ -41,7 +41,7 @@
 }
 
 .main-grade {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  border-bottom: 1px solid $color-border;
   padding: 0.5em 0.46em 1.2em;
 
   div {
@@ -49,14 +49,14 @@
   }
 
   .label {
-    color: #888;
+    color: lighten($color-text, 10);
     font-size: 0.9em;
     margin-left: 0.7em;
   }
 
   .grade {
     font-size: 2em;
-    color: #444;
+    color: $color-text;
     font-weight: 500;
   }
 
@@ -67,7 +67,7 @@
     }
 
     .grade {
-        color: #888;
+      color: lighten($color-text, 20);
     }
   }
 }
@@ -76,7 +76,7 @@
   padding: 0 0.66em;
 
   .individual-grade-box {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    border-bottom: 1px solid $color-border;
     padding: 0.6em 0;
   }
 
@@ -85,21 +85,23 @@
   }
 
   .grade-index {
-    color: #888;
+    color: lighten($color-text, 10);
     margin-right: 0.5em;
   }
 
   .star-box {
+    margin-left: 0.5em;
+
     md-icon {
-      color: #dadada;
-      font-size: 1.2em;
+      color: lighten($color-text, 40);
+      font-size: 1.3em;
       height: 1em;
-      padding: 0 0.2em;
+      padding: 0.3em 0.2em 0;
     }
   }
 
   .number-of-grades {
-    color: #888;
+    color: lighten($color-text, 10);
     font-weight: 500;
   }
 }

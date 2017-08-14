@@ -7,6 +7,10 @@ $color-green: #3eba96;
 $color-green-light: #defff6;
 $color-alert: #e072ba;
 
+$color-text: #6d7793;
+$color-border: #eef2f5;
+//$color-text: #424770;
+
 @import 'ember-paper';
 
 @import 'base';
@@ -18,7 +22,9 @@ $color-alert: #e072ba;
 @import 'account';
 @import 'inputs';
 @import 'buttons';
-@import 'dialogs';
+@import 'card';
+@import 'custom-dialog';
+@import 'inline-preloader';
 
 @import 'profile';
 @import 'checking';

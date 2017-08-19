@@ -1,0 +1,37 @@
+{{#if waiting}}
+  <div class="waiting-box layout-row layout-align-center-center">
+    {{#if success}}
+      <div class="message success layout-row layout-align-start-center">
+        {{paper-icon "checked"}}
+        <div class="text">{{successMsg}}</div>
+        <span class="flex"></span>
+      </div>
+
+    {{else if error}}
+      <div class="message error layout-row layout-align-start-center">
+        {{paper-icon "error"}}
+        <div class="text">{{errorMsg}}</div>
+        <span class="flex"></span>
+        <div class="close-btn" {{action "closeActions"}}>
+          {{paper-icon "close"}}
+        </div>
+      </div>
+
+    {{else}}
+      <div class="inline-preloader">
+        <div class="ball1"></div>
+        <div class="ball2"></div>
+        <div class="ball3"></div>
+      </div>
+    {{/if}}
+  </div>
+{{/if}}
+
+<div class="buttons-box layout-row layout-align-end-center">
+  {{#if success}}
+    <div class="outline-btn" {{action "closeDialog"}}>OK</div>
+  {{else}}
+    <div class="text-btn" {{action "closeDialog"}}>Cancel</div>
+    <div class="outline-btn" {{action "confirm"}}>{{confirmLabel}}</div>
+  {{/if}}
+</div>

@@ -78,6 +78,13 @@ md-dialog.md-default-theme.custom-dialog {
     box-sizing: border-box;
   }
 
+  .prompt-info {
+    font-size: 1.2em;
+    padding: 3em 2em;
+    text-align: center;
+    line-height: 1.6em;
+  }
+
   .buttons-box {
     height: 5em;
     background: #FFF;
@@ -101,6 +108,7 @@ md-dialog.md-default-theme.custom-dialog {
     margin: 4em 0 5em;
     overflow-y: scroll;
     //-webkit-overflow-scrolling: touch;
+    color: $color-text;
   }
 
   .content.no-bottom-margin {
@@ -111,6 +119,11 @@ md-dialog.md-default-theme.custom-dialog {
     padding: 1.5em;
     padding-bottom: 0;
     font-size: 1em;
+  }
+
+  .form-info {
+    margin: 0 0 1.5em;
+    line-height: 1.5em;
   }
 
   .waiting-box {
@@ -227,8 +240,6 @@ md-dialog .md-dialog-content {
     }
   }
 }
-
-
 
 .uploading-box {
   height: 280px;

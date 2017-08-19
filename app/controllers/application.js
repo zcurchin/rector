@@ -19,6 +19,10 @@ export default Controller.extend({
           window.location.reload();
         }, 1000);
       });
+    },
+
+    goToChecking(){
+      this.transitionToRoute('checking');
     }
   }
 });

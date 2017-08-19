@@ -4,7 +4,8 @@ import RSVP from 'rsvp';
 const {
   Service,
   inject: { service },
-  get
+  get,
+  set
 } = Ember;
 
 
@@ -12,6 +13,8 @@ export default Service.extend({
   session: service(),
   firebaseApp: service(),
   firebaseUtil: service(),
+
+  checkedIn: false,
 
   restaurant: '',
 
@@ -101,6 +104,23 @@ export default Service.extend({
   // Checking
   // --------------------------------------------
 
+  isCheckedIn(){
+    let self = this;
+
+    this.getLastCheckIn().then(data => {
+      let keys = Object.keys(data.val());
+      console.log(data.val()[keys[0]]);
+      let obj = data.val()[keys[0]];
+
+      if (obj.out > Date.now()) {
+        set(self, 'checkedIn', true);
+      } else {
+        set(self, 'checkedIn', false);
+      }
+    });
+  },
+
+
   checkIn(checkOut){
     let self = this;
     let firebaseApp = get(this, 'firebaseApp');
@@ -113,16 +133,22 @@ export default Service.extend({
       restaurant: self.restaurant
     };
 
+    set(self, 'checkedIn', true);
+
     return checkIns.child(uid).push(data);
   },
 
 
   checkOut(){
+    let self = this;
+
     return this.getLastCheckIn().then(data => {
       let uid = get(this, 'session.currentUser.uid');
       let checkIn_id = Object.keys(data.val())[0];
       let firebaseApp = get(this, 'firebaseApp');
       let checkInRef = firebaseApp.database().ref('checkIns/'+uid+'/'+checkIn_id);
+
+      set(self, 'checkedIn', false);
 
       return checkInRef.update({
         out: Date.now()

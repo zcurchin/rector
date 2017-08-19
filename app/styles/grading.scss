@@ -5,8 +5,10 @@
 .yesterday-grading-box {
   background: lighten($color-alert, 28);
   margin: 0 0.5em 1em;
-  padding: 0.8em 1em;
-  color: darken($color-alert, 32);
+  padding: 0.8em;
+  border-bottom: 1px solid lighten($color-alert, 26);
+  color: darken($color-alert, 12);
+  //color: $color-alert;
   font-size: 1.1em;
   box-sizing: border-box;
   border-radius: 8px;
@@ -26,8 +28,8 @@
   }
 
   md-icon {
-    color: darken($color-alert, 32);
-    font-size: 1.9em;
+    color: $color-alert;
+    font-size: 1.7em;
     padding-left: 0.6em;
     height: 1em;
     opacity: 0.8;

@@ -3,10 +3,17 @@
 
   <span class="flex"></span>
 
+      {{#if user.checkedIn}}
+        <div class="top-bar-btn green" {{action "goToChecking"}}>
+          {{paper-icon "alarm-on"}}
+        </div>
+      {{else}}
+        <div class="top-bar-btn" {{action "goToChecking"}}>
+          {{paper-icon "alarm-off"}}
+        </div>
+      {{/if}}
+
   {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
-    <!-- {{#paper-button iconButton=true class="hide-gt-sm menu-btn" onClick=(action toggleAction)}}
-      {{paper-icon "more-vert"}}
-    {{/paper-button}} -->
     <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
       {{paper-icon "more-vert"}}
     </div>

@@ -32,7 +32,7 @@ export default Route.extend({
 
   setupController(controller, model){
     this._super(controller, model);
-    
+
     console.log('# setupController : model :', model);
 
     if (!model) {
@@ -51,6 +51,7 @@ export default Route.extend({
           if (lastCheckIn.out > Date.now()) {
             console.log('### CHECKED IN');
             controller.set('checkedIn', model[key].in);
+            controller.set('autoCheckOut', model[key].out);
 
           } else {
             console.log('### CHECKED OUT');
@@ -67,12 +68,5 @@ export default Route.extend({
 
       controller.set('history', history.reverse());
     }
-  },
-
-
-  deactivate(){
-    let controller = get(this, 'controller');
-    controller.set('confirmCheckOut', false);
-    controller.closeCheckInForm();
   }
 });

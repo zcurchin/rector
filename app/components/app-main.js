@@ -10,6 +10,7 @@ const {
 export default Component.extend({
   session: service(),
   paperSidenav: service(),
+  user: service(),
 
   classNames: ['app-container'],
 
@@ -23,6 +24,9 @@ export default Component.extend({
         height: this.$('.inner-sidenav').height()
       });
     });
+
+    let user = get(this, 'user');
+    user.isCheckedIn();
   },
 
   swipeRight(){
@@ -41,6 +45,10 @@ export default Component.extend({
 
     goToSignIn(){
       this.sendAction('goToSignIn');
+    },
+
+    goToChecking(){
+      this.sendAction('goToChecking');
     }
   }
 });

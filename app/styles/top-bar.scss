@@ -34,7 +34,20 @@
     height: auto;
   }
 
-  .outline-btn {
-    margin-right: 0.6em;
+  .top-bar-btn {
+    cursor: pointer;
+
+    md-icon {
+      font-size: 2.2em;
+      padding: 0.3em;
+      color: #bababa;
+      height: 1em;
+    }
+  }
+
+  .top-bar-btn.green {
+    md-icon {
+      color: $color-green;
+    }
   }
 }

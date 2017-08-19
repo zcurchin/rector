@@ -1,6 +1,6 @@
 {{#app-page title="Check In/Out"}}
   {{#app-page-card
-    title="Status"
+    title="Current Status"
     resizeable=true
     info="This is your current check in status..."
   }}
@@ -19,24 +19,14 @@
         </div>
       </div>
 
-      {{#unless confirmCheckOut}}        
-        <div class="filled-btn center" {{action "openConfirmCheckOut"}}>Check Out</div>
-      {{/unless}}
-
-      {{#if confirmCheckOut}}
-        <div class="inline-form">
-          <div class="form">
-            <p class="info">Please confir that you want to check out right now.</p>
-
-            <div class="preloader {{if checkout_preloader 'visible' 'hidden'}}">
-              {{paper-progress-linear}}
-            </div>
-
-            <div class="outline-btn" {{action "cancelCheckOut"}}>Cancel</div>
-            <div class="filled-btn" {{action "checkOut"}}>Check Out Now</div>
+      <div class="auto-checkout">
+        <span>Auto check out at: {{moment-format autoCheckOut "h:mm a"}}</span>
+          <div class="edit-btn">
+            {{paper-icon "edit"}}
           </div>
-        </div>
-      {{/if}}
+      </div>
+
+      <div class="outline-btn center" {{action "checkOutEdit"}}>Check Out</div>
 
     {{else}}
       <div class="checkin-status-box out">
@@ -57,47 +47,12 @@
       </div>
 
       {{#unless checkInEdit}}
-        <div class="filled-btn center" {{action "checkInEdit"}}>Check In</div>
+        <div class="outline-btn center" {{action "checkInEdit"}}>Check In</div>
       {{/unless}}
-
-      {{#if checkInEdit}}
-        {{#paper-form onSubmit=(action "checkIn") as |form|}}
-          <div class="inline-form">
-            <div class="form">
-              <p class="info">Specify in how hours you want to be automatically checked out</p>
-
-              {{paper-input
-                label="Check Out After (hours)"
-                type="number"
-                value=checkOutHours
-                onChange=(action (mut checkOutHours))
-                required=true
-              }}
-
-              <div class="checkout-time">
-                <div class="info">Check Out at: <span>{{checkOutTime}}</span></div>
-              </div>
-
-              {{#if error_msg}}
-                <div class="message-box error">
-                  {{paper-icon "error"}}
-                  <div class="message">{{error_msg}}</div>
-                </div>
-              {{/if}}
-
-              <div class="preloader {{if preloader 'visible' 'hidden'}}">
-                {{paper-progress-linear}}
-              </div>
-
-              <div class="outline-btn" {{action "checkInEditCancel"}}>Cancel</div>
-              <div class="filled-btn" {{action form.onSubmit}}>Check In</div>
-            </div>
-          </div>
-        {{/paper-form}}
-      {{/if}}
 
     {{/if}}
   {{/app-page-card}}
+
 
   {{#app-page-card
     title="History"
@@ -116,3 +71,60 @@
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}
+
+{{#if checkingOut}}
+  {{#custom-dialog
+    title="Check Out"
+    active=checkingOut
+  }}
+    <p class="prompt-info">Please confirm that you want to check out right now.</p>
+
+    {{custom-dialog-actions
+      active=checkingOut
+      confirmLabel="Check Out Now"
+      confirmAction=(action "checkOut")
+      waiting=co_waiting
+      success=co_success
+      error=co_error
+      errorMsg=co_errorMsg
+      successMsg="You are checked out"
+    }}
+  {{/custom-dialog}}
+{{/if}}
+
+{{#if checkingIn}}
+  {{#custom-dialog
+    title="Check In"
+    active=checkingIn
+  }}
+    {{#paper-form onSubmit=(action "checkIn") as |form|}}
+
+      <p class="form-info">How many hours will you be working today? You can always check out before "automatic check out" in case necessary.</p>
+
+      {{paper-input
+        label="Working Hours"
+        type="number"
+        value=checkOutHours
+        onChange=(action (mut checkOutHours))
+        required=true
+      }}
+
+      <div class="checkout-time">
+        <div>Auto check out at:</div>
+        <div class="time">{{checkOutTime}}</div>
+      </div>
+
+      {{custom-dialog-actions
+        active=checkingIn
+        confirmLabel="Check in"
+        confirmAction=form.onSubmit
+        waiting=ci_waiting
+        success=ci_success
+        error=ci_error
+        errorMsg=ci_errorMsg
+        successMsg="You are checked in"
+      }}
+
+    {{/paper-form}}
+  {{/custom-dialog}}
+{{/if}}

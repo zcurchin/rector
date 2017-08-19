@@ -27,11 +27,10 @@ export default Controller.extend({
     'zipcode'
   ],
 
-  waiting: false,
-  waitingSuccess: false,
-  waitingError: false,
-  waitingErrorMsg: '',
-  waitingSuccessMsg: 'Successfully saved personal info',
+  pi_waiting: false,
+  pi_success: false,
+  pi_error: false,
+  pi_errorMsg: '',
 
 
   populateFields(){
@@ -49,24 +48,17 @@ export default Controller.extend({
     let uid = get(this, 'session.currentUser.uid');
     let firebaseApp = get(this, 'firebaseApp');
 
-    set(self, 'waiting', true);
-    set(self, 'waitingError', false);
-    set(self, 'waitingSuccess', false);
+    set(self, 'pi_waiting', true);
+    set(self, 'pi_error', false);
+    set(self, 'pi_success', false);
 
     firebaseApp.database().ref('userProfiles/'+ uid).update(data).then(() => {
-      set(self, 'waitingSuccess', true);
+      set(self, 'pi_success', true);
 
     }).catch(error => {
-      set(self, 'waitingErrorMsg', error);
-      set(self, 'waitingError', true);
+      set(self, 'pi_errorMsg', error);
+      set(self, 'pi_error', true);
     });
-  },
-
-
-  closeWaiting(){
-    set(this, 'waiting', false);
-    set(this, 'waitingSuccess', false);
-    set(this, 'waitingError', false);
   },
 
 
@@ -74,23 +66,6 @@ export default Controller.extend({
     editProfile(){
       this.set('editPersonalInfo', true);
       this.populateFields();
-    },
-
-
-    onClosed(){
-      this.closeWaiting();
-    },
-
-
-    closeWaiting(){
-      set(this, 'waiting', false);
-      set(this, 'waitingSuccess', false);
-      set(this, 'waitingError', false);
-    },
-
-
-    cancelEditProfile(){
-      this.set('editPersonalInfo', false);
     },
 
 
@@ -113,21 +88,21 @@ export default Controller.extend({
       console.log(propsToUpdate);
 
       if (propsChanged.length === 0) {
-        set(self, 'waiting', true);
-        set(self, 'waitingError', true);
-        set(self, 'waitingErrorMsg', 'You did not changed anything');
+        set(self, 'pi_waiting', true);
+        set(self, 'pi_error', true);
+        set(self, 'pi_errorMsg', 'No changes');
 
       } else if (propsChanged.indexOf('username') !== -1) {
-        set(self, 'waiting', true);
+        set(self, 'pi_waiting', true);
 
         user.isUsernameTaken(self.username).then(() => {
           // username if available
           return self.updateUserProfile(propsToUpdate);
 
         }).catch(error => {
-          set(self, 'waitingSuccess', false);
-          set(self, 'waitingError', true);
-          set(self, 'waitingErrorMsg', error.message);
+          set(self, 'pi_success', false);
+          set(self, 'pi_error', true);
+          set(self, 'pi_errorMsg', error.message);
         });
 
       } else {

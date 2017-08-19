@@ -143,7 +143,7 @@
     title="Edit Personal Info"
     info="This is where you edit your profiles personal data"
     active=editPersonalInfo
-    onClosed=(action "onClosed")
+
   }}
     {{#paper-form onSubmit=(action "saveProfile") as |form|}}
       {{paper-input
@@ -189,49 +189,16 @@
         onChange=(action (mut zipcode))
       }}
 
-      {{#if waiting}}
-        <div class="waiting-box layout-row layout-align-center-center">
-          {{#if waitingSuccess}}
-            <div class="message success layout-row layout-align-start-center">
-              {{paper-icon "checked"}}
-              <div class="text">{{waitingSuccessMsg}}</div>
-              <span class="flex"></span>
-              <div class="close-btn" {{action "closeWaiting"}}>
-                {{paper-icon "close"}}
-              </div>
-            </div>
-
-
-          {{else if waitingError}}
-            <div class="message error layout-row layout-align-start-center">
-              {{paper-icon "error"}}
-              <div class="text">{{waitingErrorMsg}}</div>
-              <span class="flex"></span>
-              <div class="close-btn" {{action "closeWaiting"}}>
-                {{paper-icon "close"}}
-              </div>
-            </div>
-
-
-          {{else}}
-            <div class="inline-preloader">
-              <div class="ball1"></div>
-              <div class="ball2"></div>
-              <div class="ball3"></div>
-            </div>
-          {{/if}}
-        </div>
-      {{/if}}
-
-      <div class="buttons-box layout-row layout-align-end-center">
-        {{#if waitingSuccess}}
-          <div class="outline-btn" {{action "cancelEditProfile"}}>OK</div>
-        {{else}}
-          <div class="text-btn" {{action "cancelEditProfile"}}>Cancel</div>
-          <div class="outline-btn" {{action form.onSubmit}}>Save Changes</div>
-        {{/if}}
-
-      </div>
+      {{custom-dialog-actions
+        active=editPersonalInfo
+        confirmLabel="Save Changes"
+        confirmAction=form.onSubmit
+        waiting=pi_waiting
+        success=pi_success
+        error=pi_error
+        errorMsg=pi_errorMsg
+        successMsg="Successfully saved changes"
+      }}
 
     {{/paper-form}}
   {{/custom-dialog}}

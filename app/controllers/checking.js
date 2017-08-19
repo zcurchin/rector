@@ -16,7 +16,10 @@ export default Controller.extend({
   checkout_preloader: false,
 
   checkedIn: false,
-  checkInEdit: false,
+  checkingIn: false,
+  checkingOut: false,
+
+  autoCheckOut: null,
   confirmCheckOut: false,
   checkedOut_value: false,
 
@@ -28,7 +31,20 @@ export default Controller.extend({
     return time;
   }),
 
+
+  ci_waiting: false,
+  ci_success: false,
+  ci_error: false,
+  ci_errorMsg: '',
+
+  co_waiting: false,
+  co_success: false,
+  co_error: false,
+  co_errorMsg: '',
+
+
   history: [],
+
   updateHistory: function(type, obj){
     let history = get(this, 'history');
 
@@ -48,43 +64,36 @@ export default Controller.extend({
   },
 
 
-  closeCheckInForm(){
-    set(this, 'checkInEdit', false);
-    set(this, 'preloader', false);
-    set(this, 'checkOutHours', 6);
-  },
-
-
   actions: {
+    checkInEdit(){
+      set(this, 'checkingIn', true);
+    },
+
+
     checkIn(){
       let self = this;
       let user = this.get('user');
       let checkOutMilis = this.getCheckOutMilis();
       let now = Date.now();
-      set(self, 'preloader', true);
+
+      set(self, 'ci_waiting', true);
 
       user.checkIn(checkOutMilis).then(() => {
-        self.closeCheckInForm();
-
         set(self, 'checkedIn', now);
+        set(self, 'autoCheckOut', checkOutMilis);
+        set(self, 'ci_success', true);
+
+      }).catch(error => {
+        set(self, 'ci_error', true);
+        set(self, 'ci_errorMsg', error);
       });
     },
 
-    checkInEdit(){
-      set(this, 'checkInEdit', true);
+
+    checkOutEdit(){
+      set(this, 'checkingOut', true);
     },
 
-    checkInEditCancel(){
-      this.closeCheckInForm();
-    },
-
-    openConfirmCheckOut(){
-      set(this, 'confirmCheckOut', true);
-    },
-
-    cancelCheckOut(){
-      set(this, 'confirmCheckOut', false);
-    },
 
     checkOut(){
       let self = this;
@@ -92,18 +101,22 @@ export default Controller.extend({
       let checkedIn = this.get('checkedIn');
       let now = Date.now();
 
-      set(this, 'checkout_preloader', true);
+      set(this, 'co_waiting', true);
 
       user.checkOut().then(() => {
         set(self, 'checkedIn', false);
-        set(self, 'checkout_preloader', false);
-        set(self, 'confirmCheckOut', false);
         set(self, 'checkedOut_value', now);
+
+        set(self, 'co_success', true);
 
         self.updateHistory('checkOut', {
           in: checkedIn,
           out: now
         });
+
+      }).catch(error => {
+        set(self, 'co_errorMsg', error);
+        set(self, 'co_error', true);
       });
     }
   }

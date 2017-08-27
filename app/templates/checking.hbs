@@ -19,8 +19,8 @@
         </div>
       </div>
 
-      <div class="auto-checkout">
-        <span>Auto check out at: {{moment-format autoCheckOut "h:mm a"}}</span>
+      <div class="auto-checkout" {{action "editAutoCheckOut"}}>
+        <span>Auto check out at: <br> <span class="date">{{moment-format autoCheckOut "dddd, MMMM Do, h:mm a"}}</span></span>
           <div class="edit-btn">
             {{paper-icon "edit"}}
           </div>
@@ -72,34 +72,14 @@
   {{/app-page-card}}
 {{/app-page}}
 
-{{#if checkingOut}}
-  {{#custom-dialog
-    title="Check Out"
-    active=checkingOut
-  }}
-    <p class="prompt-info">Please confirm that you want to check out right now.</p>
-
-    {{custom-dialog-actions
-      active=checkingOut
-      confirmLabel="Check Out Now"
-      confirmAction=(action "checkOut")
-      waiting=co_waiting
-      success=co_success
-      error=co_error
-      errorMsg=co_errorMsg
-      successMsg="You are checked out"
-    }}
-  {{/custom-dialog}}
-{{/if}}
 
 {{#if checkingIn}}
   {{#custom-dialog
-    title="Check In"
     active=checkingIn
+    title="Check In"
+    info="How many hours will you be working today? You can always check out before 'automatic check out' in case necessary."
   }}
     {{#paper-form onSubmit=(action "checkIn") as |form|}}
-
-      <p class="form-info">How many hours will you be working today? You can always check out before "automatic check out" in case necessary.</p>
 
       {{paper-input
         label="Working Hours"
@@ -123,6 +103,63 @@
         error=ci_error
         errorMsg=ci_errorMsg
         successMsg="You are checked in"
+      }}
+
+    {{/paper-form}}
+  {{/custom-dialog}}
+{{/if}}
+
+
+{{#if checkingOut}}
+  {{#custom-dialog
+    title="Check Out"
+    active=checkingOut
+  }}
+    <p class="prompt-info">Please confirm that you want to check out right now.</p>
+
+    {{custom-dialog-actions
+      active=checkingOut
+      confirmLabel="Check Out Now"
+      confirmAction=(action "checkOut")
+      waiting=co_waiting
+      success=co_success
+      error=co_error
+      errorMsg=co_errorMsg
+      successMsg="You are checked out"
+    }}
+  {{/custom-dialog}}
+{{/if}}
+
+
+{{#if editingAutoCheckOut}}
+  {{#custom-dialog
+    title="Update Auto Check Out Time"
+    active=editingAutoCheckOut
+    info="How many hours will you be working today? You can always check out before 'automatic check out' in case necessary."
+  }}
+    {{#paper-form onSubmit=(action "updateAutoCheckOut") as |form|}}
+      {{paper-input
+        label="Working Hours"
+        type="number"
+        value=checkOutHours
+        onChange=(action (mut checkOutHours))
+        required=true
+      }}
+
+      <div class="checkout-time">
+        <div>Auto check out at:</div>
+        <div class="time">{{checkOutTime}}</div>
+      </div>
+
+      {{custom-dialog-actions
+        active=editingAutoCheckOut
+        confirmLabel="Update Time"
+        confirmAction=form.onSubmit
+        waiting=ua_waiting
+        success=ua_success
+        error=ua_error
+        errorMsg=ua_errorMsg
+        successMsg="Successfully updated auto check out time"
       }}
 
     {{/paper-form}}

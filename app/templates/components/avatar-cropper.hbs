@@ -6,10 +6,11 @@
         <p>Successfully saved profile image</p>
       </div>
 
+      <div class="outline-btn" {{action "closeAvatarDialog"}}>OK</div>
+
     {{else if savingFail}}
       {{paper-icon "error-outline"}}
       <p>Failed to save profile image. Try again later.</p>
-
 
     {{else}}
       <p>Saving your profile image</p>

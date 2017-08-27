@@ -4,15 +4,13 @@
     class="profile-card"
   }}
     <div class="profile-intro">
-      {{#if model.profile.profile_image}}
-        <div class="profile-image">
+      <div class="profile-image" {{action "editAvatar"}}>          
+        {{#if model.profile.profile_image}}
           <img src="{{model.profile.profile_image}}" alt="">
-        </div>
-      {{else}}
-      <div class="profile-image">
-        {{paper-icon "account-circle"}}
+        {{else}}
+          {{paper-icon "account-circle"}}
+        {{/if}}
       </div>
-      {{/if}}
 
       <div class="profile-name">
         <h1>{{model.profile.first_name}} {{model.profile.last_name}}</h1>
@@ -130,7 +128,7 @@
     {{#if editingProfile}}
 
     {{else}}
-      <div class="outline-btn" {{action "editProfilePicture"}}>Change Profile Picture</div>
+      <div class="outline-btn" {{action "editAvatar"}}>Change Profile Picture</div>
       <div class="outline-btn" {{action "editProfile"}}>Edit Personal Info</div>
     {{/if}}
 
@@ -211,7 +209,10 @@
     bottomMargin=false
   }}
     {{#if avatar.showCropper}}
-      {{avatar-cropper action="onAvatarChanged"}}
+      {{avatar-cropper
+        showAvatarDialog=editingAvatar
+        action="onAvatarChanged"
+      }}
     {{else}}
       {{avatar-upload-box}}
     {{/if}}

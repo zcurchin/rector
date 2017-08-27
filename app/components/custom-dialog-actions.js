@@ -17,6 +17,7 @@ export default Component.extend({
   successMsg: '',
   errorMsg: '',
 
+
   onDialogClose: observer('active', function(){
     let active = get(this, 'active');
 
@@ -24,8 +25,16 @@ export default Component.extend({
 
     if (!active) {
       console.log('DIALOG CLOSED');
+      this.closeActions();
     }
   }),
+
+  willDestroyElement() {
+    this._super(...arguments);
+
+    console.log('DIALOG ACTIONS : willDestroyElement');
+    this.closeActions();
+  },
 
   closeActions(){
     set(this, 'waiting', false);

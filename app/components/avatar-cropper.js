@@ -32,9 +32,11 @@ export default imageCropper.extend({
   savingSuccess: false,
   savingFail: false,
 
+  showAvatarDialog: null,
+
   actions: {
-    saveImage: function() {
-      let self = this;
+    saveImage() {
+      let self = this;      
       let session = get(this, 'session');
       let currentUser = session.get('currentUser');
       let container = this.$(this.get('cropperContainer'));
@@ -78,6 +80,7 @@ export default imageCropper.extend({
 
           }).then(function(){
             set(self, 'savingSuccess', true);
+
             self.sendAction('action', snapshot.downloadURL);
 
           }).catch(function(){
@@ -89,6 +92,14 @@ export default imageCropper.extend({
         });
 
       }, 'image/jpeg', 0.6);
+    },
+
+
+    closeAvatarDialog(){
+      console.log('DDDDD');
+      let avatar = get(this, 'avatar');
+      avatar.close();
+      set(this, 'showAvatarDialog', false);
     },
 
 

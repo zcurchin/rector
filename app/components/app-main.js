@@ -4,8 +4,8 @@ const {
   Component,
   inject: { service },
   get,
-  set
 } = Ember;
+
 
 export default Component.extend({
   session: service(),

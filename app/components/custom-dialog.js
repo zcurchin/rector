@@ -2,10 +2,9 @@ import Ember from 'ember';
 import PaperDialog from 'ember-paper/components/paper-dialog';
 
 const {
-  get,
-  set,
-  $
+  set
 } = Ember;
+
 
 export default PaperDialog.extend({
   info: null,

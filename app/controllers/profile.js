@@ -112,12 +112,6 @@ export default Controller.extend({
 
 
     editAvatar(){
-      let avatar = get(this, 'avatar');
-      avatar.open();
-    },
-
-
-    editProfilePicture(){
       set(this, 'editingAvatar', true);
     },
 

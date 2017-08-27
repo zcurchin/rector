@@ -4,12 +4,14 @@ import RSVP from 'rsvp';
 const {
   Route,
   inject: { service },
+  set,
   get
 } = Ember;
 
 
 export default Route.extend({
   user: service(),
+
 
   model(){
     let user = get(this, 'user');
@@ -33,6 +35,8 @@ export default Route.extend({
   setupController(controller, model){
     this._super(controller, model);
 
+    let user = get(this, 'user');
+
     console.log('# setupController : model :', model);
 
     if (!model) {
@@ -52,11 +56,14 @@ export default Route.extend({
             console.log('### CHECKED IN');
             controller.set('checkedIn', model[key].in);
             controller.set('autoCheckOut', model[key].out);
+            set(user, 'checkedIn', true);
 
           } else {
             console.log('### CHECKED OUT');
             controller.set('checkedIn', false);
             controller.set('checkedOut_value', model[key].out);
+            set(user, 'checkedIn', false);
+
             history.push(model[key]);
           }
 

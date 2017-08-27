@@ -18,6 +18,7 @@ Router.map(function() {
   this.route('ranking');
   this.route('forgot-password');
   this.route('sign-up-restaurant');
+  this.route('workplace');
 });
 
 export default Router;

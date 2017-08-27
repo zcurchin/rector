@@ -12,6 +12,8 @@
 .profile-image {
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+  cursor: pointer;
 
   md-icon {
     font-size: 10em;

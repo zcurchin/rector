@@ -20,30 +20,50 @@ export default Controller.extend({
   checkingOut: false,
 
   autoCheckOut: null,
-  confirmCheckOut: false,
   checkedOut_value: false,
 
+  editingAutoCheckOut: false,
+
   checkOutHours: 6,
+
   checkOutTime: computed('checkOutHours', function(){
     let checkOutMilis = this.getCheckOutMilis();
-    let time = moment(checkOutMilis).format('hh:mm a');
+    let dateNow = new Date();
+    let dateNow_num = dateNow.getDate();
+    let checkOutDate = new Date(checkOutMilis);
+    let checkOutDate_num = checkOutDate.getDate();
+    let time = null;
+
+    console.log('dateNow_num :', dateNow_num);
+    console.log('checkOutDate_num :', checkOutDate_num);
+
+    if (checkOutDate_num > dateNow_num) {
+      time = moment(checkOutMilis).format('hh:mm a, dddd');
+
+    } else {
+      time = moment(checkOutMilis).format('hh:mm a');
+    }
 
     return time;
   }),
-
-
-  ci_waiting: false,
-  ci_success: false,
-  ci_error: false,
-  ci_errorMsg: '',
 
   co_waiting: false,
   co_success: false,
   co_error: false,
   co_errorMsg: '',
 
+  ci_waiting: false,
+  ci_success: false,
+  ci_error: false,
+  ci_errorMsg: '',
+
+  ua_waiting: false,
+  ua_success: false,
+  ua_error: false,
+  ua_errorMsg: '',
 
   history: [],
+
 
   updateHistory: function(type, obj){
     let history = get(this, 'history');
@@ -97,8 +117,8 @@ export default Controller.extend({
 
     checkOut(){
       let self = this;
-      let user = this.get('user');
-      let checkedIn = this.get('checkedIn');
+      let user = get(this, 'user');
+      let checkedIn = get(this, 'checkedIn');
       let now = Date.now();
 
       set(this, 'co_waiting', true);
@@ -117,6 +137,29 @@ export default Controller.extend({
       }).catch(error => {
         set(self, 'co_errorMsg', error);
         set(self, 'co_error', true);
+      });
+    },
+
+
+    editAutoCheckOut(){
+      set(this, 'editingAutoCheckOut', true);
+    },
+
+
+    updateAutoCheckOut(){
+      let self = this;
+      let user = get(this, 'user');
+      let timestamp = this.getCheckOutMilis();
+
+      set(this, 'ua_waiting', true);
+
+      user.checkOut(timestamp, 'update').then(() => {
+        set(self, 'autoCheckOut', timestamp);
+        set(self, 'ua_success', true);
+
+      }).catch(error => {
+        set(self, 'ua_errorMsg', error);
+        set(self, 'ua_error', true);
       });
     }
   }

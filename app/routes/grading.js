@@ -19,7 +19,7 @@ export default Route.extend({
     console.log('=====================================');
 
     let self = this;
-    let firebaseApp = get(this, 'firebaseApp');
+    // let firebaseApp = get(this, 'firebaseApp');
     let uid = get(this, 'session').get('uid');
 
     // default model
@@ -148,7 +148,7 @@ export default Route.extend({
   getStartTime(type){
     let date = new Date();
     let hours = date.getHours();
-    let dateNum = date.getDate();
+    // let dateNum = date.getDate();
     let after_midnight_treshold = get(this, 'after_midnight_treshold');
 
     if (hours < after_midnight_treshold) {

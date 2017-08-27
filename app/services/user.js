@@ -108,12 +108,19 @@ export default Service.extend({
     let self = this;
 
     this.getLastCheckIn().then(data => {
-      let keys = Object.keys(data.val());
-      console.log(data.val()[keys[0]]);
-      let obj = data.val()[keys[0]];
+      // console.log(data.val());
+      // console.log(data.val()[keys[0]]);
 
-      if (obj.out > Date.now()) {
-        set(self, 'checkedIn', true);
+      if (data.val()) {
+        let keys = Object.keys(data.val());
+        let obj = data.val()[keys[0]];
+        
+        if (obj.out > Date.now()) {
+          set(self, 'checkedIn', true);
+        } else {
+          set(self, 'checkedIn', false);
+        }
+
       } else {
         set(self, 'checkedIn', false);
       }
@@ -139,7 +146,7 @@ export default Service.extend({
   },
 
 
-  checkOut(){
+  checkOut(timestamp, type){
     let self = this;
 
     return this.getLastCheckIn().then(data => {
@@ -148,10 +155,14 @@ export default Service.extend({
       let firebaseApp = get(this, 'firebaseApp');
       let checkInRef = firebaseApp.database().ref('checkIns/'+uid+'/'+checkIn_id);
 
-      set(self, 'checkedIn', false);
+      if (type !== 'update') {
+        set(self, 'checkedIn', false);
+      }
+
+      let outTime = timestamp || Date.now();
 
       return checkInRef.update({
-        out: Date.now()
+        out: outTime
       });
     });
   },
@@ -163,7 +174,7 @@ export default Service.extend({
     let checkIns = firebaseApp.database().ref('checkIns');
     let userCheckins = checkIns.child(uid);
 
-    return userCheckins.orderByKey().once('value');
+    return userCheckins.orderByKey().limitToLast(10).once('value');
   },
 
 

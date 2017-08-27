@@ -37,7 +37,7 @@
 
     .full-time {
       color: $color-green;
-      font-size: 0.9em;
+      font-size: 1.1em;
       margin-bottom: 0.5em;
     }
   }
@@ -79,6 +79,13 @@
   margin: 0.5em 0 2em;
   position: relative;
   cursor: pointer;
+
+  .date {
+    color: #777;
+    padding-top: 0.6em;
+    display: block;
+    font-size: 1.1em;
+  }
 
   .edit-btn {
     position: absolute;

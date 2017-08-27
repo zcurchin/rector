@@ -2,9 +2,7 @@ import Ember from 'ember';
 
 const {
   Controller,
-  inject: { controller },
-  set,
-  get
+  inject: { controller }
 } = Ember;
 
 export default Controller.extend({
@@ -16,7 +14,7 @@ export default Controller.extend({
     },
 
     cancel(){
-      this.transitionToRoute('sign-in');      
+      this.transitionToRoute('sign-in');
     }
   }
 });

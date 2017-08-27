@@ -3,6 +3,6 @@ export default {
   exclude: [],
   options: {
     threshold: 25,
-    direction: typeof Hammer === 'undefined' ? '' : Hammer.DIRECTION_HORIZONTAL },
+    direction: typeof window.Hammer === 'undefined' ? '' : window.Hammer.DIRECTION_HORIZONTAL },
   recognizer: 'swipe'
 };

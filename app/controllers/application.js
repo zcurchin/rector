@@ -3,7 +3,6 @@ import Ember from 'ember';
 const {
   Controller,
   inject: { service },
-  set,
   get
 } = Ember;
 

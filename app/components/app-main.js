@@ -23,10 +23,7 @@ export default Component.extend({
       this.$('md-card-content').css({
         height: this.$('.inner-sidenav').height()
       });
-    });
-
-    let user = get(this, 'user');
-    user.isCheckedIn();
+    });    
   },
 
   swipeRight(){

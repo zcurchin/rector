@@ -2,15 +2,16 @@
   <img class="logo" src="assets/images/yograde_logo.svg">
 
   <span class="flex"></span>
-
-      {{#if user.checkedIn}}
-        <div class="top-bar-btn green" {{action "goToChecking"}}>
-          {{paper-icon "alarm-on"}}
-        </div>
-      {{else}}
-        <div class="top-bar-btn" {{action "goToChecking"}}>
-          {{paper-icon "alarm-off"}}
-        </div>
+      {{#if user.accountType.user}}
+        {{#if user.checkedIn}}
+          <div class="top-bar-btn green" {{action "goToChecking"}}>
+            {{paper-icon "alarm-on"}}
+          </div>
+        {{else}}
+          <div class="top-bar-btn" {{action "goToChecking"}}>
+            {{paper-icon "alarm-off"}}
+          </div>
+        {{/if}}
       {{/if}}
 
   {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
@@ -29,56 +30,68 @@
   }}
 
     {{#paper-content}}
-      {{#link-to "checking"}}
-        {{#paper-item}}
-          {{paper-icon "alarm-on"}}
-          <p>Check In/Out</p>
-        {{/paper-item}}
-      {{/link-to}}
 
-      {{#link-to "grading"}}
-        {{#paper-item}}
-          {{paper-icon "grade"}}
-          <p>Grading</p>
-        {{/paper-item}}
-      {{/link-to}}
+      {{#if user.accountType.user}}
 
-      {{#link-to "ranking"}}
-        {{#paper-item}}
-          {{paper-icon "equalizer"}}
-          <p>Ranking</p>
-        {{/paper-item}}
-      {{/link-to}}
+        {{#link-to "checking"}}
+          {{#paper-item}}
+            {{paper-icon "alarm-on"}}
+            <p>Check In/Out</p>
+          {{/paper-item}}
+        {{/link-to}}
 
-      {{#link-to "notifications"}}
-        {{#paper-item}}
-          {{paper-icon "notifications"}}
-          <p>Notifications</p>
-        {{/paper-item}}
-      {{/link-to}}
+        {{#link-to "grading"}}
+          {{#paper-item}}
+            {{paper-icon "grade"}}
+            <p>Grading</p>
+          {{/paper-item}}
+        {{/link-to}}
 
-      {{paper-divider}}
+        {{#link-to "ranking"}}
+          {{#paper-item}}
+            {{paper-icon "equalizer"}}
+            <p>Ranking</p>
+          {{/paper-item}}
+        {{/link-to}}
 
-      {{#link-to "workplace"}}
-        {{#paper-item}}
-          {{paper-icon "store-mall-directory"}}
-          <p>Workplace</p>
-        {{/paper-item}}
-      {{/link-to}}
+        {{#link-to "notifications"}}
+          {{#paper-item}}
+            {{paper-icon "notifications"}}
+            <p>Notifications</p>
+          {{/paper-item}}
+        {{/link-to}}
 
-      {{#link-to "profile"}}
-        {{#paper-item}}
-          {{paper-icon "account-circle"}}
-          <p>Profile</p>
-        {{/paper-item}}
-      {{/link-to}}
+        {{paper-divider}}
 
-      {{#link-to "account"}}
-        {{#paper-item}}
-          {{paper-icon "folder-shared"}}
-          <p>Account</p>
-        {{/paper-item}}
-      {{/link-to}}
+        {{#link-to "workplace"}}
+          {{#paper-item}}
+            {{paper-icon "store-mall-directory"}}
+            <p>Workplace</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "profile"}}
+          {{#paper-item}}
+            {{paper-icon "account-circle"}}
+            <p>Profile</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "account"}}
+          {{#paper-item}}
+            {{paper-icon "folder-shared"}}
+            <p>Account</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+      {{else if user.accountType.business}}
+        {{#link-to "account"}}
+          {{#paper-item}}
+            {{paper-icon "folder-shared"}}
+            <p>Account</p>
+          {{/paper-item}}
+        {{/link-to}}
+      {{/if}}
 
       {{paper-divider}}
 

@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'rector',
+    modulePrefix: 'yo-grade',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
@@ -27,13 +27,6 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    firebase: {
-      apiKey: 'AIzaSyDdBGXk9_lZv57ehjQn6E2Lpl1ZlBm5UaY',
-      authDomain: 'rector-test.firebaseapp.com',
-      databaseURL: 'https://rector-test.firebaseio.com',
-      storageBucket: 'rector-test.appspot.com',
-    },
-
     // needed for ember-paper
     contentSecurityPolicy: {
       'default-src': "'none'",
@@ -52,6 +45,13 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    ENV.firebase = {
+      apiKey: "AIzaSyCptpo75UGAuIynLjMSp0LibCHQBooCNPI",
+      authDomain: "yograde-staging.firebaseapp.com",
+      databaseURL: "https://yograde-staging.firebaseio.com",
+      storageBucket: "yograde-staging.appspot.com"
+    };
   }
 
   if (environment === 'test') {
@@ -66,7 +66,12 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.firebase = {
+      apiKey: 'AIzaSyDNVJ7XBK_tW2XJWu8opBn2uerHz-FxzQM',
+      authDomain: 'yograde-production.firebaseapp.com',
+      databaseURL: 'https://yograde-production.firebaseio.com',
+      storageBucket: 'yograde-production.appspot.com'
+    };
   }
 
   return ENV;

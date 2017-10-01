@@ -1,21 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const {
+  Route,
+  inject: { service },
+  get
+} = Ember;
+
+
+export default Route.extend({
+  user: service(),
+
 
   beforeModel: function() {
     return this.get('session').fetch().catch(function() {});
   },
-
-
-  // model: function(){
-  //   //var self = this;
-  //   // let isAuthenticated = this.get('session').get('isAuthenticated');
-  //   // console.log('# Route : Application : isAuthenticated:', isAuthenticated);
-  //   //
-  //   // if (!isAuthenticated) {
-  //   //   this.replaceWith('sign-in');
-  //   // }
-  // },
 
 
   afterModel: function(model, transition) {
@@ -26,8 +24,14 @@ export default Ember.Route.extend({
     if (!isAuthenticated) {
       this.replaceWith('sign-in');
 
-    } else if (isAuthenticated && (target === 'index' || target === 'sign-in' || target === 'sign-up')) {
-      this.replaceWith('checking');
+    } else {
+      let user = get(this, 'user');
+      user.setup();
+
+      if (target === 'index' || target === 'sign-in' || target === 'sign-up') {
+        this.replaceWith('checking');
+      }
+
     }
   }
 });

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 const {
   Controller,
@@ -13,6 +14,7 @@ export default Controller.extend({
   error_msg: '',
   preloader: false,
 
+
   actions: {
     signIn() {
       let self = this;
@@ -25,7 +27,10 @@ export default Controller.extend({
         email: self.get('email'),
         password: self.get('password')
 
-      }).then(function() {
+      }).then(function(userData) {
+
+        console.log(userData);
+
         self.set('email', '');
         self.set('password', '');
         self.set('error_msg', '');
@@ -42,13 +47,11 @@ export default Controller.extend({
       });
     },
 
+
     signUp(){
       this.transitionToRoute('sign-up');
     },
 
-    signUpRestaurant(){
-      this.transitionToRoute('sign-up-restaurant');
-    },
 
     forgottenPassword(){
       this.transitionToRoute('forgot-password');

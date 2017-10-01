@@ -8,9 +8,30 @@ md-input-container.md-default-theme {
   width: 100%;
   padding: 0;
 
+  .pass-visibility-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+
+    md-icon {
+      color: rgba(0,0,0,0.6) !important;
+      font-size: 1.6em;
+      height: 1em;
+      padding: 0.3em;
+      position: relative;
+      top: -0.2em;
+    }
+  }
+
   label {
     color: #666;
-    font-size: 1.1em;
+    font-size: 1.16em;
+    padding-bottom: 0.2em;
+  }
+
+  label:after {
+    color: transparent !important;
   }
 
   .md-input {

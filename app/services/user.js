@@ -18,6 +18,15 @@ export default Service.extend({
 
   restaurant: '',
 
+  // roles
+  accountType: {
+    user: false,
+    manager: false,
+    business: false,
+    admin: false
+  },
+
+
   create(params){
     let self = this;
 
@@ -71,6 +80,9 @@ export default Service.extend({
       case 'privateGrades':
         dbRef = 'privateGrades';
       break;
+      case 'businessProfile':
+        dbRef = 'businessProfiles';
+      break;
     }
 
     console.log('# User : get : '+dbRef+' :', uid);
@@ -100,6 +112,34 @@ export default Service.extend({
   },
 
 
+  setAccountType(){
+    let self = this;
+
+    this.get('profile').then(profile => {
+
+      // console.log('------------------------');
+      // console.log(Object.keys(data).length);
+      // console.log('------------------------');
+
+      if (Object.keys(profile).length > 0) {
+        set(self, 'accountType.user', true);
+      } else {
+        self.get('businessProfile').then(businessProfile => {
+          console.log('------------------------');
+          console.log(businessProfile);
+          console.log('------------------------');
+        });
+      }
+    });
+  },
+
+
+  setup(){
+    this.isCheckedIn();
+    this.setAccountType();
+  },
+
+
   // --------------------------------------------
   // Checking
   // --------------------------------------------
@@ -114,7 +154,7 @@ export default Service.extend({
       if (data.val()) {
         let keys = Object.keys(data.val());
         let obj = data.val()[keys[0]];
-        
+
         if (obj.out > Date.now()) {
           set(self, 'checkedIn', true);
         } else {
@@ -239,15 +279,6 @@ export default Service.extend({
     };
 
     return userProfiles.child(uid).set(data);
-  },
-
-
-  // --------------------------------------------
-  // Create Admin User
-  // --------------------------------------------
-
-  _createAdminAccount(auth_uid, email){
-    console.log(auth_uid, email);
   },
 
 

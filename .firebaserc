@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "rector-test"
+    "default": "yograde-staging",
+    "production": "yograde-production"
   }
 }

@@ -54,21 +54,25 @@
           {{/paper-item}}
         {{/link-to}}
 
+        {{!--
         {{#link-to "notifications"}}
           {{#paper-item}}
             {{paper-icon "notifications"}}
             <p>Notifications</p>
           {{/paper-item}}
         {{/link-to}}
+        --}}
 
         {{paper-divider}}
 
+        {{!--
         {{#link-to "workplace"}}
           {{#paper-item}}
             {{paper-icon "store-mall-directory"}}
             <p>Workplace</p>
           {{/paper-item}}
         {{/link-to}}
+        --}}
 
         {{#link-to "profile"}}
           {{#paper-item}}
@@ -84,6 +88,13 @@
           {{/paper-item}}
         {{/link-to}}
 
+        {{paper-divider}}
+
+        {{#paper-item onClick=(action "signOut")}}
+          {{paper-icon "lock"}}
+          <p>Sign Out</p>
+        {{/paper-item}}
+
       {{else if user.accountType.business}}
         {{#link-to "account"}}
           {{#paper-item}}
@@ -91,14 +102,14 @@
             <p>Account</p>
           {{/paper-item}}
         {{/link-to}}
+
+        {{paper-divider}}
+
+        {{#paper-item onClick=(action "signOut")}}
+          {{paper-icon "lock"}}
+          <p>Sign Out</p>
+        {{/paper-item}}
       {{/if}}
-
-      {{paper-divider}}
-
-      {{#paper-item onClick=(action "signOut")}}
-        {{paper-icon "lock"}}
-        <p>Sign Out</p>
-      {{/paper-item}}
 
     {{/paper-content}}
   {{/paper-sidenav}}

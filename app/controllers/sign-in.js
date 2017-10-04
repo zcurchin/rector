@@ -13,12 +13,13 @@ export default Controller.extend({
   firebaseApp: service(),
   error_msg: '',
   preloader: false,
-
+  user: service(),
 
   actions: {
     signIn() {
       let self = this;
       let session = get(this, 'session');
+      let user = get(this, 'user');
 
       self.set('preloader', true);
 
@@ -28,6 +29,7 @@ export default Controller.extend({
         password: self.get('password')
 
       }).then(function(userData) {
+        user.setup();
 
         console.log(userData);
 

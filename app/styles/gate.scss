@@ -70,6 +70,23 @@
     margin: 0 auto;
     display: block;
   }
+}
 
+.soon {
+  width: 100%;
+  height: 100%;
 
+  img {
+    width: 9em;
+  }
+
+  p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 1.2em;
+    opacity: 0.9;
+    color: #FFF;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
 }

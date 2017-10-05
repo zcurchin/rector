@@ -39,6 +39,15 @@ module.exports = function(environment) {
     }
   };
 
+  if (environment === 'production') {
+    ENV.firebase = {
+      apiKey: 'AIzaSyDNVJ7XBK_tW2XJWu8opBn2uerHz-FxzQM',
+      authDomain: 'yograde-production.firebaseapp.com',
+      databaseURL: 'https://yograde-production.firebaseio.com',
+      storageBucket: 'yograde-production.appspot.com'
+    };
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -54,6 +63,15 @@ module.exports = function(environment) {
     };
   }
 
+  if (environment === 'demo') {
+    ENV.firebase = {
+      apiKey: "AIzaSyDWumcTVgLopPlCw7K41AHXHtMgxP4z9dQ",
+      authDomain: "yograde-demo.firebaseapp.com",
+      databaseURL: "https://yograde-demo.firebaseio.com",
+      storageBucket: "yograde-demo.appspot.com"
+    };
+  }
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
@@ -63,15 +81,6 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-    ENV.firebase = {
-      apiKey: 'AIzaSyDNVJ7XBK_tW2XJWu8opBn2uerHz-FxzQM',
-      authDomain: 'yograde-production.firebaseapp.com',
-      databaseURL: 'https://yograde-production.firebaseio.com',
-      storageBucket: 'yograde-production.appspot.com'
-    };
   }
 
   return ENV;

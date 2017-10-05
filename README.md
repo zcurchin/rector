@@ -48,3 +48,12 @@ Specify what it takes to deploy your app.
 * Development Browser Extensions
   * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
   * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+
+### FIREBASE
+
+Deploy to multiple environments with Firebase Hosting
+
+https://firebase.googleblog.com/2016/07/deploy-to-multiple-environments-with.html
+
+https://firebase.google.com/docs/firestore/security/get-started?authuser=0
+https://firebase.google.com/docs/firestore/security/secure-data?authuser=0

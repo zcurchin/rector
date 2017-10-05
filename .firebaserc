@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "yograde-staging",
-    "production": "yograde-production"
+    "production": "yograde-production",
+    "demo": "yograde-demo"
   }
 }

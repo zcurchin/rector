@@ -45,6 +45,7 @@ export default Controller.extend({
 
         }).then(function() {
           console.log('# Sign Up : user logged in');
+          user.setup();
           set(self, 'preloader', false);
           self.replaceRoute('checking');
 

@@ -1,5 +1,39 @@
 {{#app-page title="Ranking"}}
-  {{#app-page-card header=false}}
-    Soon
+  {{#app-page-card
+    title="Realtime List"
+    resizeable=true
+    info="This is real time rank list..."
+    refresh=refreshRealtimeList
+  }}
+
+    {{#if model}}
+      {{#each model as |user index|}}
+        <div class="ranking-user layout-row layout-align-start-center">
+          <div class="order-num">
+
+          </div>
+          <div class="image">
+            {{#if user.profileImage}}
+            <img src="{{user.profileImage}}" alt="">
+            {{else}}
+            {{paper-icon "account-circle"}}
+            {{/if}}
+          </div>
+          <div class="name">
+            {{user.profileName}}
+          </div>
+          <span class="flex"></span>
+          <div class="grade">
+            <span class="value">{{user.grade_average}}</span> / <span>{{user.grade_total}}</span>
+          </div>
+        </div>
+      {{/each}}
+
+    {{else}}
+      <div class="info-message">
+        No graded users so far.
+      </div>
+    {{/if}}
+
   {{/app-page-card}}
 {{/app-page}}

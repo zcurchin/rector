@@ -17,8 +17,10 @@ Router.map(function() {
   this.route('notifications');
   this.route('ranking');
   this.route('forgot-password');
-  this.route('sign-up-restaurant');
+  this.route('sign-up-business');
   this.route('workplace');
+  this.route('employees');
+  this.route('business-profile');
 });
 
 export default Router;

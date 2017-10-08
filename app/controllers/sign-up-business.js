@@ -3,37 +3,35 @@ import Ember from 'ember';
 const {
   Controller,
   inject: { service },
+  get,
   set
 } = Ember;
 
-
 export default Controller.extend({
-  user: service(),
+  //app_controler: controller('application'),
+  business: service(),
   preloader: false,
   error_msg: '',
 
   actions: {
-    createUser(){
+    signUpBusiness(){
+      console.log('##### signUpBusiness');
       let self = this;
-      let first_name = this.get('first_name');
-      let last_name = this.get('last_name');
-      let username = this.get('username');
-      let email = this.get('email');
-      let pass = this.get('password');
-      let user = this.get('user');
+      let email = get(this,'email');
+      let pass = get(this, 'password');
+      let name = get(this, 'name');
+      let business = get(this, 'business');
 
       set(this, 'preloader', true);
 
       let params = {
         email: email,
         password: pass,
-        username: username,
-        first_name: first_name,
-        last_name: last_name
+        name: name
       };
 
-      user.create(params).then(() => {
-        console.log('# Sign Up : user data created');
+      business.create(params).then(() => {
+        console.log('# Sign Up Business : user data created');
 
         self.get('session').open('firebase', {
           provider: 'password',
@@ -41,10 +39,12 @@ export default Controller.extend({
           password: pass
 
         }).then(function() {
-          console.log('# Sign Up : user logged in');
-          user.setup();
-          set(self, 'preloader', false);
-          self.replaceRoute('checking');
+          console.log('# Sign Up Business : user logged in');
+
+          user.setup().then(() => {
+            set(self, 'preloader', false);
+            self.replaceRoute('ranking');
+          });
 
         }).catch(function(err){
           console.log(err);
@@ -60,8 +60,7 @@ export default Controller.extend({
       });
     },
 
-
-    cancelSignUp(){
+    cancel(){
       this.transitionToRoute('sign-in');
     }
   }

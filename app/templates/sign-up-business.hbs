@@ -1,0 +1,38 @@
+<div class="gate-title">Sign Up Business</div>
+<div class="form">
+  {{#paper-form onSubmit=(action "signUpBusiness") as |form|}}
+    {{paper-input
+      required=true
+      label="Business Name"
+      type="text"
+      value=name
+      onChange=(action (mut name))
+    }}
+
+    {{paper-input
+      required=true
+      label="E-mail"
+      type="email"
+      value=email
+      onChange=(action (mut email))
+    }}
+
+    {{input-password
+      required=true
+      label="Password"
+      type="password"
+      value=password
+      minlength=6
+      onChange=(action (mut password))
+    }}
+
+    <div class="preloader {{if preloader 'visible' 'hidden'}}">
+      {{paper-progress-linear}}
+    </div>
+
+    <div class="remote-error">{{error_msg}}</div>
+
+    <div class="filled-btn centered" {{action form.onSubmit}}>Create Account</div>
+  {{/paper-form}}
+</div>
+<div class="outline-btn centered" {{action "cancel"}}>Cancel</div>

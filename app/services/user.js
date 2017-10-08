@@ -21,7 +21,6 @@ export default Service.extend({
   // roles
   accountType: {
     user: false,
-    manager: false,
     business: false,
     admin: false
   },
@@ -115,28 +114,55 @@ export default Service.extend({
   setAccountType(){
     let self = this;
 
-    this.get('profile').then(profile => {
+    return new RSVP.Promise((resolve, reject) => {
+      self.get('profile').then(profile => {
+        // console.log('------------------------');
+        // console.log(Object.keys(data).length);
+        // console.log('------------------------');
 
-      // console.log('------------------------');
-      // console.log(Object.keys(data).length);
-      // console.log('------------------------');
+        if (Object.keys(profile).length > 0) {
+          set(self, 'accountType.user', true);
+          resolve();
 
-      if (Object.keys(profile).length > 0) {
-        set(self, 'accountType.user', true);
-      } else {
-        self.get('businessProfile').then(businessProfile => {
-          console.log('------------------------');
-          console.log(businessProfile);
-          console.log('------------------------');
-        });
-      }
+        } else {
+          self.get('businessProfile').then(businessProfile => {
+            console.log('------------------------');
+            console.log(businessProfile);
+            console.log('------------------------');
+
+            if (Object.keys(businessProfile).length > 0) {
+              set(self, 'accountType.business', true);
+              resolve();
+            }
+          });
+        }
+
+      }).catch(err => {
+        reject(err);
+      });
     });
   },
 
 
   setup(){
-    this.isCheckedIn();
-    this.setAccountType();
+    let self = this;
+    console.log('--------------------------------');
+    console.log('# Service : User : Setup');
+    console.log('--------------------------------');
+
+    return new RSVP.Promise((resolve, reject) => {
+      self.setAccountType().then(() => {
+        if (get(self, 'accountType.user')) {
+          self.isCheckedIn();
+          resolve();
+
+        } else {
+          resolve();
+        }
+      }).catch(err => {
+        reject(err);
+      });
+    });
   },
 
 
@@ -248,8 +274,7 @@ export default Service.extend({
     let userAccounts = firebaseApp.database().ref('userAccounts');
 
     let data = {
-      created: Date.now(),
-      type: params.admin ? 'admin' : 'user'
+      created: new Date().getTime()
     };
 
     return userAccounts.child(uid).set(data);
@@ -265,17 +290,11 @@ export default Service.extend({
     let userProfiles = firebaseApp.database().ref('userProfiles');
 
     let data = {
-      created: Date.now(),
-      updated: '',
+      created: new Date().getTime(),
       first_name: params.first_name,
       last_name: params.last_name,
       username: params.username,
-      country: '',
-      state: '',
-      city: '',
-      zipcode: '',
-      profile_image: '',
-      restaurant: ''
+      profile_image: ''
     };
 
     return userProfiles.child(uid).set(data);

@@ -2,17 +2,22 @@
   <img class="logo" src="assets/images/yograde_logo.svg">
 
   <span class="flex"></span>
-      {{#if user.accountType.user}}
-        {{#if user.checkedIn}}
-          <div class="top-bar-btn green" {{action "goToChecking"}}>
-            {{paper-icon "alarm-on"}}
-          </div>
-        {{else}}
-          <div class="top-bar-btn" {{action "goToChecking"}}>
-            {{paper-icon "alarm-off"}}
-          </div>
-        {{/if}}
-      {{/if}}
+
+  {{#if user.accountType.user}}
+    {{#if user.checkedIn}}
+      <div class="top-bar-btn green" {{action "goToChecking"}}>
+        {{paper-icon "alarm-on"}}
+      </div>
+    {{else}}
+      <div class="top-bar-btn" {{action "goToChecking"}}>
+        {{paper-icon "alarm-off"}}
+      </div>
+    {{/if}}
+  {{/if}}
+
+  {{#if user.accountType.business}}
+    <div class="business">Business</div>
+  {{/if}}
 
   {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
     <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
@@ -95,7 +100,34 @@
           <p>Sign Out</p>
         {{/paper-item}}
 
+      {{!
+        BUSINESS ACCOUNT
+      --}}
+
       {{else if user.accountType.business}}
+        {{#link-to "ranking"}}
+          {{#paper-item}}
+            {{paper-icon "equalizer"}}
+            <p>Ranking</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{#link-to "employees"}}
+          {{#paper-item}}
+            {{paper-icon "account-circle"}}
+            <p>Employees</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{paper-divider}}
+
+        {{#link-to "business-profile"}}
+          {{#paper-item}}
+            {{paper-icon "store-mall-directory"}}
+            <p>Profile</p>
+          {{/paper-item}}
+        {{/link-to}}
+
         {{#link-to "account"}}
           {{#paper-item}}
             {{paper-icon "folder-shared"}}

@@ -17,6 +17,7 @@ export default Route.extend({
 
 
   afterModel: function(model, transition) {
+    var self = this;
     let target = Ember.get(transition, 'targetName');
     let isAuthenticated = this.get('session').get('isAuthenticated');
     console.log('# Route : Application : target :', target);
@@ -26,12 +27,21 @@ export default Route.extend({
 
     } else {
       let user = get(this, 'user');
-      user.setup();
 
-      if (target === 'index' || target === 'sign-in' || target === 'sign-up') {
-        this.replaceWith('checking');
-      }
+      user.setup().then(() => {
+        console.log('get(self, "accountType.user")', user.accountType.user);
 
+        if (user.accountType.user) {
+          if (target === 'index' || target === 'sign-in' || target === 'sign-up') {
+            this.replaceWith('checking');
+          }
+
+        } else if (user.accountType.business) {
+          if (target === 'index' || target === 'sign-in' || target === 'sign-up') {
+            this.replaceWith('ranking');
+          }
+        }
+      });
     }
   }
 });

@@ -50,13 +50,18 @@ export default Controller.extend({
     },
 
 
+    forgottenPassword(){
+      this.transitionToRoute('forgot-password');
+    },
+
+
     signUp(){
       this.transitionToRoute('sign-up');
     },
 
 
-    forgottenPassword(){
-      this.transitionToRoute('forgot-password');
+    signUpBusiness(){
+      this.transitionToRoute('sign-up-business');
     }
   }
 });

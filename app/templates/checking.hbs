@@ -2,7 +2,7 @@
   {{#app-page-card
     title="Current Status"
     resizeable=true
-    info="This is your current check in status..."
+    info="This is your current status. Here you can check out manually and edit check in time. Check in for the shift will enable you to grade and to be graded by coworkers for the time you worked togeather."
   }}
     {{#if checkedIn}}
       <div class="checkin-status-box">
@@ -57,7 +57,7 @@
   {{#app-page-card
     title="History"
     resizeable=true
-    info="This is history of check ins..."
+    info="Preview of your check in activity."
   }}
     {{#if history.length}}
     <div class="checkin-history-list">
@@ -67,7 +67,7 @@
     </div>
 
     {{else}}
-      <div class="info-message">No history available</div>
+      <div class="info-message">No recent activity</div>
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}
@@ -115,7 +115,7 @@
     title="Check Out"
     active=checkingOut
   }}
-    <p class="prompt-info">Please confirm that you want to check out right now.</p>
+    <p class="prompt-info">Would you like to check out before your automatic check out?</p>
 
     {{custom-dialog-actions
       active=checkingOut

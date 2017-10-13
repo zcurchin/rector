@@ -4,7 +4,7 @@
     class="profile-card"
   }}
     <div class="profile-intro">
-      <div class="profile-image" {{action "editAvatar"}}>          
+      <div class="profile-image" {{action "editAvatar"}}>
         {{#if model.profile.profile_image}}
           <img src="{{model.profile.profile_image}}" alt="">
         {{else}}
@@ -19,9 +19,9 @@
   {{/app-page-card}}
 
   {{#app-page-card
-    title="Your Grade"
+    title="My Grade"
     resizeable=true
-    info="This is your public profile information which is visible by all users. If you want to include details in your profile, edit those below."
+    info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
   }}
     <div class="main-grade layout-row layout-align-start-center">
       <div class="grade-avg-box">
@@ -98,7 +98,7 @@
   {{#app-page-card
     title="Personal Info"
     resizeable=true
-    info="This is your public profile information which is visible by all users. If you want to include details in your profile, edit those below."
+    info="Visible to public. Edit personal information in Edit Profile section bellow."
   }}
     <p class="label">First Name: <span class="value">{{model.profile.first_name}}</span></p>
     <p class="label">Last Name: <span class="value">{{model.profile.last_name}}</span></p>
@@ -138,8 +138,7 @@
 
 {{#if editPersonalInfo}}
   {{#custom-dialog
-    title="Edit Personal Info"
-    info="This is where you edit your profiles personal data"
+    title="Edit Personal Info"    
     active=editPersonalInfo
 
   }}

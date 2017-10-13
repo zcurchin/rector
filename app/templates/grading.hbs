@@ -15,8 +15,7 @@
       </div>
 
       {{#if yesterdayInfo}}
-        <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus lacus non ipsum consequat dapibus. In tempor eros a arcu fringilla pretium. Cras facilisis lobortis erat, eu semper ante vestibulum in. Etiam et libero tortor.</p>
+        <p>Cutoff time is at 3AM after that grading list is restarted! Please grade coworkers performance before cutoff time (after that you won't be able to grade who you worked with today).</p>
       {{/if}}
     </div>
 
@@ -24,7 +23,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus lacus non
   {{#app-page-card
     title="Users to grade"
     resizeable=true
-    info="Those are available users that you can grade at the moment."
+    info="List of coworkers you worked with today. This list is restarted at 3 AM the next day, all grades should be given by that time. After the cutoff time list is restarted and you won't be able to grade coworkers for the previous day."
   }}
     {{#if model.checkedInToday}}
       {{#if model.gradableUsers}}
@@ -40,12 +39,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus lacus non
 
         {{else}}
           <div class="info-message">
-            No gradable users at this moment
+            No one to grade at this moment.
           </div>
         {{/if}}
     {{else}}
       <div class="info-message">
-        You didn't checked in today. In order to grade other users you have to be checked in today at least once.
+        Check in in order to grade coworkers/friends/buddies.
       </div>
     {{/if}}
   {{/app-page-card}}
@@ -53,7 +52,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus lacus non
   {{#app-page-card
     title="Today's History"
     resizeable=true
-    info="Those are grades you gave recently."
+    info="History of grade's you gave today."
   }}
     {{#if model.history}}
       {{#each model.history as |user|}}

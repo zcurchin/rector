@@ -46,7 +46,7 @@ export default Route.extend({
               let all = 0;
 
               Object.keys(grades).forEach((key, index) => {
-                console.log(grades[key]);
+                //console.log(grades[key]);
                 let gradeVal = grades[key].value;
 
                 if (gradeVal !== 0) {
@@ -58,10 +58,12 @@ export default Route.extend({
                   console.log('LAST GRADE');
                   console.log(sum / all);
 
-                  modelObj.grade_average = +(Math.round((sum / all) + "e+2")  + "e-2");
-                  modelObj.grade_total = all;
+                  if (!isNaN(sum / all)) {
+                    modelObj.grade_average = +(Math.round((sum / all) + "e+2")  + "e-2");
+                    modelObj.grade_total = all;
 
-                  model.push(modelObj);
+                    model.push(modelObj);
+                  }
                 }
               });
             }
@@ -70,7 +72,7 @@ export default Route.extend({
               console.log('last profile loaded');
 
               model.sort(function(a, b) {
-                console.log(a, b);
+                //console.log(a, b);
                 if (a.grade_average > b.grade_average) {
                   return -1;
                 } else if (a.grade_average < b.grade_average) {
@@ -80,7 +82,7 @@ export default Route.extend({
                 }
               });
 
-              console.log(model);
+              //console.log(model);
 
               resolve(model);
             }
@@ -91,16 +93,16 @@ export default Route.extend({
   },
 
 
-  getModel(){
-
-  },
-
-
-  getProfiles(){
-    let firebaseApp = get(this, 'firebaseApp');
-
-
-  },
+  // getModel(){
+  //
+  // },
+  //
+  //
+  // getProfiles(){
+  //   let firebaseApp = get(this, 'firebaseApp');
+  //
+  //
+  // },
 
 
   actions: {

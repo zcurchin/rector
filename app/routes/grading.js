@@ -12,7 +12,8 @@ const {
 
 export default Route.extend({
   firebaseApp: service(),
-  overlap_treshold: 135, // minutes
+  // overlap_treshold: 135, // minutes
+  overlap_treshold: 1, // minutes
   after_midnight_treshold: 3, // hours
 
   model(){

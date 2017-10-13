@@ -1,10 +1,25 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var env = EmberApp.env();
+var isProductionLikeBuild = ['production', 'development', 'demo'].indexOf(env) > -1;
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
+    fingerprint: {
+      enabled: isProductionLikeBuild
+    },
+
+    sourcemaps: {
+      enabled: !isProductionLikeBuild,
+    },
+
+    minifyCSS: { enabled: isProductionLikeBuild },
+    minifyJS: { enabled: isProductionLikeBuild },
+
+    tests: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+    hinting: process.env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild
   });
 
   // Use `app.import` to add additional libraries to the generated

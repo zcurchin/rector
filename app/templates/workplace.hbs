@@ -1,5 +1,47 @@
 {{#app-page title="Workplace"}}
-  {{#app-page-card header=false}}
-    Soon
+  {{#app-page-card
+    resizeable=true
+    title="My Current Workplace"
+    info="This is where you are currently employed"
+  }}
+    <div class="info-message">
+      You are not employed at this moment. Try to find business that you want to work for and send them request.
+    </div>
+    <div class="outline-btn" {{action "showFinder"}}>Find Business</div>
   {{/app-page-card}}
 {{/app-page}}
+
+{{#if findingWorkplace}}
+  {{#custom-dialog
+    title="Find Business"
+    active=findingWorkplace
+  }}
+
+    <div class="inner">
+      {{paper-input
+        label="Business Name"
+        type="text"
+        value=searchQuery
+        onChange=(action "queryChanged")
+      }}
+
+      <div class="search-results">
+        {{#each searchResults as |result|}}
+          {{result.name}}
+        {{/each}}
+      </div>
+    </div>
+
+    {{custom-dialog-actions
+      active=findingWorkplace
+      confirmLabel="Send Request"
+      confirmAction=sendRequest
+      waiting=waiting
+      success=success
+      error=error
+      errorMsg=errorMsg
+      successMsg="Successfully send request"
+    }}
+
+  {{/custom-dialog}}
+{{/if}}

@@ -97,8 +97,8 @@ export default Route.extend({
     let hours = date.getHours();
     let after_midnight_treshold = get(this, 'after_midnight_treshold');
 
-    console.log('OOOOOOOOO : hours :', hours);
-    console.log('OOOOOOOOO : after_midnight_treshold :', after_midnight_treshold);
+    console.log('# Route : Grading : hours :', hours);
+    console.log('# Route : Grading : after_midnight_treshold :', after_midnight_treshold);
 
     if (hours < after_midnight_treshold) {
       let startDate = this.getStartTime('date');

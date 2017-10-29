@@ -21,9 +21,7 @@
       }
     },
     "businessProfiles": {
-      "$uid": {
-        ".indexOn": "name"
-      }
+      ".indexOn": "name"
     }
   }
 }

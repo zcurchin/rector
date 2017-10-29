@@ -1,6 +1,7 @@
-<div class="gate-title">Sign Up Business</div>
-<div class="form">
-  {{#paper-form onSubmit=(action "signUpBusiness") as |form|}}
+<div class="{{if hideTemplate "hidden"}}">
+  <div class="gate-title">Sign Up Business</div>
+  <div class="form">
+    {{#paper-form onSubmit=(action "signUpBusiness") as |form|}}
     {{paper-input
       required=true
       label="Business Name"
@@ -33,6 +34,7 @@
     <div class="remote-error">{{error_msg}}</div>
 
     <div class="filled-btn centered" {{action form.onSubmit}}>Create Account</div>
-  {{/paper-form}}
+    {{/paper-form}}
+  </div>
+  <div class="outline-btn centered" {{action "cancel"}}>Cancel</div>  
 </div>
-<div class="outline-btn centered" {{action "cancel"}}>Cancel</div>

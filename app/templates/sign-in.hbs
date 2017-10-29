@@ -1,4 +1,4 @@
-<div class="sign-in">
+<div class="sign-in {{if hideTemplate "hidden"}}">
   <img src="assets/images/yograde_logo_white.svg" class="logo" />
   {{#paper-form onSubmit=(action "signIn") as |form|}}
     <div class="form">

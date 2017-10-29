@@ -10,7 +10,7 @@ const {
 
 
 export default Service.extend({
-  session: service(),
+  session: service(),  
   firebaseApp: service(),
   firebaseUtil: service(),
 

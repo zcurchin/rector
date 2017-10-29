@@ -13,6 +13,7 @@ export default Controller.extend({
   findingWorkplace: false,
   searchQuery: '',
   searchResults: null,
+  selectedBusiness: null,
 
   waiting: false,
   success: false,
@@ -23,8 +24,8 @@ export default Controller.extend({
   sendRequest(dialog){
     let target = dialog._targetObject;
     let query = target.searchQuery;
-    let selectedBusiness = dialog.selectedBusiness;
-    console.log(query, selectedBusiness);
+    let selectedBusiness = target.selectedBusiness;
+    console.log(selectedBusiness);
     //console.log(query);
     dialog.set('waiting', true);
 
@@ -35,7 +36,27 @@ export default Controller.extend({
   },
 
 
+  onCancelDialog(dialog){
+    console.log(dialog._targetObject);
+    let self = dialog._targetObject;
+
+    set(self, 'searchQuery', '');
+    set(self, 'searchResults', null);
+    set(self, 'selectedBusiness', null);
+  },
+
+
   actions: {
+    selectBusiness(item){
+      $('.busines-search-results .item').each(function(){
+        $(this).toggleClass('selected', false);
+      });
+
+      $('#'+item.uid).toggleClass('selected', true);
+      set(this, 'selectedBusiness', item);
+    },
+
+
     showFinder(){
       set(this, 'findingWorkplace', true);
     },
@@ -53,20 +74,29 @@ export default Controller.extend({
 
         console.log(query);
 
-        businessProfiles.orderByChild('name').startAt(query).once('value').then(snap => {
+        businessProfiles.orderByChild('name').startAt(query).endAt(query+"\uf8ff").once('value').then(snap => {
           console.log(snap.val());
+          // console.log(Object.keys(snap.val()).length);
           if (snap.val() !== null) {
             let results = [];
 
             Object.keys(snap.val()).forEach(key => {
-              results.push(snap.val()[key]);
+
+              let obj = snap.val()[key];
+              obj.uid = key;
+              results.push(obj);
             });
 
             set(self, 'searchResults', results);
+
           } else {
             set(self, 'searchResults', null);
           }
         });
+
+      } else if (data.length === 0) {
+        set(self, 'searchResults', null);
+        set(self, 'selectedBusiness', null);
       }
     }
   }

@@ -25,9 +25,18 @@
         onChange=(action "queryChanged")
       }}
 
-      <div class="search-results">
-        {{#each searchResults as |result|}}
-          {{result.name}}
+      <div class="busines-search-results">
+        {{#each searchResults as |item|}}
+          <div id="{{item.uid}}" class="item layout-row layout-align-start-center" {{action "selectBusiness" item}}>
+            {{#if item.profile_image}}
+              <img src="{{item.profile_image}}">
+            {{else}}
+              {{paper-icon "store-mall-directory"}}
+            {{/if}}
+            <div class="name">{{item.name}}</div>
+            <span class="flex"></span>
+            {{paper-icon "check" class="checkmark-icon"}}
+          </div>
         {{/each}}
       </div>
     </div>
@@ -36,6 +45,7 @@
       active=findingWorkplace
       confirmLabel="Send Request"
       confirmAction=sendRequest
+      onClose=onCancelDialog
       waiting=waiting
       success=success
       error=error

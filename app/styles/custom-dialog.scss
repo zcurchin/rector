@@ -279,3 +279,70 @@ md-dialog .md-dialog-content {
     text-align: center;
   }
 }
+
+
+// ----------------------------------------------
+// Business Search Dialog
+// ----------------------------------------------
+
+.busines-search-results {
+  min-height: 10em;
+  box-sizing: border-box;
+
+  .item {
+    margin-top: 0.5em;
+    padding: 0.5em;
+    cursor: pointer;
+    background: #FFF;
+    border-radius: 10px;
+    border: 1px solid #FFF;
+
+    img {
+      width: 3em;
+      height: 3em;
+      display: inline-block;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-right: 1.2em;
+      background: lighten($color-text, 45);
+    }
+
+    md-icon {
+      display: inline-block;
+      font-size: 2.23em;
+      height: 1.4em;
+      margin: 0;
+      margin-right: 0.5em;
+      background: lighten($color-text, 45);
+      color: lighten($color-text, 20);
+      padding: 0.2em;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .name {
+      font-size: 1.2em;
+    }
+
+    .checkmark-icon {
+      display: none;
+      color: color($primary);
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      height: 1em;
+    }
+  }
+
+  .item:first-child {
+    margin-top: 0;
+  }
+
+  .item.selected {
+    border-color: color($primary);
+
+    .checkmark-icon {
+      display: inline-block;
+    }
+  }
+}

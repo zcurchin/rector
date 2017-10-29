@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 const {
   Controller,
@@ -9,6 +10,7 @@ const {
 
 export default Controller.extend({
   firebaseApp: service(),
+  user: service(),
 
   findingWorkplace: false,
   searchQuery: '',
@@ -25,19 +27,50 @@ export default Controller.extend({
     let target = dialog._targetObject;
     let query = target.searchQuery;
     let selectedBusiness = target.selectedBusiness;
-    console.log(selectedBusiness);
-    //console.log(query);
+
     dialog.set('waiting', true);
 
     if (!selectedBusiness) {
+      dialog.set('waiting', false);
       dialog.set('error', true);
       dialog.set('errorMsg', 'You did not select any business to send request to');
+
+    } else {
+      let userId = target.session.content.uid;
+      let businessId = selectedBusiness.uid;
+
+      target.sendRequestToBusiness(userId, businessId).then(() => {
+        dialog.set('success', true);
+
+      }).catch(err => {
+        dialog.set('error', true);
+        dialog.set('errorMsg', 'Sending request failed! Please try again later.');
+      });
     }
   },
 
 
+  sendRequestToBusiness(userId, businessId){
+    let self = this;
+    let firebaseApp = get(this, 'firebaseApp');
+    let businessRequests = firebaseApp.database().ref('businessRequests');
+
+    let data = {
+      timestamp: Date.now(),
+      from: userId
+    };
+
+    return new RSVP.Promise((resolve, reject) => {
+      businessRequests.child(businessId).push(data).then(() => {
+        resolve();
+      }).catch(err => {
+        reject(err);
+      });
+    });
+  },
+
+
   onCancelDialog(dialog){
-    console.log(dialog._targetObject);
     let self = dialog._targetObject;
 
     set(self, 'searchQuery', '');
@@ -72,11 +105,7 @@ export default Controller.extend({
 
         let query = data.charAt(0).toUpperCase() + data.slice(1);
 
-        console.log(query);
-
-        businessProfiles.orderByChild('name').startAt(query).endAt(query+"\uf8ff").once('value').then(snap => {
-          console.log(snap.val());
-          // console.log(Object.keys(snap.val()).length);
+        businessProfiles.orderByChild('name').startAt(query).endAt(query+"\uf8ff").once('value').then(snap => {          
           if (snap.val() !== null) {
             let results = [];
 

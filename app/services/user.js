@@ -10,7 +10,8 @@ const {
 
 
 export default Service.extend({
-  session: service(),  
+  session: service(),
+  notifications: service(),
   firebaseApp: service(),
   firebaseUtil: service(),
 
@@ -150,13 +151,17 @@ export default Service.extend({
     console.log('# Service : User : Setup');
     console.log('--------------------------------');
 
+    let notifications = get(self, 'notifications');
+
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
           self.isCheckedIn();
+          notifications.setup();
           resolve();
 
         } else {
+          notifications.setup();
           resolve();
         }
       }).catch(err => {

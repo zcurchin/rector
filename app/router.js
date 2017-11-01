@@ -21,6 +21,7 @@ Router.map(function() {
   this.route('workplace');
   this.route('employees');
   this.route('business-profile');
+  this.route('business-requests');
 });
 
 export default Router;

@@ -60,11 +60,11 @@
     info="Preview of your check in activity."
   }}
     {{#if history.length}}
-    <div class="checkin-history-list">
-      {{#each history as |check|}}
-        {{checkin-history-item check=check}}
-      {{/each}}
-    </div>
+      <div class="checkin-history-list">
+        {{#each history as |check|}}
+          {{checkin-history-item check=check}}
+        {{/each}}
+      </div>
 
     {{else}}
       <div class="info-message">No recent activity</div>

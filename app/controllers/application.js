@@ -22,6 +22,10 @@ export default Controller.extend({
 
     goToChecking(){
       this.transitionToRoute('checking');
+    },
+
+    goToNotifications(){
+      this.transitionToRoute('notifications');
     }
   }
 });

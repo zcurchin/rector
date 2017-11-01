@@ -1,0 +1,55 @@
+.requests {
+  .item {
+    border-bottom: 1px solid $color-border;
+    padding: 0.6em 0 0.4em;
+    cursor: pointer;
+
+    .avatar {
+      display: inline-block;
+
+      img {
+        display: inline-block;
+        width: 3em;
+        height: 3em;
+        border-radius: 10em;
+        overflow: hidden;
+        background: lighten($color-text, 45);
+        margin-right: 1em;
+        margin-left: 0.2em;
+      }
+
+      md-icon {
+        display: inline-block;
+        font-size: 3.56em;
+        height: 1em;
+        margin-right: 0.2em;
+        color: #DDD;
+      }
+    }
+
+    .text {
+      .name {
+        margin: 0;
+        font-size: 1.2em;
+        color: darken($color-text, 10)
+      }
+
+      .date {
+        color: lighten($color-text, 10);
+        margin: 0;
+        margin-top: 0.5em;
+        font-size: 0.8em;
+      }
+    }
+
+    .icon {
+      md-icon {
+        color: color($primary);        
+      }
+    }
+  }
+
+  .item:last-child {
+    border: none;
+  }
+}

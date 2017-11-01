@@ -19,6 +19,12 @@
     <div class="business">Business</div>
   {{/if}}
 
+  {{#if notifications.total}}
+    <div class="top-bar-btn alert" {{action "goToNotifications"}}>
+      {{paper-icon "notifications"}}
+    </div>
+  {{/if}}
+
   {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
     <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
       {{paper-icon "more-vert"}}
@@ -35,6 +41,8 @@
   }}
 
     {{#paper-content}}
+
+      {{! MAIN-NAV : USER ACCOUNT --}}
 
       {{#if user.accountType.user}}
 
@@ -98,9 +106,8 @@
           <p>Sign Out</p>
         {{/paper-item}}
 
-      {{!
-        BUSINESS ACCOUNT
-      --}}
+
+      {{! MAIN-NAV : BUSINESS ACCOUNT --}}
 
       {{else if user.accountType.business}}
         {{#link-to "ranking"}}
@@ -114,6 +121,21 @@
           {{#paper-item}}
             {{paper-icon "account-circle"}}
             <p>Employees</p>
+          {{/paper-item}}
+        {{/link-to}}
+
+        {{paper-divider}}
+
+        {{#link-to "notifications"}}
+          {{#paper-item}}
+            {{paper-icon "notifications"}}
+            <p>Notifications</p>
+            <span class="flex"></span>
+            {{#if notifications.total}}
+              <div class="counter layout-row layout-align-center-center">
+                <p class="num">{{notifications.total}}</p>
+              </div>
+            {{/if}}
           {{/paper-item}}
         {{/link-to}}
 

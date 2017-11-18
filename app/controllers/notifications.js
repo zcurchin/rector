@@ -2,20 +2,23 @@ import Ember from 'ember';
 
 const {
   Controller,
-  inject: { service },
-  get
+  inject: { service }
 } = Ember;
+
 
 export default Controller.extend({
   notifications: service(),
+  user: service(),
+
 
   actions: {
-    hallo(data){
-      let notifications = get(this, 'notifications');
-      // console.log(notifications);
-      // console.log(data);
+    launchAllowDialog(name){
+      console.log('launchAllowDialog :', name);
+    },
 
-      notifications.removeBusinessRequest(data);
+
+    launchDenyDialog(name){
+      console.log('launchDenyDialog :', name);
     }
   }
 });

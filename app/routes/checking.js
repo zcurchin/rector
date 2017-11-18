@@ -19,7 +19,7 @@ export default Route.extend({
     return new RSVP.Promise((resolve, reject) => {
       user.getCheckIns().then(data => {
         if (data.val()) {
-          console.log(data.val());
+          //console.log(data.val());
           resolve(data.val());
 
         } else {
@@ -37,7 +37,7 @@ export default Route.extend({
 
     let user = get(this, 'user');
 
-    console.log('# setupController : model :', model);
+    //console.log('# setupController : model :', model);
 
     if (!model) {
       controller.set('checkedIn', false);
@@ -50,16 +50,16 @@ export default Route.extend({
 
         if (index === keys.length - 1) {
           let lastCheckIn = model[key];
-          console.log('### LAST');
+          //console.log('### LAST');
 
           if (lastCheckIn.out > Date.now()) {
-            console.log('### CHECKED IN');
+            //console.log('### CHECKED IN');
             controller.set('checkedIn', model[key].in);
             controller.set('autoCheckOut', model[key].out);
             set(user, 'checkedIn', true);
 
           } else {
-            console.log('### CHECKED OUT');
+            //console.log('### CHECKED OUT');
             controller.set('checkedIn', false);
             controller.set('checkedOut_value', model[key].out);
             set(user, 'checkedIn', false);
@@ -68,7 +68,7 @@ export default Route.extend({
           }
 
         } else {
-          console.log('### NOT LAST');
+          //console.log('### NOT LAST');
           history.push(model[key]);
         }
       });

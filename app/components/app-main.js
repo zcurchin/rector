@@ -18,7 +18,7 @@ export default Component.extend({
   didInsertElement(){
     this.$('md-card-content').css({
       height: this.$('.inner-sidenav').height()
-    });
+    });    
 
     this.$(window).on('resize', () => {
       this.$('md-card-content').css({

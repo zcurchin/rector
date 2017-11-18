@@ -29,7 +29,7 @@ export default Route.extend({
       let user = get(this, 'user');
 
       user.setup().then(() => {
-        console.log('get(self, "accountType.user")', user.accountType.user);
+        //console.log('get(self, "accountType.user")', user.accountType.user);
 
         if (user.accountType.user) {
           if (target === 'index' || target === 'sign-in' || target === 'sign-up') {

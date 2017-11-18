@@ -3,7 +3,19 @@ import PaperInput from 'ember-paper/components/paper-input';
 export default PaperInput.extend({
   passwordIcon: 'visibility',
 
-  didRender(){
+  // didRender(){
+  //   this._super(...arguments);
+  //
+  //   this.$('input').attr({
+  //     autocomplete: "off",
+  //     autocorrect: "off",
+  //     autocapitalize: "off",
+  //     spellcheck: "false"
+  //   });
+  // },
+
+
+  didInsertElement(){
     this._super(...arguments);
 
     this.$('input').attr({
@@ -13,6 +25,7 @@ export default PaperInput.extend({
       spellcheck: "false"
     });
   },
+
 
   actions: {
     togglePasswordVisibility(){

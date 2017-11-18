@@ -76,3 +76,31 @@
   text-align: center;
   padding: 0.5em;
 }
+
+
+
+// ----------------------------------------------
+// SELECT
+// ----------------------------------------------
+
+.ember-basic-dropdown-content {
+  z-index: 1000 !important;
+}
+
+.md-select-menu-container.md-active md-select-menu {
+  width: 80%;
+  // margin-left: 0.4em;
+  border-radius: 10px;
+  box-shadow: 0 4px 36px 0px rgba(0, 0, 0, 0.3);
+}
+
+.requests md-input-container {
+  margin: 2.5em 0 0;
+  font-size: 1.4em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+md-select-menu.md-default-theme {
+  font-size: 1.5em;
+}

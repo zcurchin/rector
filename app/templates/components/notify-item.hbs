@@ -1,0 +1,57 @@
+<div class="layout-row layout-align-start-center" {{action "toggleRespond"}}>
+  <div class="avatar">
+    {{#if item.profile_image}}
+      <img src="{{item.profile_image}}">
+    {{else}}
+      {{paper-icon "account-circle"}}
+    {{/if}}
+  </div>
+  <div class="text">
+    <p class="name">{{item.first_name}} {{item.last_name}}</p>
+    <p class="date">{{moment-format item.timestamp "MMMM Do, h:mm a"}}</p>
+  </div>
+
+  <span class="flex"></span>
+
+  {{#if respond}}
+    <div class="icon">{{paper-icon "close"}}</div>
+  {{else}}
+    <div class="icon no-color">{{paper-icon "event-note"}}</div>
+  {{/if}}
+</div>
+
+{{#if respond}}
+  {{#if isInitial}}
+    <div class="respond-box layout-row layout-align-center-center">
+      <div>
+        <div class="outline-btn" {{action "denyRequest"}}>Deny</div>
+        <div class="outline-btn" {{action "approveRequest"}}>Approve</div>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if isApprove}}
+
+    {{#paper-select
+      required=true
+      label="Assign job title"
+      selected=selectedJobTitle
+      options=jobTitles
+      onChange=(action (mut selectedJobTitle)) as |jobTitle|}}
+      {{jobTitle}}
+
+    {{/paper-select}}
+
+
+    <div class="respond-box layout-row layout-align-center-center">
+      <div class="outline-btn" {{action "approveRequest"}}>Add as Employee</div>
+    </div>
+  {{/if}}
+
+  {{#if isDeny}}
+    <div class="info-message">Do you really want to deny this request?</div>
+    <div class="respond-box layout-row layout-align-center-center">
+      <div class="outline-btn" {{action "approveRequest"}}>Yes, Deny</div>
+    </div>
+  {{/if}}
+{{/if}}

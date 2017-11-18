@@ -44,12 +44,27 @@
 
     .icon {
       md-icon {
-        color: color($primary);        
+        color: color($primary);
+      }
+    }
+
+    .icon.no-color {
+      md-icon {
+        color: lighten($color-text, 25);
       }
     }
   }
 
+  .info-message {
+    text-align: center;
+    margin-top: 2.6em;
+  }
+
   .item:last-child {
     border: none;
+  }
+
+  .respond-box {
+    margin: 2em 0;
   }
 }

@@ -1,68 +1,65 @@
-{{#app-page title="Notifications"}}
 
-  <!-- REQUESTS -->
+{{#if notifications.ready}}
+  {{#app-page title="Notifications"}}
 
-  {{#if notifications.requests}}
+    <!-- REQUESTS -->
+
+    {{#if user.accountType.business}}
+      {{#app-page-card
+        title="Requests"
+        title_count=notifications.requests.length
+        resizeable=true
+        info="Those are requests came from the people who want to join your business and you didn't respond to their request."
+      }}
+        {{#if notifications.requests.length}}
+          <div class="requests">
+            {{#each notifications.requests as |request|}}
+              {{notify-item
+                item=request
+                onAllowRequest=(action "launchAllowDialog")
+                onDenyRequest=(action "launchDenyDialog")
+              }}
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="info-message">No requests yet.</div>
+        {{/if}}
+      {{/app-page-card}}
+    {{/if}}
+
+    <!-- MESSAGES -->
+
     {{#app-page-card
-      title="Requests"
+      title="Messages"
       resizeable=true
-      info="Those are requests came from the people who want to join your business and you didn't respond to their request."
+      info="Those are notification messages."
     }}
-      {{#if notifications.requests.length}}
-        <div class="requests">
-          {{#each notifications.requests as |request|}}
-            <div class="item layout-row layout-align-start-center" {{action "hallo" request}}>
+      {{#if notifications.messages.length}}
+        <div class="messages">
+          {{#each notifications.messages as |message|}}
+            <div class="item layout-row layout-align-start-center">
               <div class="avatar">
-                {{#if request.profile_image}}
-                  <img src="{{request.profile_image}}">
+                {{#if message.profile_image}}
+                  <img src="{{message.profile_image}}">
                 {{else}}
                   {{paper-icon "account-circle"}}
                 {{/if}}
               </div>
               <div class="text">
-                <p class="name">{{request.first_name}} {{request.last_name}}</p>
+                <p class="name">{{message.first_name}} {{message.last_name}}</p>
                 <p class="date">{{moment-format request.timestamp "MMMM Do, h:mm a"}}</p>
-              </div>
-              <span class="flex"></span>
-              <div class="icon">
-                {{paper-icon "reply"}}
               </div>
             </div>
           {{/each}}
         </div>
       {{else}}
-        <div class="info-message">No requests yet.</div>
+        <div class="info-message">No messages yet.</div>
       {{/if}}
     {{/app-page-card}}
-  {{/if}}
+  {{/app-page}}
 
-  <!-- MESSAGES -->
-
-  {{#app-page-card
-    title="Messages"
-    resizeable=true
-    info="Those are notification messages."
-  }}
-    {{#if notifications.messages.length}}
-      <div class="messages">
-        {{#each notifications.messages as |message|}}
-          <div class="item layout-row layout-align-start-center">
-            <div class="avatar">
-              {{#if message.profile_image}}
-                <img src="{{message.profile_image}}">
-              {{else}}
-                {{paper-icon "account-circle"}}
-              {{/if}}
-            </div>
-            <div class="text">
-              <p class="name">{{message.first_name}} {{message.last_name}}</p>
-              <p class="date">{{moment-format request.timestamp "MMMM Do, h:mm a"}}</p>
-            </div>
-          </div>
-        {{/each}}
-      </div>
-    {{else}}
-      <div class="info-message">No messages yet.</div>
-    {{/if}}
-  {{/app-page-card}}
-{{/app-page}}
+{{else}}
+  <div class="content-preloader layout-align-center-center layout-row">
+    {{paper-progress-circular diameter=60}}
+  </div>
+{{/if}}

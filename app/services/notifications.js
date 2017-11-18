@@ -14,6 +14,7 @@ export default Service.extend({
   user: service(),
   firebaseApp: service(),
 
+  ready: false,
   total: 0,
   requests: [],
   messages: [],
@@ -25,14 +26,16 @@ export default Service.extend({
     let firebaseApp = get(this, 'firebaseApp');
     let accountType = get(this, 'user').accountType;
 
+    console.log('# Service : Notifications : setup');
+
     if (accountType.business) {
       firebaseApp.database().ref('businessRequests').child(uid).on('value', snap => {
         let val = snap.val();
-        set(self, 'requests', []);
+        //set(self, 'requests', []);
 
         if (val) {
           let total_reqs = Object.keys(val).length;
-          console.log(total_reqs);
+          console.log('# Service : Notifications :', total_reqs);
 
           if (total_reqs > 0) {
             set(self, 'total', total_reqs);
@@ -59,6 +62,7 @@ export default Service.extend({
 
               if (index + 1 === total_reqs) {
                 set(self, 'requests', reqs.reverse());
+                set(self, 'ready', true);
               }
             });
           });
@@ -68,10 +72,12 @@ export default Service.extend({
   },
 
 
-  removeBusinessRequest(data){
+  removeRequest(data){
     let firebaseApp = get(this, 'firebaseApp');
     console.log(data);
 
-    firebaseApp.database().ref('businessRequests').child(data.uid).remove();
+    this.requests.removeObject(data);
+    this.decrementProperty('total');
+    //firebaseApp.database().ref('businessRequests').child(data.uid).remove();
   }
 });

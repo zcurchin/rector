@@ -122,7 +122,7 @@ export default Service.extend({
             console.log('DELETE REQUEST');
 
             if (total > 0) {
-              self.decrementProperty('total');              
+              self.decrementProperty('total');
             }
 
           } else {
@@ -221,23 +221,37 @@ export default Service.extend({
     let businessEmployeesRef = firebaseApp.database().ref('businessEmployees').child(business_id);
 
     let data = {
-      user_id: userId,
       created: Date.now(),
       job_title: jobTitle,
       manager: isManager
     };
 
-    return businessEmployeesRef.push(data).then(() => {
-      return self.removeRequest(requestObj.request_id).then(() => {
-        self.requests.removeObject(requestObj);
+    return new RSVP.Promise((resolve, reject) => {
+      businessEmployeesRef.child(userId).once('value', function(snapshot) {
+        var exists = (snapshot.val() !== null);
+        //userExistsCallback(userId, exists);
+        console.log('# Service : Notifications : addEmployee : exists :', exists);
 
-        console.log('requests.length :', self.requests.length);
+        if (exists) {
+          resolve(true);
+        } else {
+          // resolve(false);
+          businessEmployeesRef.child(userId).set(data).then(() => {
+            self.removeRequest(requestObj.request_id).then(() => {
+              self.requests.removeObject(requestObj);
 
-        if (self.requests.length  > 0 && total > 0) {
-          self.decrementProperty('total');
+              console.log('requests.length :', self.requests.length);
+
+              if (self.requests.length  > 0 && total > 0) {
+                self.decrementProperty('total');
+              }
+
+              resolve(false);
+            });
+          });
         }
       });
-    })
+    });
   },
 
 

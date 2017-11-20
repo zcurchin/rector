@@ -70,10 +70,14 @@ export default Component.extend({
       let jobTitle = get(this, 'selectedJobTitle');
       let isManager = get(this, 'isManager');
 
-      let toastText = 'Successfully added ' + user.first_name + ' ' + user.last_name + ' as employee';
+      let employeeName = user.first_name + ' ' + user.last_name;
+      let successMsg = 'Successfully added ' + employeeName + ' as employee';
+      let errorMsg = 'You already added ' + employeeName + ' to your employees list';
 
-      notifications.addEmployee(user.uid, jobTitle, isManager, user).then(() => {
-        paperToaster.show(toastText, {
+      notifications.addEmployee(user.uid, jobTitle, isManager, user).then(exists => {
+        let toasterText = exists ? errorMsg : successMsg;
+
+        paperToaster.show(toasterText, {
           duration: 7000,
           position: 'bottom right'
         });

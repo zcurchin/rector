@@ -57,7 +57,7 @@ export default Controller.extend({
 
     let data = {
       timestamp: Date.now(),
-      from: userId
+      sender_uid: userId
     };
 
     return new RSVP.Promise((resolve, reject) => {
@@ -105,7 +105,7 @@ export default Controller.extend({
 
         let query = data.charAt(0).toUpperCase() + data.slice(1);
 
-        businessProfiles.orderByChild('name').startAt(query).endAt(query+"\uf8ff").once('value').then(snap => {          
+        businessProfiles.orderByChild('name').startAt(query).endAt(query+"\uf8ff").once('value').then(snap => {
           if (snap.val() !== null) {
             let results = [];
 

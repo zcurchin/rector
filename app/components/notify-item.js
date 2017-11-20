@@ -62,6 +62,10 @@ export default Component.extend({
 
 
     addEmployee(){
+      if (get(this, 'preloader')) { return; }
+
+      console.log('# Component : notifyItem : addEmployee');
+
       let self = this;
       let user = get(this, 'item');
       let notifications = get(this, 'notifications');
@@ -74,8 +78,14 @@ export default Component.extend({
       let successMsg = 'Successfully added ' + employeeName + ' as employee';
       let errorMsg = 'You already added ' + employeeName + ' to your employees list';
 
-      notifications.addEmployee(user.uid, jobTitle, isManager, user).then(exists => {
+      set(self, 'preloader', true);
+
+      notifications.addEmployee(user.sender_uid, jobTitle, isManager, user).then(exists => {
         let toasterText = exists ? errorMsg : successMsg;
+
+        if (exists) {
+          set(self, 'preloader', false);
+        }
 
         paperToaster.show(toasterText, {
           duration: 7000,

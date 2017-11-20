@@ -14,7 +14,7 @@
         {{#if notifications.requests.length}}
           <div class="requests">
             {{#each notifications.requests as |request|}}
-              {{notify-item item=request}}
+              {{notify-item item=request type="request"}}
             {{/each}}
           </div>
         {{else}}
@@ -33,19 +33,7 @@
       {{#if notifications.messages.length}}
         <div class="messages">
           {{#each notifications.messages as |message|}}
-            <div class="item layout-row layout-align-start-center">
-              <div class="avatar">
-                {{#if message.profile_image}}
-                  <img src="{{message.profile_image}}">
-                {{else}}
-                  {{paper-icon "account-circle"}}
-                {{/if}}
-              </div>
-              <div class="text">
-                <p class="name">{{message.first_name}} {{message.last_name}}</p>
-                <p class="date">{{moment-format request.timestamp "MMMM Do, h:mm a"}}</p>
-              </div>
-            </div>
+            {{notify-item item=message type="message"}}
           {{/each}}
         </div>
       {{else}}

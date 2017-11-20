@@ -7,7 +7,7 @@
     {{/if}}
   </div>
   <div class="text">
-    <p class="name">{{item.first_name}} {{item.last_name}}</p>
+    <p class="name">{{item.name}}</p>
     <p class="date">{{moment-format item.timestamp "MMMM Do, h:mm a"}}</p>
   </div>
 
@@ -16,7 +16,11 @@
   {{#if respond}}
     <div class="icon">{{paper-icon "close"}}</div>
   {{else}}
-    <div class="icon no-color">{{paper-icon "event-note"}}</div>
+    {{#if item.message_id}}
+      <div class="icon no-color">{{paper-icon "email"}}</div>
+    {{else}}
+      <div class="icon no-color">{{paper-icon "event-note"}}</div>
+    {{/if}}
   {{/if}}
 </div>
 

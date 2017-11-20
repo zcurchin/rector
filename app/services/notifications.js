@@ -86,12 +86,12 @@ export default Service.extend({
             return {
               request_id: Object.keys(val)[index],
               timestamp: val[req].timestamp,
-              uid: val[req].from
+              sender_uid: val[req].sender_uid
             };
           });
 
           reqs.forEach((req, index) => {
-            let sender_profile_uid = req.uid;
+            let sender_profile_uid = req.sender_uid;
 
             firebaseApp.database().ref('userProfiles').child(sender_profile_uid).once('value', snap => {
               let profile = snap.val();
@@ -100,6 +100,8 @@ export default Service.extend({
               Object.keys(profile).forEach(prof_key => {
                 req[prof_key] = profile[prof_key];
               });
+
+              req.name = profile.first_name + ' ' + profile.last_name;
 
               if (index + 1 === total_reqs) {
                 reqs.reverse();
@@ -138,8 +140,11 @@ export default Service.extend({
   handleMessages(){
     let self = this;
     let uid = get(this, 'session').get('uid');
+    let user = get(this, 'user');
     let firebaseApp = get(this, 'firebaseApp');
     let messagesRef = firebaseApp.database().ref('messages');
+
+    console.log('# Service : Notifications : handleMessages');
 
     return new RSVP.Promise((resolve, reject) => {
       messagesRef.child(uid).on('value', snap => {
@@ -150,54 +155,84 @@ export default Service.extend({
           let total = get(self, 'total');
           let messages = get(self, 'messages');
 
+          console.log('# Service : Notifications : value :', val);
+
           console.log('# Service : Notifications : total :', total);
-          console.log('# Service : Notifications : current messages :', messages.length);
-          console.log('# Service : Notifications : total messages :', total_msgs);
+          console.log('# Service : Notifications : local messages :', messages.length);
+          console.log('# Service : Notifications : remote messages :', total_msgs);
 
-          return;
+          // if requests.length <
+          if (total_msgs < messages.length) {
+            console.log('DELETNG MESSAGE');
 
-          if (requests.length === 0) {
-            set(self, 'total', total + total_reqs);
+            if (total > 0) {
+              self.decrementProperty('total');
+            }
 
           } else {
-            self.incrementProperty('total');
+            console.log('WE ARE ADDING MESSAGE');
+            set(self, 'total', total + total_msgs);
           }
 
-          let reqs = Object.keys(val).map((req, index) => {
+          let msgs = Object.keys(val).map((msg, index) => {
             //console.log(val[req]);
             return {
-              request_id: Object.keys(val)[index],
-              timestamp: val[req].timestamp,
-              uid: val[req].from
+              message_id: Object.keys(val)[index],
+              business: val[msg].business,
+              timestamp: val[msg].timestamp,
+              sender_uid: val[msg].sender_uid,
+              title: val[msg].title,
+              text: val[msg].text
             };
           });
 
-          reqs.forEach((req, index) => {
-            let sender_profile_uid = req.uid;
+          console.log('# Service : Notifications : msgs :', msgs);
 
-            firebaseApp.database().ref('userProfiles').child(sender_profile_uid).once('value', snap => {
+          msgs.forEach((msg, index) => {
+            let dbRef = msg.business ? 'businessProfiles' : 'userProfiles';
+
+            firebaseApp.database().ref(dbRef).child(msg.sender_uid).once('value', snap => {
               let profile = snap.val();
-              //console.log(Object.keys(profile));
+              // console.log(Object.keys(profile));
+              console.log(profile);
 
               Object.keys(profile).forEach(prof_key => {
-                req[prof_key] = profile[prof_key];
+                msg[prof_key] = profile[prof_key];
               });
 
-              if (index + 1 === total_reqs) {
-                reqs.reverse();
-                set(self, 'requests', reqs);
-                resolve(reqs);
+              if (profile.name) {
+                msg.name = profile.name;
+              } else {
+                msg.name = profile.first_name + ' ' + profile.last_name;
+              }
+
+              if (index + 1 === total_msgs) {
+                msgs.reverse();
+                set(self, 'messages', msgs);
+                resolve(msgs);
               }
             });
           });
 
         } else {
-          let messages = get(this, 'requests');
+          let total = get(self, 'total');
+          let messages = get(self, 'messages');
+          ///let total = get(self, 'total');
+          console.log("MESSAGES IS NULL");
+          // console.log("total :", total);
+          console.log("local messages  :", messages.length);
+          console.log("remote messages :", val);
 
-          if (messages.length === 0) {
-            resolve([]);
+          if (messages.length > 0) {
+            console.log('DELETE MESSAGE');
+
+            if (total > 0) {
+              self.decrementProperty('total');
+            }
+
           } else {
-            self.decrementProperty('total');
+            console.log('SET MESSAGES AS 0');
+            resolve([]);
           }
         }
       });
@@ -246,11 +281,30 @@ export default Service.extend({
                 self.decrementProperty('total');
               }
 
-              resolve(false);
+              let text = 'We added you to as ' +  jobTitle;
+
+              self.sendMessage(userId, text).then(() => {
+                resolve(false);
+              });
             });
           });
         }
       });
+    });
+  },
+
+
+  sendMessage(userId, text){
+    let firebaseApp = get(this, 'firebaseApp');
+    let senderId = get(this, 'session').get('uid');
+    let messagesRef = firebaseApp.database().ref('messages').child(userId);
+    let user = get(this, 'user');
+
+    return messagesRef.push({
+      business: user.accountType.business,
+      sender_uid: senderId,
+      timestamp: Date.now(),
+      text: text
     });
   },
 

@@ -9,6 +9,7 @@ const {
 
 
 export default Component.extend({
+  paperToaster: service(),
   notifications: service(),
   classNames: ['item'],
   item: null,
@@ -22,20 +23,32 @@ export default Component.extend({
   isApprove: false,
   isDeny: false,
 
-  selectedJobTitle: 'server',
+  isManager: false,
+
+  selectedJobTitle: 'Server',
 
   jobTitles: [
-    'server',
-    'runner',
-    'expo',
-    'host',
-    'bartender',
-    'bar back',
-    'barista',
-    'sommelier',
-    'polisher',
-    'porter'
+    'Server',
+    'Runner',
+    'Expo',
+    'Host',
+    'Bartender',
+    'Bar Back',
+    'Barista',
+    'Sommelier',
+    'Polisher',
+    'Porter'
   ],
+
+  preloader: false,
+
+
+  removeItem(){
+    let notifications = get(this, 'notifications');
+    let item = get(this, 'item');
+
+    notifications.removeRequest(item);
+  },
 
 
   actions: {
@@ -48,11 +61,23 @@ export default Component.extend({
     },
 
 
-    removeItem(){
+    addEmployee(){
+      let self = this;
+      let user = get(this, 'item');
       let notifications = get(this, 'notifications');
-      let item = get(this, 'item');
+      let paperToaster = get(this, 'paperToaster');
 
-      notifications.removeRequest(data);
+      let jobTitle = get(this, 'selectedJobTitle');
+      let isManager = get(this, 'isManager');
+
+      let toastText = 'Successfully added ' + user.first_name + ' ' + user.last_name + ' as employee';
+
+      notifications.addEmployee(user.uid, jobTitle, isManager, user).then(() => {
+        paperToaster.show(toastText, {
+          duration: 7000,
+          position: 'bottom right'
+        });
+      });
     },
 
 

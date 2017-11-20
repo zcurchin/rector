@@ -14,11 +14,7 @@
         {{#if notifications.requests.length}}
           <div class="requests">
             {{#each notifications.requests as |request|}}
-              {{notify-item
-                item=request
-                onAllowRequest=(action "launchAllowDialog")
-                onDenyRequest=(action "launchDenyDialog")
-              }}
+              {{notify-item item=request}}
             {{/each}}
           </div>
         {{else}}

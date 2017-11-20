@@ -80,6 +80,27 @@
 
 
 // ----------------------------------------------
+// CHECKBOX
+// ----------------------------------------------
+
+md-checkbox.md-default-theme.md-checked .md-icon,
+md-checkbox.md-checked .md-icon {
+  background-color: color($primary);
+}
+
+md-checkbox.md-default-theme:not(.md-checked) .md-icon,
+md-checkbox:not(.md-checked) .md-icon {
+  border-color: $color-text;
+}
+
+md-checkbox .md-label {
+  color: $color-text;
+  font-size: 1.1em;
+}
+
+
+
+// ----------------------------------------------
 // SELECT
 // ----------------------------------------------
 

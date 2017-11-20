@@ -43,8 +43,16 @@
     {{/paper-select}}
 
 
+    {{#paper-checkbox value=isManager onChange=(action (mut isManager))}}
+      Add as manager
+    {{/paper-checkbox}}
+
+    <div class="preloader {{if preloader 'visible' 'hidden'}}">
+      {{paper-progress-linear}}
+    </div>
+
     <div class="respond-box layout-row layout-align-center-center">
-      <div class="outline-btn" {{action "approveRequest"}}>Add as Employee</div>
+      <div class="outline-btn" {{action "addEmployee"}}>Add Employee</div>
     </div>
   {{/if}}
 

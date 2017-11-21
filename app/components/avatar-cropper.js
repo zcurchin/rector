@@ -9,6 +9,7 @@ const {
 
 export default imageCropper.extend({
   avatar: service(),
+  user: service(),
   firebaseApp: service(),
   session: service(),
 
@@ -36,12 +37,15 @@ export default imageCropper.extend({
 
   actions: {
     saveImage() {
-      let self = this;      
+      let self = this;
       let session = get(this, 'session');
+      let user = get(this, 'user');
       let currentUser = session.get('currentUser');
       let container = this.$(this.get('cropperContainer'));
       let firebaseApp = get(this, 'firebaseApp');
       let storageRef = firebaseApp.storage().ref();
+
+      console.log('KKKKKKKKKKKKKKKKKK : SAVE IMAGE');
 
       set(this, 'savingAvatar', true);
 
@@ -67,13 +71,18 @@ export default imageCropper.extend({
         height: 400
 
       }).toBlob(function(blob){
+        console.log('# AVATRA CROPPER : container.cropper.toBlob :', user.accountType.business);
         var avatarRef = storageRef.child('avatars/'+currentUser.uid+'.jpg');
         var metadata = {
           contentType: 'image/jpeg',
         };
 
         avatarRef.put(blob, metadata).then(function(snapshot) {
-          let profileRef = firebaseApp.database().ref('userProfiles/' + currentUser.uid);
+          console.log('KKKKKKKKKKKKKKKKKK:', user.accountType.business);
+          let profilesRefStr = user.accountType.business ? 'businessProfiles' : 'userProfiles';
+          let profileRef = firebaseApp.database().ref(profilesRefStr + '/' + currentUser.uid);
+
+          console.log(profilesRefStr);
 
           profileRef.update({
             profile_image: snapshot.downloadURL
@@ -96,7 +105,7 @@ export default imageCropper.extend({
 
 
     closeAvatarDialog(){
-      console.log('DDDDD');
+      console.log('closeAvatarDialog');
       let avatar = get(this, 'avatar');
       avatar.close();
       set(this, 'showAvatarDialog', false);

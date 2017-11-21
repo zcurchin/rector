@@ -25,45 +25,55 @@
 </div>
 
 {{#if respond}}
-  {{#if isInitial}}
-    <div class="respond-box layout-row layout-align-center-center">
-      <div>
-        <div class="outline-btn" {{action "denyRequest"}}>Deny</div>
-        <div class="outline-btn" {{action "approveRequest"}}>Approve</div>
-      </div>
-    </div>
-  {{/if}}
-
-  {{#if isApprove}}
-
-    {{#paper-select
-      required=true
-      label="Assign job title"
-      selected=selectedJobTitle
-      options=jobTitles
-      onChange=(action (mut selectedJobTitle)) as |jobTitle|}}
-      {{jobTitle}}
-
-    {{/paper-select}}
-
-
-    {{#paper-checkbox value=isManager onChange=(action (mut isManager))}}
-      Add as manager
-    {{/paper-checkbox}}
+  {{#if item.message_id}}
+    <p class="body">{{item.text}}</p>
 
     <div class="preloader {{if preloader 'visible' 'hidden'}}">
       {{paper-progress-linear}}
     </div>
-
+    
     <div class="respond-box layout-row layout-align-center-center">
-      <div class="outline-btn" {{action "addEmployee"}}>Add Employee</div>
+      <div class="outline-btn" {{action "deleteMessage"}}>Delete Message</div>
     </div>
-  {{/if}}
 
-  {{#if isDeny}}
-    <div class="info-message">Do you really want to deny this request?</div>
-    <div class="respond-box layout-row layout-align-center-center">
-      <div class="outline-btn" {{action "approveRequest"}}>Yes, Deny</div>
-    </div>
+  {{else}}
+    {{#if isInitial}}
+      <div class="respond-box layout-row layout-align-center-center">
+        <div>
+          <div class="outline-btn" {{action "denyRequest"}}>Deny</div>
+          <div class="outline-btn" {{action "approveRequest"}}>Approve</div>
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if isApprove}}
+      {{#paper-select
+        required=true
+        label="Assign job title"
+        selected=selectedJobTitle
+        options=jobTitles
+        onChange=(action (mut selectedJobTitle)) as |jobTitle|}}
+        {{jobTitle}}
+      {{/paper-select}}
+
+      {{#paper-checkbox value=isManager onChange=(action (mut isManager))}}
+        Add as manager
+      {{/paper-checkbox}}
+
+      <div class="preloader {{if preloader 'visible' 'hidden'}}">
+        {{paper-progress-linear}}
+      </div>
+
+      <div class="respond-box layout-row layout-align-center-center">
+        <div class="outline-btn" {{action "addEmployee"}}>Add Employee</div>
+      </div>
+    {{/if}}
+
+    {{#if isDeny}}
+      <div class="info-message">Do you really want to deny this request?</div>
+      <div class="respond-box layout-row layout-align-center-center">
+        <div class="outline-btn" {{action "approveRequest"}}>Yes, Deny</div>
+      </div>
+    {{/if}}
   {{/if}}
 {{/if}}

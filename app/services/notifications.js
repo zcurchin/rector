@@ -4,6 +4,7 @@ import RSVP from 'rsvp';
 const {
   Service,
   inject: { service },
+  observer,
   get,
   set
 } = Ember;
@@ -15,9 +16,23 @@ export default Service.extend({
   firebaseApp: service(),
 
   ready: false,
+
   total: 0,
+
   requests: [],
   messages: [],
+
+
+  onMessagesChanged: observer('messages', 'requests', function(){
+    let requests = get(this, 'requests');
+    let messages = get(this, 'messages');
+
+    console.log('######### TOTAL CHANGED');
+    console.log(messages.length, requests.length);
+
+    set(this, 'total', messages.length + requests.length);
+
+  }),
 
 
   setup(){
@@ -59,27 +74,29 @@ export default Service.extend({
       businessRequestsRef.child(uid).on('value', snap => {
         let val = snap.val();
 
+        console.log('##### REQUESTS CHANGED :', val);
+
         if (val) {
           let total_reqs = Object.keys(val).length;
-          let total = get(self, 'total');
-          let requests = get(self, 'requests');
-
-          console.log('# Service : Notifications : total :', total);
-          console.log('# Service : Notifications : local requests :', requests.length);
-          console.log('# Service : Notifications : remote requests :', total_reqs);
-
-          // if requests.length <
-          if (total_reqs < requests.length) {
-            console.log('DELETNG REQUESTS');
-
-            if (total > 0) {
-              self.decrementProperty('total');
-            }
-
-          } else {
-            console.log('WE ARE ADDING REQUEST');
-            set(self, 'total', total + total_reqs);
-          }
+          // let total = get(self, 'total');
+          // let requests = get(self, 'requests');
+          //
+          // console.log('# Service : Notifications : total :', total);
+          // console.log('# Service : Notifications : local requests :', requests.length);
+          // console.log('# Service : Notifications : remote requests :', total_reqs);
+          //
+          // // if requests.length <
+          // if (total_reqs < requests.length) {
+          //   console.log('DELETNG REQUESTS');
+          //
+          //   if (total > 0) {
+          //     self.decrementProperty('total');
+          //   }
+          //
+          // } else {
+          //   console.log('WE ARE ADDING REQUEST');
+          //   set(self, 'total', total + total_reqs);
+          // }
 
           let reqs = Object.keys(val).map((req, index) => {
             //console.log(val[req]);
@@ -112,25 +129,28 @@ export default Service.extend({
           });
 
         } else {
-          let total = get(self, 'total');
-          let requests = get(self, 'requests');
-          ///let total = get(self, 'total');
-          console.log("REQUEST IS NULL");
-          // console.log("total :", total);
-          console.log("local requests  :", requests.length);
-          console.log("remote requests :", val);
+          set(self, 'requests', []);
+          resolve([]);
 
-          if (requests.length > 0) {
-            console.log('DELETE REQUEST');
-
-            if (total > 0) {
-              self.decrementProperty('total');
-            }
-
-          } else {
-            console.log('SET REQUESTS AS 0');
-            resolve([]);
-          }
+          // let total = get(self, 'total');
+          // let requests = get(self, 'requests');
+          // ///let total = get(self, 'total');
+          // console.log("REQUEST IS NULL");
+          // // console.log("total :", total);
+          // console.log("local requests  :", requests.length);
+          // console.log("remote requests :", val);
+          //
+          // if (requests.length > 0) {
+          //   console.log('DELETE REQUEST');
+          //
+          //   if (total > 0) {
+          //     self.decrementProperty('total');
+          //   }
+          //
+          // } else {
+          //   console.log('SET REQUESTS AS 0');
+          //   resolve([]);
+          // }
         }
       });
     });
@@ -152,27 +172,27 @@ export default Service.extend({
 
         if (val) {
           let total_msgs = Object.keys(val).length;
-          let total = get(self, 'total');
-          let messages = get(self, 'messages');
-
-          console.log('# Service : Notifications : value :', val);
-
-          console.log('# Service : Notifications : total :', total);
-          console.log('# Service : Notifications : local messages :', messages.length);
-          console.log('# Service : Notifications : remote messages :', total_msgs);
-
-          // if requests.length <
-          if (total_msgs < messages.length) {
-            console.log('DELETNG MESSAGE');
-
-            if (total > 0) {
-              self.decrementProperty('total');
-            }
-
-          } else {
-            console.log('WE ARE ADDING MESSAGE');
-            set(self, 'total', total + total_msgs);
-          }
+          // let total = get(self, 'total');
+          // let messages = get(self, 'messages');
+          //
+          // console.log('# Service : Notifications : value :', val);
+          //
+          // console.log('# Service : Notifications : total :', total);
+          // console.log('# Service : Notifications : local messages :', messages.length);
+          // console.log('# Service : Notifications : remote messages :', total_msgs);
+          //
+          // // if requests.length <
+          // if (total_msgs < messages.length) {
+          //   console.log('DELETNG MESSAGE');
+          //
+          //   if (total > 0) {
+          //     self.decrementProperty('total');
+          //   }
+          //
+          // } else {
+          //   console.log('WE ARE ADDING MESSAGE');
+          //   set(self, 'total', total + total_msgs);
+          // }
 
           let msgs = Object.keys(val).map((msg, index) => {
             //console.log(val[req]);
@@ -194,7 +214,7 @@ export default Service.extend({
             firebaseApp.database().ref(dbRef).child(msg.sender_uid).once('value', snap => {
               let profile = snap.val();
               // console.log(Object.keys(profile));
-              console.log(profile);
+              //console.log(profile);
 
               Object.keys(profile).forEach(prof_key => {
                 msg[prof_key] = profile[prof_key];
@@ -215,25 +235,27 @@ export default Service.extend({
           });
 
         } else {
-          let total = get(self, 'total');
-          let messages = get(self, 'messages');
-          ///let total = get(self, 'total');
-          console.log("MESSAGES IS NULL");
-          // console.log("total :", total);
-          console.log("local messages  :", messages.length);
-          console.log("remote messages :", val);
-
-          if (messages.length > 0) {
-            console.log('DELETE MESSAGE');
-
-            if (total > 0) {
-              self.decrementProperty('total');
-            }
-
-          } else {
-            console.log('SET MESSAGES AS 0');
-            resolve([]);
-          }
+          set(self, 'messages', []);
+          resolve([]);
+          // let total = get(self, 'total');
+          // let messages = get(self, 'messages');
+          // ///let total = get(self, 'total');
+          // console.log("MESSAGES IS NULL");
+          // // console.log("total :", total);
+          // console.log("local messages  :", messages.length);
+          // console.log("remote messages :", val);
+          //
+          // if (messages.length > 0) {
+          //   console.log('DELETE MESSAGE');
+          //
+          //   if (total > 0) {
+          //     self.decrementProperty('total');
+          //   }
+          //
+          // } else {
+          //   console.log('SET MESSAGES AS 0');
+          //   resolve([]);
+          // }
         }
       });
     });
@@ -294,6 +316,16 @@ export default Service.extend({
   },
 
 
+  removeRequest(requestId){
+    let firebaseApp = get(this, 'firebaseApp');
+    let business_id = get(this, 'session').get('uid');
+    let businessRef = firebaseApp.database().ref('businessRequests').child(business_id);
+    let requestRef = businessRef.child(requestId);
+
+    return requestRef.remove();
+  },
+
+
   sendMessage(userId, text){
     let firebaseApp = get(this, 'firebaseApp');
     let senderId = get(this, 'session').get('uid');
@@ -309,12 +341,11 @@ export default Service.extend({
   },
 
 
-  removeRequest(requestId){
+  deleteMessage(messageObj){
     let firebaseApp = get(this, 'firebaseApp');
-    let business_id = get(this, 'session').get('uid');
-    let businessRef = firebaseApp.database().ref('businessRequests').child(business_id);
-    let requestRef = businessRef.child(requestId);
+    let user_uid = get(this, 'session').get('uid');
+    let messageRef = firebaseApp.database().ref('messages').child(user_uid).child(messageObj.message_id);
 
-    return requestRef.remove();
+    return messageRef.remove();
   }
 });

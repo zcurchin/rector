@@ -23,7 +23,7 @@
         font-size: 3.56em;
         height: 1em;
         margin-right: 0.2em;
-        color: #DDD;
+        color: lighten($color-text, 35);
       }
     }
 
@@ -66,5 +66,14 @@
 
   .respond-box {
     margin: 2em 0;
+  }
+}
+
+.messages {
+  .body {
+    font-size: 1.3em;
+    line-height: 1.5;
+    color: $color-text;
+    padding: 0 0.5em;
   }
 }

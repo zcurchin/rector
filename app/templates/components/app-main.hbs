@@ -80,6 +80,12 @@
           {{#paper-item}}
             {{paper-icon "notifications"}}
             <p>Notifications</p>
+            <span class="flex"></span>
+            {{#if notifications.total}}
+              <div class="counter layout-row layout-align-center-center">
+                <p class="num">{{notifications.total}}</p>
+              </div>
+            {{/if}}
           {{/paper-item}}
         {{/link-to}}
 
@@ -169,6 +175,6 @@
 
   {{#paper-card-content}}
     {{outlet}}
-  {{/paper-card-content}}  
+  {{/paper-card-content}}
 
 {{/paper-sidenav-container}}

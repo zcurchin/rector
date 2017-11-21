@@ -18,13 +18,8 @@ export default Controller.extend({
   showAvatarDialog: false,
 
   personalInfoProps: [
-    'first_name',
-    'last_name',
-    'username',
-    'country',
-    'state',
-    'city',
-    'zipcode'
+    'name',
+    'address'
   ],
 
   pi_waiting: false,
@@ -35,7 +30,7 @@ export default Controller.extend({
 
   populateFields(){
     let self = this;
-    let model = this.get('model.profile');
+    let model = this.get('model');
 
     this.personalInfoProps.forEach(prop => {
       self.set(prop, model[prop]);
@@ -53,8 +48,11 @@ export default Controller.extend({
     set(self, 'pi_success', false);
 
     console.log('###### updateUserProfile :', data);
+    //console.log(data);
 
-    firebaseApp.database().ref('userProfiles/'+ uid).update(data).then(() => {
+    //let dbRef = user.accountType.business ? 'businessProfiles' : 'userProfiles';
+
+    firebaseApp.database().ref('businessProfiles/'+ uid).update(data).then(() => {
       set(self, 'pi_success', true);
 
     }).catch(error => {
@@ -74,9 +72,11 @@ export default Controller.extend({
     saveProfile(){
       let self = this;
       let user = get(this, 'user');
-      let model = this.get('model.profile');
+      let model = this.get('model');
       let propsChanged = [];
       let propsToUpdate = {};
+
+      console.log('##### SAVE PROFILE');
 
       this.personalInfoProps.forEach(prop => {
         if (model[prop] !== self[prop]) { propsChanged.push(prop); }
@@ -94,19 +94,6 @@ export default Controller.extend({
         set(self, 'pi_error', true);
         set(self, 'pi_errorMsg', 'No changes');
 
-      } else if (propsChanged.indexOf('username') !== -1) {
-        set(self, 'pi_waiting', true);
-
-        user.isUsernameTaken(self.username).then(() => {
-          // username if available
-          return self.updateUserProfile(propsToUpdate);
-
-        }).catch(error => {
-          set(self, 'pi_success', false);
-          set(self, 'pi_error', true);
-          set(self, 'pi_errorMsg', error.message);
-        });
-
       } else {
         self.updateUserProfile(propsToUpdate);
       }
@@ -119,7 +106,7 @@ export default Controller.extend({
 
 
     onAvatarChanged(data){
-      set(this, 'model.profile.profile_image', data);
+      set(this, 'model.profile_image', data);
     }
   }
 });

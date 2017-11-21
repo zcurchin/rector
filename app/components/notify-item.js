@@ -85,6 +85,7 @@ export default Component.extend({
 
         if (exists) {
           set(self, 'preloader', false);
+          set(self, 'respond', false);
         }
 
         paperToaster.show(toasterText, {
@@ -112,6 +113,24 @@ export default Component.extend({
       set(this, 'isApprove', false);
       set(this, 'isInitial', false);
       //onDenyRequest(item);
+    },
+
+
+    deleteMessage(){
+      let item = get(this, 'item');
+      let notifications = get(this, 'notifications');
+      let paperToaster = get(this, 'paperToaster');
+
+      let toasterText = 'Successfully deleted message from ' + item.name;
+
+      set(this, 'preloader', true);
+
+      notifications.deleteMessage(item).then(() => {
+        paperToaster.show(toasterText, {
+          duration: 7000,
+          position: 'bottom right'
+        });
+      });
     }
   }
 });

@@ -71,7 +71,7 @@ export default Controller.extend({
     },
 
 
-    saveProfile(){
+    saveUserProfile(){
       let self = this;
       let user = get(this, 'user');
       let model = this.get('model.profile');

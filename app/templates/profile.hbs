@@ -138,11 +138,11 @@
 
 {{#if editPersonalInfo}}
   {{#custom-dialog
-    title="Edit Personal Info"    
+    title="Edit Personal Info"
     active=editPersonalInfo
 
   }}
-    {{#paper-form onSubmit=(action "saveProfile") as |form|}}
+    {{#paper-form onSubmit=(action "saveUserProfile") as |form|}}
       {{paper-input
         label="First Name"
         type="text"

@@ -11,6 +11,7 @@ const {
 
 export default Service.extend({
   session: service(),
+  workplace: service(),
   notifications: service(),
   firebaseApp: service(),
   firebaseUtil: service(),
@@ -119,6 +120,7 @@ export default Service.extend({
       console.log('# Service : User : setAccountType');
 
       self.get('profile').then(profile => {
+        console.log('user profile:', Object.keys(profile).length > 0);
 
         if (Object.keys(profile).length > 0) {
           set(self, 'accountType.user', true);
@@ -128,6 +130,7 @@ export default Service.extend({
         } else {
           console.log('# Service : User : setAccountType : check businessProfiles');
           self.get('businessProfile').then(businessProfile => {
+            console.log('business profile:', Object.keys(businessProfile).length > 0);
 
             if (Object.keys(businessProfile).length > 0) {
               set(self, 'accountType.business', true);
@@ -150,12 +153,14 @@ export default Service.extend({
     console.log('# Service : User : setup');
     // console.log('--------------------------------');
 
+    let workplace = get(self, 'workplace');
     let notifications = get(self, 'notifications');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
           self.isCheckedIn();
+          workplace.setup();
           notifications.setup();
           resolve();
 

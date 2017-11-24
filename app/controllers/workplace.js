@@ -54,15 +54,23 @@ export default Controller.extend({
     let self = this;
     let firebaseApp = get(this, 'firebaseApp');
     let businessRequests = firebaseApp.database().ref('businessRequests');
+    let userWorkplaces = firebaseApp.database().ref('userWorkplaces');
 
-    let data = {
+    let businessData = {
       timestamp: Date.now(),
       sender_uid: userId
     };
 
+    let userData = {
+      pending: true,
+      business_uid: businessId
+    };
+
     return new RSVP.Promise((resolve, reject) => {
-      businessRequests.child(businessId).push(data).then(() => {
-        resolve();
+      businessRequests.child(businessId).push(businessData).then(() => {
+        userWorkplaces.child(userId).push(userData).then(() => {
+          resolve();
+        });
       }).catch(err => {
         reject(err);
       });

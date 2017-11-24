@@ -69,7 +69,7 @@ export default Controller.extend({
     },
 
 
-    saveProfile(){
+    saveBusinessProfile(){
       let self = this;
       let user = get(this, 'user');
       let model = this.get('model');

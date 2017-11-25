@@ -71,7 +71,6 @@ export default Controller.extend({
 
     saveBusinessProfile(){
       let self = this;
-      let user = get(this, 'user');
       let model = this.get('model');
       let propsChanged = [];
       let propsToUpdate = {};

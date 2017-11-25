@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
+// import RSVP from 'rsvp';
 
 const {
   Controller,
@@ -29,7 +29,7 @@ export default Controller.extend({
         email: self.get('email'),
         password: self.get('password')
 
-      }).then(function(userData) {
+      }).then(function() {
         self.set('email', '');
         self.set('password', '');
         self.set('error_msg', '');

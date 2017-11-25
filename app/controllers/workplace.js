@@ -3,9 +3,10 @@ import RSVP from 'rsvp';
 
 const {
   Controller,
+  inject: { service },
   set,
   get,
-  inject: { service }
+  $
 } = Ember;
 
 export default Controller.extend({
@@ -25,7 +26,7 @@ export default Controller.extend({
 
   sendRequest(dialog){
     let target = dialog._targetObject;
-    let query = target.searchQuery;
+    //let query = target.searchQuery;
     let selectedBusiness = target.selectedBusiness;
 
     dialog.set('waiting', true);
@@ -42,7 +43,7 @@ export default Controller.extend({
       target.sendRequestToBusiness(userId, businessId).then(() => {
         dialog.set('success', true);
 
-      }).catch(err => {
+      }).catch(() => {
         dialog.set('error', true);
         dialog.set('errorMsg', 'Sending request failed! Please try again later.');
       });
@@ -51,7 +52,7 @@ export default Controller.extend({
 
 
   sendRequestToBusiness(userId, businessId){
-    let self = this;
+    //let self = this;
     let firebaseApp = get(this, 'firebaseApp');
     let businessRequests = firebaseApp.database().ref('businessRequests');
     let userWorkplaces = firebaseApp.database().ref('userWorkplaces');

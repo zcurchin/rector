@@ -1,4 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
+const {
+  Route,
+  inject: { service },
+  get
+} = Ember;
+
+
+export default Route.extend({
+  firebaseApp: service(),
+  user: service()
+
+
+  // model(){
+  //   let firebaseApp = get(this, 'firebaseApp');
+  //   let user = get(this, 'user').accountType;
+  //   console.log('MODEL: user.accountType', user);
+  // }
 });

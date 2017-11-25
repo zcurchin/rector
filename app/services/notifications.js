@@ -160,7 +160,7 @@ export default Service.extend({
   handleMessages(){
     let self = this;
     let uid = get(this, 'session').get('uid');
-    let user = get(this, 'user');
+    // let user = get(this, 'user');
     let firebaseApp = get(this, 'firebaseApp');
     let messagesRef = firebaseApp.database().ref('messages');
 

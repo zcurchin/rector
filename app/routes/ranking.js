@@ -12,8 +12,8 @@ export default Route.extend({
   firebaseApp: service(),
 
   model(){
-    let user = get(this, 'user');
-    let firebaseApp = get(this, 'firebaseApp')
+    //let user = get(this, 'user');
+    let firebaseApp = get(this, 'firebaseApp');
     let userProfiles = firebaseApp.database().ref('userProfiles');
     let publicGrades = firebaseApp.database().ref('publicGrades');
 
@@ -92,6 +92,9 @@ export default Route.extend({
             }
           });
         });
+
+      }).catch(err => {
+        reject(err);
       });
     });
   },

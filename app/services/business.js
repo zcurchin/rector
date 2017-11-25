@@ -4,8 +4,8 @@ import RSVP from 'rsvp';
 const {
   Service,
   inject: { service },
-  get,
-  set
+  get
+  //set
 } = Ember;
 
 export default Service.extend({
@@ -53,7 +53,7 @@ export default Service.extend({
   // Create Business Account
   // --------------------------------------------
 
-  _createAccount(uid, params){
+  _createAccount(uid){
     let firebaseApp = get(this, 'firebaseApp');
     let businessAccounts = firebaseApp.database().ref('businessAccounts');
 

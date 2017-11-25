@@ -97,22 +97,16 @@ export default Component.extend({
 
 
     approveRequest(){
-      let item = get(this, 'item');
-      let onApproveRequest = get(this, 'onApproveRequest');
       set(this, 'isApprove', true);
       set(this, 'isDeny', false);
       set(this, 'isInitial', false);
-      //onDenyRequest(item);
     },
 
 
     denyRequest(){
-      let item = get(this, 'item');
-      let onDenyRequest = get(this, 'onDenyRequest');
       set(this, 'isDeny', true);
       set(this, 'isApprove', false);
       set(this, 'isInitial', false);
-      //onDenyRequest(item);
     },
 
 

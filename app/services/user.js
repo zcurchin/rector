@@ -11,14 +11,16 @@ const {
 
 export default Service.extend({
   session: service(),
-  workplace: service(),
-  notifications: service(),
   firebaseApp: service(),
   firebaseUtil: service(),
 
+  workplace: service(),
+  notifications: service(),
+  employees: service(),
+
   checkedIn: false,
 
-  restaurant: '',
+  ///restaurant: '',
 
   // roles
   accountType: {
@@ -275,10 +277,10 @@ export default Service.extend({
 
 
   // --------------------------------------------
-  // Create Basic User
+  // Create User Account
   // --------------------------------------------
 
-  _createAccount(uid, params){
+  _createAccount(uid){
     let firebaseApp = get(this, 'firebaseApp');
     let userAccounts = firebaseApp.database().ref('userAccounts');
 
@@ -291,7 +293,7 @@ export default Service.extend({
 
 
   // --------------------------------------------
-  // Create Profile
+  // Create User Profile
   // --------------------------------------------
 
   _createProfile(uid, params){

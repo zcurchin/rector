@@ -157,6 +157,7 @@ export default Service.extend({
 
     let workplace = get(self, 'workplace');
     let notifications = get(self, 'notifications');
+    let employees = get(self, 'employees');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
@@ -167,6 +168,7 @@ export default Service.extend({
           resolve();
 
         } else {
+          employees.setup();
           notifications.setup();
           resolve();
         }
@@ -213,8 +215,7 @@ export default Service.extend({
 
     let data = {
       in: Date.now(),
-      out: checkOut,
-      restaurant: self.restaurant
+      out: checkOut
     };
 
     set(self, 'checkedIn', true);

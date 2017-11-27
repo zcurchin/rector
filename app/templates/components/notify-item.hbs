@@ -19,7 +19,7 @@
     {{#if item.message_id}}
       <div class="icon no-color">{{paper-icon "email"}}</div>
     {{else}}
-      <div class="icon no-color">{{paper-icon "event-note"}}</div>
+      <div class="icon no-color">{{paper-icon "assignment-ind"}}</div>
     {{/if}}
   {{/if}}
 </div>
@@ -31,7 +31,7 @@
     <div class="preloader {{if preloader 'visible' 'hidden'}}">
       {{paper-progress-linear}}
     </div>
-    
+
     <div class="respond-box layout-row layout-align-center-center">
       <div class="outline-btn" {{action "deleteMessage"}}>Delete Message</div>
     </div>

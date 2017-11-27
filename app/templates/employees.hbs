@@ -1,1 +1,45 @@
-{{outlet}}
+{{#app-page title="Employees"}}
+  {{#app-page-card
+    title="Staff"
+    title_count=employees.staff.length
+    resizeable=true
+    info="Info goes here"
+  }}
+    {{#each employees.staff as |employee|}}
+      <div class="user-list-box layout-row layout-align-start-center">
+        <div class="avatar">
+          {{#if employee.profile_image}}
+            <img src="{{employee.profile_image}}">
+          {{else}}
+            {{paper-icon "account-circle"}}
+          {{/if}}
+        </div>
+        <div class="name">{{employee.first_name}} {{employee.last_name}}</div>
+        <span class="flex"></span>
+        <div class="icon no-color" {{action "deleteEmployee" employee}}>{{paper-icon "delete"}}</div>
+      </div>
+    {{/each}}
+  {{/app-page-card}}
+
+  {{#app-page-card
+    title="Management"
+    title_count=employees.management.length
+    resizeable=true
+    info="Info goes here"
+  }}
+    {{#each employees.management as |employee|}}
+      <div class="user-list-box layout-row layout-align-start-center">
+        <div class="avatar">
+          {{#if employee.profile_image}}
+            <img src="{{employee.profile_image}}">
+          {{else}}
+            {{paper-icon "account-circle"}}
+          {{/if}}
+        </div>
+        <div class="name">{{employee.first_name}} {{employee.last_name}}</div>
+        <span class="flex"></span>
+        <div class="icon no-color" {{action "deleteEmployee" employee}}>{{paper-icon "delete"}}</div>
+      </div>
+    {{/each}}
+  {{/app-page-card}}
+{{/app-page}}

@@ -1,15 +1,65 @@
-{{#app-page title="Workplace"}}
-  {{#app-page-card
-    resizeable=true
-    title="My Current Workplace"
-    info="This is where you are currently employed"
-  }}
-    <div class="info-message center">
-      You are not employed at this moment. Try to find business that you want to work for and send them request.
-    </div>
-    <div class="outline-btn centered" {{action "showFinder"}}>Find Business</div>
-  {{/app-page-card}}
-{{/app-page}}
+{{#if workplace.ready}}
+  {{#app-page title="Workplace"}}
+    {{#app-page-card
+      resizeable=true
+      title="My Current Workplace"
+      info="This is where you are currently employed"
+    }}
+      {{#if workplace.list}}
+        {{#each workplace.list as |place|}}
+          <div class="workplace-box">
+            <div class="layout-row layout-align-start-center">
+              <div class="avatar">
+                {{#if place.profile_image}}
+                  <img src="{{place.profile_image}}">
+                {{else}}
+                  {{paper-icon "store-mall-directory"}}
+                {{/if}}
+              </div>
+
+              <div class="business-info">
+                <div class="name">{{place.name}}</div>
+                <div class="city">{{place.city}} {{place.state}}</div>
+                <div class="address">{{place.address}}</div>
+              </div>
+
+              <span class="flex"></span>
+
+              <div class="status-icon">
+                {{#if place.pending}}
+                  {{paper-icon "hourglass-empty"}}
+                {{else}}
+                  {{paper-icon "assignment-turned-in" class="approved-icon"}}
+                {{/if}}
+              </div>
+            </div>
+
+            {{#if place.pending}}
+              <div class="pending">Pending Response</div>
+              <div class="outline-btn">Cancel Request</div>
+
+            {{else}}
+              <div class="approved">Approved Employment</div>
+              <div class="outline-btn">Cancel Employement</div>
+            {{/if}}
+          </div>
+        {{/each}}
+
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "store-mall-directory"}}
+          <p>You are not employed at this moment. Try to find business that you want to work for and send them request.</p>
+        </div>
+        <div class="outline-btn centered" {{action "showFinder"}}>Find Business</div>
+      {{/if}}
+    {{/app-page-card}}
+  {{/app-page}}
+
+{{else}}
+  <div class="content-preloader layout-align-center-center layout-row">
+    {{paper-progress-circular diameter=60}}
+  </div>
+{{/if}}
 
 {{#if findingWorkplace}}
   {{#custom-dialog

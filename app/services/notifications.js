@@ -78,25 +78,6 @@ export default Service.extend({
 
         if (val) {
           let total_reqs = Object.keys(val).length;
-          // let total = get(self, 'total');
-          // let requests = get(self, 'requests');
-          //
-          // console.log('# Service : Notifications : total :', total);
-          // console.log('# Service : Notifications : local requests :', requests.length);
-          // console.log('# Service : Notifications : remote requests :', total_reqs);
-          //
-          // // if requests.length <
-          // if (total_reqs < requests.length) {
-          //   console.log('DELETNG REQUESTS');
-          //
-          //   if (total > 0) {
-          //     self.decrementProperty('total');
-          //   }
-          //
-          // } else {
-          //   console.log('WE ARE ADDING REQUEST');
-          //   set(self, 'total', total + total_reqs);
-          // }
 
           let reqs = Object.keys(val).map((req, index) => {
             //console.log(val[req]);
@@ -131,26 +112,6 @@ export default Service.extend({
         } else {
           set(self, 'requests', []);
           resolve([]);
-
-          // let total = get(self, 'total');
-          // let requests = get(self, 'requests');
-          // ///let total = get(self, 'total');
-          // console.log("REQUEST IS NULL");
-          // // console.log("total :", total);
-          // console.log("local requests  :", requests.length);
-          // console.log("remote requests :", val);
-          //
-          // if (requests.length > 0) {
-          //   console.log('DELETE REQUEST');
-          //
-          //   if (total > 0) {
-          //     self.decrementProperty('total');
-          //   }
-          //
-          // } else {
-          //   console.log('SET REQUESTS AS 0');
-          //   resolve([]);
-          // }
         }
       });
     });
@@ -172,27 +133,6 @@ export default Service.extend({
 
         if (val) {
           let total_msgs = Object.keys(val).length;
-          // let total = get(self, 'total');
-          // let messages = get(self, 'messages');
-          //
-          // console.log('# Service : Notifications : value :', val);
-          //
-          // console.log('# Service : Notifications : total :', total);
-          // console.log('# Service : Notifications : local messages :', messages.length);
-          // console.log('# Service : Notifications : remote messages :', total_msgs);
-          //
-          // // if requests.length <
-          // if (total_msgs < messages.length) {
-          //   console.log('DELETNG MESSAGE');
-          //
-          //   if (total > 0) {
-          //     self.decrementProperty('total');
-          //   }
-          //
-          // } else {
-          //   console.log('WE ARE ADDING MESSAGE');
-          //   set(self, 'total', total + total_msgs);
-          // }
 
           let msgs = Object.keys(val).map((msg, index) => {
             //console.log(val[req]);
@@ -237,25 +177,6 @@ export default Service.extend({
         } else {
           set(self, 'messages', []);
           resolve([]);
-          // let total = get(self, 'total');
-          // let messages = get(self, 'messages');
-          // ///let total = get(self, 'total');
-          // console.log("MESSAGES IS NULL");
-          // // console.log("total :", total);
-          // console.log("local messages  :", messages.length);
-          // console.log("remote messages :", val);
-          //
-          // if (messages.length > 0) {
-          //   console.log('DELETE MESSAGE');
-          //
-          //   if (total > 0) {
-          //     self.decrementProperty('total');
-          //   }
-          //
-          // } else {
-          //   console.log('SET MESSAGES AS 0');
-          //   resolve([]);
-          // }
         }
       });
     });

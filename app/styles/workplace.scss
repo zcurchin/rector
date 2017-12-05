@@ -1,0 +1,62 @@
+.workplace-box {
+  .avatar {
+    background-color: lighten($color-text, 55);
+    padding: 1em;
+    border-radius: 0.9em;
+    margin-right: 1em;
+
+    img {
+
+    }
+
+    md-icon {
+      color: lighten($color-text, 40);
+      font-size: 3em;
+      height: 1em;
+    }
+  }
+
+  .business-info {
+    display: inline-block;
+
+    .name {
+      font-size: 1.2em;
+      color: $color-text;
+      padding-bottom: 0.2em;
+    }
+
+    .city {
+      color: lighten($color-text, 20);
+    }
+
+    .address {
+      font-size: 0.8em;
+      color: lighten($color-text, 20);
+    }
+  }
+
+  .status-icon {
+    md-icon {
+      font-size: 2.3em;
+      height: 1em;
+      color: lighten($color-text, 40);
+    }
+
+    md-icon.approved-icon {
+      color: $color-green;
+    }
+  }
+
+  .pending, .approved {
+    background-color: lighten($color-alert, 30);
+    border-radius: 0.5em;
+    color: darken($color-alert, 20);
+    padding: 0.6em;
+    margin: 1em 0;
+  }
+
+  .approved {
+    color: $color-green;
+    background-color: lighten($color-alert, 30);
+  }
+}

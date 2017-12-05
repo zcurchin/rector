@@ -18,7 +18,10 @@
             {{/each}}
           </div>
         {{else}}
-          <div class="info-message">No requests yet.</div>
+          <div class="rich-info">
+            {{paper-icon "assignment-ind"}}
+            <p>You don't have any requests yet</p>
+          </div>
         {{/if}}
       {{/app-page-card}}
     {{/if}}
@@ -38,7 +41,10 @@
           {{/each}}
         </div>
       {{else}}
-        <div class="info-message">No messages yet.</div>
+        <div class="rich-info">
+          {{paper-icon "mail-outline"}}
+          <p>You don't have any messages yet</p>
+        </div>
       {{/if}}
     {{/app-page-card}}
   {{/app-page}}

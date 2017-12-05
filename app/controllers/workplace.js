@@ -12,6 +12,7 @@ const {
 export default Controller.extend({
   firebaseApp: service(),
   user: service(),
+  workplace: service(),
 
   findingWorkplace: false,
   searchQuery: '',
@@ -29,10 +30,12 @@ export default Controller.extend({
     //let query = target.searchQuery;
     let selectedBusiness = target.selectedBusiness;
 
+    console.log('### sendRequest : selectedBusiness :', selectedBusiness);
+
     dialog.set('waiting', true);
 
     if (!selectedBusiness) {
-      dialog.set('waiting', false);
+      //dialog.set('waiting', false);
       dialog.set('error', true);
       dialog.set('errorMsg', 'You did not select any business to send request to');
 
@@ -63,13 +66,12 @@ export default Controller.extend({
     };
 
     let userData = {
-      pending: true,
-      business_uid: businessId
+      pending: true
     };
 
     return new RSVP.Promise((resolve, reject) => {
       businessRequests.child(businessId).push(businessData).then(() => {
-        userWorkplaces.child(userId).push(userData).then(() => {
+        userWorkplaces.child(userId).child(businessId).set(userData).then(() => {
           resolve();
         });
       }).catch(err => {

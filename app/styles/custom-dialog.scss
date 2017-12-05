@@ -304,7 +304,7 @@ md-dialog .md-dialog-content {
       border-radius: 15px;
       overflow: hidden;
       margin-right: 1.2em;
-      background: lighten($color-text, 45);
+      background: lighten($color-text, 55);
     }
 
     md-icon {
@@ -313,10 +313,10 @@ md-dialog .md-dialog-content {
       height: 1.4em;
       margin: 0;
       margin-right: 0.5em;
-      background: lighten($color-text, 45);
-      color: lighten($color-text, 20);
+      background: lighten($color-text, 55);
+      color: lighten($color-text, 40);
       padding: 0.2em;
-      border-radius: 15px;
+      border-radius: 0.3em;
       overflow: hidden;
     }
 

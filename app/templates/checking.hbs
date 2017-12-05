@@ -66,8 +66,11 @@
         {{/each}}
       </div>
 
-    {{else}}
-      <div class="info-message">No recent activity</div>
+    {{else}}      
+      <div class="rich-info">
+        {{paper-icon "history"}}
+        <p>No recent activity</p>
+      </div>
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}

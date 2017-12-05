@@ -40,6 +40,7 @@ md-toast .md-toast-content {
   margin: 10px;
 }
 
+
 // ----------------------------------------------
 // APP WRAPPERS
 // ----------------------------------------------
@@ -154,7 +155,6 @@ md-sidenav.md-locked-open {
 }
 
 
-
 // ----------------------------------------------
 // APP PAGE
 // ----------------------------------------------
@@ -168,26 +168,9 @@ md-sidenav.md-locked-open {
 
     .app-page-title {
       font-size: 1.4em;
-      padding: 1em 0.8em;
-      //color: lighten($color-text, 15);
+      padding: 1em;
       color: $color-text;
     }
-  }
-}
-
-
-// ----------------------------------------------
-// INFO ITEMS
-// ----------------------------------------------
-
-.info-item {
-  font-size: 1.1em;
-  color: #888;
-  padding-bottom: 0.8em;
-
-  span {
-    //font-size: 1.1em;
-    color: #111;
   }
 }
 
@@ -290,6 +273,37 @@ md-sidenav.md-locked-open {
 
 .user-list-box:last-child {
   border: none;
+}
+
+
+// ----------------------------------------------
+// INFO MESSAGES
+// ----------------------------------------------
+
+.info-item {
+  font-size: 1.1em;
+  color: #888;
+  padding-bottom: 0.8em;
+
+  span {
+    //font-size: 1.1em;
+    color: #111;
+  }
+}
+
+.rich-info {
+  color: lighten($color-text, 10);
+  margin: 0;
+  line-height: 1.6em;
+  padding: 0.5em 1.5em;
+  font-size: 1.1em;
+  text-align: center;
+
+  md-icon {
+    color: lighten($color-text, 50);
+    font-size: 2.5em;
+    margin: 0.3em 0;
+  }
 }
 
 

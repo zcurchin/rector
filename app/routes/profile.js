@@ -23,7 +23,7 @@ export default Route.extend({
       };
 
       RSVP.hash(requests).then(data => {
-        console.log(data);
+        //console.log(data);
         resolve(data);
 
       }).catch(error => {

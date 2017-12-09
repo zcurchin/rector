@@ -12,8 +12,8 @@ export default Route.extend({
   firebaseApp: service(),
 
   model(){
-    let user = get(this, 'user');
-    let firebaseApp = get(this, 'firebaseApp')
+    //let user = get(this, 'user');
+    let firebaseApp = get(this, 'firebaseApp');
     let userProfiles = firebaseApp.database().ref('userProfiles');
     let publicGrades = firebaseApp.database().ref('publicGrades');
 
@@ -22,9 +22,13 @@ export default Route.extend({
     return new RSVP.Promise((resolve, reject) => {
       userProfiles.once('value').then(profiles => {
         let value = profiles.val();
-        let totalProfiles = Object.keys(value).length;
 
-        //console.log('total:', total);
+        if (value === null) {
+          resolve([]);
+          return;
+        }
+
+        let totalProfiles = Object.keys(value).length;
 
         Object.keys(value).forEach((key, index) => {
           let profileObj = value[key];
@@ -88,6 +92,9 @@ export default Route.extend({
             }
           });
         });
+
+      }).catch(err => {
+        reject(err);
       });
     });
   },

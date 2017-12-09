@@ -1,5 +1,56 @@
-{{#app-page title="Notifications"}}
-  {{#app-page-card header=false}}
-    Soon :)
-  {{/app-page-card}}
-{{/app-page}}
+
+{{#if notifications.ready}}
+  {{#app-page title="Notifications"}}
+
+    <!-- REQUESTS -->
+
+    {{#if user.accountType.business}}
+      {{#app-page-card
+        title="Requests"
+        title_count=notifications.requests.length
+        resizeable=true
+        info="Those are requests came from the people who want to join your business and you didn't respond to their request."
+      }}
+        {{#if notifications.requests.length}}
+          <div class="requests">
+            {{#each notifications.requests as |request|}}
+              {{notify-item item=request type="request"}}
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="rich-info">
+            {{paper-icon "assignment-ind"}}
+            <p>You don't have any requests yet</p>
+          </div>
+        {{/if}}
+      {{/app-page-card}}
+    {{/if}}
+
+    <!-- MESSAGES -->
+
+    {{#app-page-card
+      title="Messages"
+      title_count=notifications.messages.length
+      resizeable=true
+      info="Those are notification messages."
+    }}
+      {{#if notifications.messages.length}}
+        <div class="messages">
+          {{#each notifications.messages as |message|}}
+            {{notify-item item=message type="message"}}
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "mail-outline"}}
+          <p>You don't have any messages yet</p>
+        </div>
+      {{/if}}
+    {{/app-page-card}}
+  {{/app-page}}
+
+{{else}}
+  <div class="content-preloader layout-align-center-center layout-row">
+    {{paper-progress-circular diameter=60}}
+  </div>
+{{/if}}

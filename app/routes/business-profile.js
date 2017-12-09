@@ -1,4 +1,21 @@
 import Ember from 'ember';
+//import RSVP from 'rsvp';
 
-export default Ember.Route.extend({
+const {
+  inject: { service },
+  get,
+  Route
+} = Ember;
+
+
+export default Route.extend({
+  //session: service(),
+  user: service(),
+  //firebaseApp: service(),
+
+  model(){
+    let user = get(this, 'user');
+
+    return user.get('businessProfile');
+  }
 });

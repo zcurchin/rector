@@ -10,8 +10,10 @@ const {
 export default Controller.extend({
   //app_controler: controller('application'),
   business: service(),
+  user: service(),
   preloader: false,
   error_msg: '',
+  hideTemplate: false,
 
   actions: {
     signUpBusiness(){
@@ -21,6 +23,7 @@ export default Controller.extend({
       let pass = get(this, 'password');
       let name = get(this, 'name');
       let business = get(this, 'business');
+      let user = get(this, 'user');
 
       set(this, 'preloader', true);
 
@@ -40,6 +43,8 @@ export default Controller.extend({
 
         }).then(function() {
           console.log('# Sign Up Business : user logged in');
+
+          self.set('hideTemplate', true);
 
           user.setup().then(() => {
             set(self, 'preloader', false);

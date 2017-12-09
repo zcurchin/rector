@@ -1,1 +1,95 @@
-{{outlet}}
+{{#app-page title="Profile"}}
+  {{#app-page-card
+    header=false
+    class="profile-card"
+  }}
+    <div class="profile-intro">
+      <div class="profile-image" {{action "editAvatar"}}>
+        {{#if model.profile_image}}
+          <img src="{{model.profile_image}}" alt="">
+        {{else}}
+          {{paper-icon "account-circle"}}
+        {{/if}}
+      </div>
+
+      <div class="profile-name">
+        <h1>{{model.name}}</h1>
+      </div>
+    </div>
+  {{/app-page-card}}
+
+
+  {{#app-page-card
+    title="Business Info"
+    resizeable=true
+    info="Visible to public. Edit personal information in Edit Profile section bellow."
+  }}
+    <p class="label">Name: <span class="value">{{model.name}}</span></p>
+    <p class="label">Address: <span class="value">{{model.address}}</span></p>
+  {{/app-page-card}}
+
+  {{#app-page-card
+    title="Edit Profile"
+    resizeable=true
+  }}
+    {{#if editingProfile}}
+
+    {{else}}
+      <div class="outline-btn" {{action "editAvatar"}}>Change Profile Picture</div>
+      <div class="outline-btn" {{action "editProfile"}}>Edit Personal Info</div>
+    {{/if}}
+
+  {{/app-page-card}}
+
+{{/app-page}}
+
+{{#if editPersonalInfo}}
+  {{#custom-dialog
+    title="Edit Personal Info"
+    active=editPersonalInfo
+  }}
+    {{#paper-form onSubmit=(action "saveBusinessProfile") as |form|}}
+      {{paper-input
+        label="Name"
+        type="text"
+        value=name
+        onChange=(action (mut name))
+      }}
+      {{paper-input
+        label="Address"
+        type="text"
+        value=address
+        onChange=(action (mut address))
+      }}
+
+      {{custom-dialog-actions
+        active=editPersonalInfo
+        confirmLabel="Save Changes"
+        confirmAction=form.onSubmit
+        waiting=pi_waiting
+        success=pi_success
+        error=pi_error
+        errorMsg=pi_errorMsg
+        successMsg="Successfully saved changes"
+      }}
+
+    {{/paper-form}}
+  {{/custom-dialog}}
+{{/if}}
+
+{{#if editingAvatar}}
+  {{#custom-dialog
+    title="Change Profile Picture"
+    active=editingAvatar
+    bottomMargin=false
+  }}
+    {{#if avatar.showCropper}}
+      {{avatar-cropper
+        showAvatarDialog=editingAvatar
+        action="onAvatarChanged"
+      }}
+    {{else}}
+      {{avatar-upload-box}}
+    {{/if}}
+  {{/custom-dialog}}
+{{/if}}

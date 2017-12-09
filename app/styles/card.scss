@@ -35,7 +35,7 @@
     }
   }
 
-  .card-title {
+  .card-title, .card-title-count {
     font-size: 1.1em;
     margin-left: 1em;
     color: $color-text;
@@ -50,6 +50,10 @@
     font-size: 1.1em;
   }
 
+  .info-message.center {
+    text-align: center;
+  }
+
   .card-info {
     border-bottom: 1px solid $color-border;
     padding: 1.4em 1.5em 1.4em;
@@ -57,7 +61,7 @@
 
   .card-content {
     padding: 1em;
-    background: rgba(246, 249, 252, 0.3);
+    //background: rgba(246, 249, 252, 0.3);
 
     .label {
       color: lighten($color-text, 10);

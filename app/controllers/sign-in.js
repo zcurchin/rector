@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
+// import RSVP from 'rsvp';
 
 const {
   Controller,
@@ -10,10 +10,11 @@ const {
 
 export default Controller.extend({
   session: service(),
+  user: service(),
   firebaseApp: service(),
   error_msg: '',
   preloader: false,
-  user: service(),
+  hideTemplate: false,
 
   actions: {
     signIn() {
@@ -28,18 +29,22 @@ export default Controller.extend({
         email: self.get('email'),
         password: self.get('password')
 
-      }).then(function(userData) {
-        user.setup();
-
-        console.log(userData);
-
+      }).then(function() {
         self.set('email', '');
         self.set('password', '');
         self.set('error_msg', '');
 
         self.set('preloader', false);
+        self.set('hideTemplate', true);
 
-        self.replaceRoute('checking');
+        user.setup().then(() => {
+          if (user.accountType.user) {
+            self.replaceRoute('checking');
+
+          } else if (user.accountType.business) {
+            self.replaceRoute('ranking');
+          }
+        });
 
       }).catch(function(err){
         console.log(err);

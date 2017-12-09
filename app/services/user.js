@@ -14,11 +14,12 @@ export default Service.extend({
   firebaseApp: service(),
   firebaseUtil: service(),
 
+  workplace: service(),
+  notifications: service(),
+  employees: service(),
+
   checkedIn: false,
 
-  restaurant: '',
-
-  // roles
   accountType: {
     user: false,
     business: false,
@@ -84,7 +85,7 @@ export default Service.extend({
       break;
     }
 
-    console.log('# User : get : '+dbRef+' :', uid);
+    console.log('# Service : User : get : '+dbRef+' :', uid);
 
     return new RSVP.Promise((resolve, reject) => {
       firebaseUtil.findRecord(dbRef, dbRef + '/' + uid).then(data => {
@@ -115,23 +116,24 @@ export default Service.extend({
     let self = this;
 
     return new RSVP.Promise((resolve, reject) => {
+      console.log('# Service : User : setAccountType');
+
       self.get('profile').then(profile => {
-        // console.log('------------------------');
-        // console.log(Object.keys(data).length);
-        // console.log('------------------------');
+        console.log('user profile:', Object.keys(profile).length > 0);
 
         if (Object.keys(profile).length > 0) {
           set(self, 'accountType.user', true);
+          console.log('# Service : User : accountType : user');
           resolve();
 
         } else {
+          console.log('# Service : User : setAccountType : check businessProfiles');
           self.get('businessProfile').then(businessProfile => {
-            console.log('------------------------');
-            console.log(businessProfile);
-            console.log('------------------------');
+            console.log('business profile:', Object.keys(businessProfile).length > 0);
 
             if (Object.keys(businessProfile).length > 0) {
               set(self, 'accountType.business', true);
+              console.log('# Service : User : accountType : business');
               resolve();
             }
           });
@@ -146,17 +148,25 @@ export default Service.extend({
 
   setup(){
     let self = this;
-    console.log('--------------------------------');
-    console.log('# Service : User : Setup');
-    console.log('--------------------------------');
+    // console.log('--------------------------------');
+    console.log('# Service : User : setup');
+    // console.log('--------------------------------');
+
+    let workplace = get(self, 'workplace');
+    let notifications = get(self, 'notifications');
+    let employees = get(self, 'employees');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
           self.isCheckedIn();
+          workplace.setup();
+          notifications.setup();
           resolve();
 
         } else {
+          employees.setup();
+          notifications.setup();
           resolve();
         }
       }).catch(err => {
@@ -202,8 +212,7 @@ export default Service.extend({
 
     let data = {
       in: Date.now(),
-      out: checkOut,
-      restaurant: self.restaurant
+      out: checkOut
     };
 
     set(self, 'checkedIn', true);
@@ -266,10 +275,10 @@ export default Service.extend({
 
 
   // --------------------------------------------
-  // Create Basic User
+  // Create User Account
   // --------------------------------------------
 
-  _createAccount(uid, params){
+  _createAccount(uid){
     let firebaseApp = get(this, 'firebaseApp');
     let userAccounts = firebaseApp.database().ref('userAccounts');
 
@@ -282,7 +291,7 @@ export default Service.extend({
 
 
   // --------------------------------------------
-  // Create Profile
+  // Create User Profile
   // --------------------------------------------
 
   _createProfile(uid, params){

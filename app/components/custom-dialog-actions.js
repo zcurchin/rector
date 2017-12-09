@@ -46,6 +46,7 @@ export default Component.extend({
     closeDialog(){
       set(this, 'active', false);
       this.closeActions();
+      if (this.onClose) { this.onClose(this); }
     },
 
 
@@ -55,7 +56,7 @@ export default Component.extend({
 
 
     confirm(){
-      this.confirmAction();
+      this.confirmAction(this);
     }
   }
 });

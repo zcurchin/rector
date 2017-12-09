@@ -19,6 +19,9 @@
       "$uid": {
         ".indexOn": "in"
       }
+    },
+    "businessProfiles": {
+      ".indexOn": "name"
     }
   }
 }

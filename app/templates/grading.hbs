@@ -38,13 +38,15 @@
         {{/each}}
 
         {{else}}
-          <div class="info-message">
-            No one to grade at this moment.
+          <div class="rich-info">
+            {{paper-icon "people"}}
+            <p>No one to grade at this moment</p>
           </div>
         {{/if}}
     {{else}}
-      <div class="info-message">
-        Check in in order to grade coworkers/friends/buddies.
+      <div class="rich-info">
+        {{paper-icon "alarm-off"}}
+        <p>Check in in order to grade coworkers/friends/buddies</p>
       </div>
     {{/if}}
   {{/app-page-card}}
@@ -84,8 +86,9 @@
       {{/each}}
 
     {{else}}
-      <div class="info-message">
-        You didn't grade anyone so far.
+      <div class="rich-info">
+        {{paper-icon "history"}}
+        <p>You didn't grade anyone so far</p>
       </div>
     {{/if}}
   {{/app-page-card}}

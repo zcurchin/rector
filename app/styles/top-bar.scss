@@ -51,8 +51,14 @@
     }
   }
 
+  .top-bar-btn.alert {
+    md-icon {
+      color: $color-alert;
+    }
+  }
+
   .business {
-    font-size: 1.4em;
+    font-size: 1.3em;
     color: color($primary);
     padding: 0 0.7em;
   }

@@ -29,14 +29,16 @@ export default Route.extend({
       let user = get(this, 'user');
 
       user.setup().then(() => {
-        console.log('get(self, "accountType.user")', user.accountType.user);
+        let accountType = get(self, 'user').accountType;
 
-        if (user.accountType.user) {
+        console.log('accountType :', accountType);
+
+        if (accountType.user) {
           if (target === 'index' || target === 'sign-in' || target === 'sign-up') {
             this.replaceWith('checking');
           }
 
-        } else if (user.accountType.business) {
+        } else if (accountType.business) {
           if (target === 'index' || target === 'sign-in' || target === 'sign-up') {
             this.replaceWith('ranking');
           }

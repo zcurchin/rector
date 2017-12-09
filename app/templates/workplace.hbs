@@ -1,5 +1,106 @@
-{{#app-page title="Workplace"}}
-  {{#app-page-card header=false}}
-    Soon
-  {{/app-page-card}}
-{{/app-page}}
+{{#if workplace.ready}}
+  {{#app-page title="Workplace"}}
+    {{#app-page-card
+      resizeable=true
+      title="My Current Workplace"
+      info="This is where you are currently employed"
+    }}
+      {{#if workplace.list}}
+        {{#each workplace.list as |place|}}
+          <div class="workplace-box">
+            <div class="layout-row layout-align-start-center">
+              <div class="avatar">
+                {{#if place.profile_image}}
+                  <img src="{{place.profile_image}}">
+                {{else}}
+                  {{paper-icon "store-mall-directory"}}
+                {{/if}}
+              </div>
+
+              <div class="business-info">
+                <div class="name">{{place.name}}</div>
+                <div class="city">{{place.city}} {{place.state}}</div>
+                <div class="address">{{place.address}}</div>
+              </div>
+
+              <span class="flex"></span>
+
+              <div class="status-icon">
+                {{#if place.pending}}
+                  {{paper-icon "hourglass-empty"}}
+                {{else}}
+                  {{paper-icon "assignment-turned-in" class="approved-icon"}}
+                {{/if}}
+              </div>
+            </div>
+
+            {{#if place.pending}}
+              <div class="pending">Pending Response</div>
+              <div class="outline-btn">Cancel Request</div>
+
+            {{else}}
+              <div class="approved">Approved Employment</div>
+              <div class="outline-btn">Cancel Employement</div>
+            {{/if}}
+          </div>
+        {{/each}}
+
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "store-mall-directory"}}
+          <p>You are not employed at this moment. Try to find business that you want to work for and send them request.</p>
+        </div>
+        <div class="outline-btn centered" {{action "showFinder"}}>Find Business</div>
+      {{/if}}
+    {{/app-page-card}}
+  {{/app-page}}
+
+{{else}}
+  <div class="content-preloader layout-align-center-center layout-row">
+    {{paper-progress-circular diameter=60}}
+  </div>
+{{/if}}
+
+{{#if findingWorkplace}}
+  {{#custom-dialog
+    title="Find Business"
+    active=findingWorkplace
+  }}
+
+    <div class="inner">
+      {{paper-input
+        label="Business Name"
+        type="text"
+        value=searchQuery
+        onChange=(action "queryChanged")
+      }}
+
+      <div class="busines-search-results">
+        {{#each searchResults as |item|}}
+          <div id="{{item.uid}}" class="item layout-row layout-align-start-center" {{action "selectBusiness" item}}>
+            {{#if item.profile_image}}
+              <img src="{{item.profile_image}}">
+            {{else}}
+              {{paper-icon "store-mall-directory"}}
+            {{/if}}
+            <div class="name">{{item.name}}</div>
+            <span class="flex"></span>
+            {{paper-icon "check" class="checkmark-icon"}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    {{custom-dialog-actions
+      active=findingWorkplace
+      confirmLabel="Send Request"
+      confirmAction=sendRequest
+      onClose=onCancelDialog
+      waiting=waiting
+      success=success
+      error=error
+      successMsg="Request successfully sent"
+    }}
+
+  {{/custom-dialog}}
+{{/if}}

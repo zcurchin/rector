@@ -13,7 +13,7 @@ md-backdrop.md-opaque.md-default-theme {
 }
 
 md-dialog.md-default-theme.custom-dialog {
-  background: #F6F9FC;
+  // background: #F6F9FC;
   max-height: 96%;
   max-width: 400px;
   margin: 10px;
@@ -104,6 +104,10 @@ md-dialog.md-default-theme.custom-dialog {
       margin: 0 0.5em 0 0;
       min-width: 7em;
     }
+  }
+
+  .inner {
+    padding: 2em 1em;
   }
 
   // FORMS
@@ -273,5 +277,72 @@ md-dialog .md-dialog-content {
     font-size: 1.2em;
     margin-bottom: 2em;
     text-align: center;
+  }
+}
+
+
+// ----------------------------------------------
+// Business Search Dialog
+// ----------------------------------------------
+
+.busines-search-results {
+  min-height: 10em;
+  box-sizing: border-box;
+
+  .item {
+    margin-top: 0.5em;
+    padding: 0.5em;
+    cursor: pointer;
+    background: #FFF;
+    border-radius: 10px;
+    border: 1px solid $color-border;
+
+    img {
+      width: 3em;
+      height: 3em;
+      display: inline-block;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-right: 1.2em;
+      background: lighten($color-text, 55);
+    }
+
+    md-icon {
+      display: inline-block;
+      font-size: 2.23em;
+      height: 1.4em;
+      margin: 0;
+      margin-right: 0.5em;
+      background: lighten($color-text, 55);
+      color: lighten($color-text, 40);
+      padding: 0.2em;
+      border-radius: 0.3em;
+      overflow: hidden;
+    }
+
+    .name {
+      font-size: 1.2em;
+    }
+
+    .checkmark-icon {
+      display: none;
+      color: color($primary);
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      height: 1em;
+    }
+  }
+
+  .item:first-child {
+    margin-top: 0;
+  }
+
+  .item.selected {
+    border-color: color($primary);
+
+    .checkmark-icon {
+      display: inline-block;
+    }
   }
 }

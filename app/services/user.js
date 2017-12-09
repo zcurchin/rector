@@ -20,9 +20,6 @@ export default Service.extend({
 
   checkedIn: false,
 
-  ///restaurant: '',
-
-  // roles
   accountType: {
     user: false,
     business: false,

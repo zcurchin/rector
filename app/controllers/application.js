@@ -8,7 +8,7 @@ const {
 
 
 export default Controller.extend({
-  session: service(),
+  session: service(),  
 
   actions: {
     signOut(){

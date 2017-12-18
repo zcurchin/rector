@@ -24,6 +24,11 @@ export default Controller.extend({
   error: false,
   errorMsg: 'Failed to send request',
 
+  cancelingEmpolyement: false,
+  ce_waiting: false,
+  ce_success: false,
+  ce_error: false,
+
 
   sendRequest(dialog){
     let target = dialog._targetObject;
@@ -110,7 +115,7 @@ export default Controller.extend({
       let self = this;
       set(this, 'searchQuery', data);
 
-      if (data.length > 3) {
+      if (data.length > 2) {
         let firebaseApp = get(this, 'firebaseApp');
         let businessProfiles = firebaseApp.database().ref('businessProfiles');
 
@@ -138,6 +143,22 @@ export default Controller.extend({
         set(self, 'searchResults', null);
         set(self, 'selectedBusiness', null);
       }
+    },
+
+
+    cancelEmployement(){
+      let workplace = get(this, 'workplace');
+
+      set(this, 'ce_waiting', true);
+
+      workplace.cancelEmployement().then(() => {
+        set(this, 'ce_success', true);
+      });
+    },
+
+
+    promptCancelEmployement(){
+      set(this, 'cancelingEmpolyement', true);
     }
   }
 });

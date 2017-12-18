@@ -119,7 +119,7 @@ export default Service.extend({
       console.log('# Service : User : setAccountType');
 
       self.get('profile').then(profile => {
-        console.log('user profile:', Object.keys(profile).length > 0);
+        console.log('# Service : User : profile :', Object.keys(profile).length > 0);
 
         if (Object.keys(profile).length > 0) {
           set(self, 'accountType.user', true);

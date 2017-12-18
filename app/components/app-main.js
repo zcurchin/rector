@@ -12,13 +12,14 @@ export default Component.extend({
   notifications: service(),
   paperSidenav: service(),
   user: service(),
+  workplace: service(),
 
   classNames: ['app-container'],
 
   didInsertElement(){
     this.$('md-card-content').css({
       height: this.$('.inner-sidenav').height()
-    });    
+    });
 
     this.$(window).on('resize', () => {
       this.$('md-card-content').css({

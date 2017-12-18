@@ -212,6 +212,7 @@ export default Service.extend({
 
         if (exists) {
           resolve(true);
+
         } else {
           // resolve(false);
           businessEmployeesRef.child(userId).set(data).then(() => {
@@ -224,10 +225,18 @@ export default Service.extend({
                 self.decrementProperty('total');
               }
 
-              let text = 'We added you to as ' +  jobTitle;
+              let text = 'We added you as ' +  jobTitle;
 
-              self.sendMessage(userId, text).then(() => {
-                resolve(false);
+              if (isManager) {
+                text = 'We added you as ' +  jobTitle + '. You are also a manager.';
+              }
+
+              let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(userId).child(business_id);
+
+              userWorkplacesRef.set({pending: false}).then(() => {
+                self.sendMessage(userId, text).then(() => {
+                  resolve(false);
+                });
               });
             });
           });
@@ -244,6 +253,24 @@ export default Service.extend({
     let requestRef = businessRef.child(requestId);
 
     return requestRef.remove();
+  },
+
+
+  denyRequest(request){
+    // console.log(request);
+
+    let firebaseApp = get(this, 'firebaseApp');
+    let business_id = get(this, 'session').get('uid');
+    let businessRef = firebaseApp.database().ref('businessRequests').child(business_id);
+    let requestRef = businessRef.child(request.request_id);
+
+    let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(request.sender_uid).child(business_id);
+
+    let msg = 'Your request has been denied';
+
+    this.sendMessage(request.sender_uid, msg);
+    userWorkplacesRef.remove();
+    requestRef.remove();
   },
 
 

@@ -69,6 +69,15 @@
 
         {{paper-divider}}
 
+        {{#if workplace.data.manager}}
+          {{#link-to "employees"}}
+            {{#paper-item}}
+              {{paper-icon "people"}}
+              <p>Employees</p>
+            {{/paper-item}}
+          {{/link-to}}
+        {{/if}}
+
         {{#link-to "workplace"}}
           {{#paper-item}}
             {{paper-icon "store-mall-directory"}}

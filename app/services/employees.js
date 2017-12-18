@@ -15,12 +15,12 @@ export default Service.extend({
   staff: [],
   management: [],
 
-  setup(){
+  setup(business_id){
     let staff = get(this, 'staff');
     let management = get(this, 'management');
 
     let firebaseApp = get(this, 'firebaseApp');
-    let uid = get(this, 'session.currentUser').uid;
+    let uid = business_id || get(this, 'session.currentUser').uid;
     let rootRef = firebaseApp.database().ref();
     let employeesRef = rootRef.child('businessEmployees').child(uid);
 
@@ -62,7 +62,7 @@ export default Service.extend({
     let business_uid = get(this, 'session.currentUser').uid;
     let rootRef = firebaseApp.database().ref();
     let employeesRef = rootRef.child('businessEmployees').child(business_uid);
-    
+
     employeesRef.child(user_uid).remove();
   }
 });

@@ -1,19 +1,50 @@
 .workplace-box {
   .avatar {
     background-color: lighten($color-text, 55);
-    padding: 1em;
     border-radius: 0.9em;
     margin-right: 1em;
+    overflow: hidden;
 
     img {
-
+      width: 5em;
+      height: 5em;
     }
 
     md-icon {
+      padding: 0.4em;
       color: lighten($color-text, 40);
       font-size: 3em;
       height: 1em;
     }
+  }
+
+  .info-box {
+    padding: 1em 0;
+  }
+
+  .work-meta {
+    font-size: 1.1em;
+    color: $color-text;
+    padding-bottom: 0.3em;
+  }
+
+  .manager-box {
+    color: $color-green;
+    font-size: 1.1em;
+    border: 1px solid $color-green;
+    padding: 0.4em;
+    padding-right: 0.7em;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 0.5em;
+
+    md-icon {
+      color: $color-green;
+    }
+  }
+
+  .outline-btn {
+    margin-top: 1em;
   }
 
   .business-info {

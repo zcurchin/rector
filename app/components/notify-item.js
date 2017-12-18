@@ -103,10 +103,20 @@ export default Component.extend({
     },
 
 
-    denyRequest(){
+    promptDenyRequest(){
       set(this, 'isDeny', true);
       set(this, 'isApprove', false);
       set(this, 'isInitial', false);
+    },
+
+
+    denyRequest(){
+      let self = this;
+      let notifications = get(this, 'notifications');
+      let paperToaster = get(this, 'paperToaster');
+      let request = get(this, 'item');
+
+      notifications.denyRequest(request);
     },
 
 

@@ -5,45 +5,51 @@
       title="My Current Workplace"
       info="This is where you are currently employed"
     }}
-      {{#if workplace.list}}
-        {{#each workplace.list as |place|}}
-          <div class="workplace-box">
-            <div class="layout-row layout-align-start-center">
-              <div class="avatar">
-                {{#if place.profile_image}}
-                  <img src="{{place.profile_image}}">
-                {{else}}
-                  {{paper-icon "store-mall-directory"}}
-                {{/if}}
-              </div>
-
-              <div class="business-info">
-                <div class="name">{{place.name}}</div>
-                <div class="city">{{place.city}} {{place.state}}</div>
-                <div class="address">{{place.address}}</div>
-              </div>
-
-              <span class="flex"></span>
-
-              <div class="status-icon">
-                {{#if place.pending}}
-                  {{paper-icon "hourglass-empty"}}
-                {{else}}
-                  {{paper-icon "assignment-turned-in" class="approved-icon"}}
-                {{/if}}
-              </div>
+      {{#if workplace.data}}
+        <div class="workplace-box">
+          <div class="layout-row layout-align-start-center">
+            <div class="avatar">
+              {{#if workplace.data.profile_image}}
+                <img src="{{workplace.data.profile_image}}">
+              {{else}}
+                {{paper-icon "store-mall-directory"}}
+              {{/if}}
             </div>
 
-            {{#if place.pending}}
-              <div class="pending">Pending Response</div>
-              <div class="outline-btn">Cancel Request</div>
+            <div class="business-info">
+              <div class="name">{{workplace.data.name}}</div>
+              <div class="city">{{workplace.data.city}} {{workplace.data.state}}</div>
+              <div class="address">{{workplace.data.address}}</div>
+            </div>
 
-            {{else}}
-              <div class="approved">Approved Employment</div>
-              <div class="outline-btn">Cancel Employement</div>
-            {{/if}}
+            <span class="flex"></span>
+
+            <div class="status-icon">
+              {{#if workplace.data.pending}}
+                {{paper-icon "hourglass-empty"}}
+              {{else}}
+                {{paper-icon "assignment-turned-in" class="approved-icon"}}
+              {{/if}}
+            </div>
           </div>
-        {{/each}}
+
+          {{#if workplace.data.pending}}
+            <div class="pending">Pending Response</div>
+
+          {{else}}
+            <div class="info-box">
+              <div class="work-meta">Joined: {{moment-format workplace.data.created "MMMM Do, h:mm a"}}</div>
+              <div class="work-meta">Job title: {{workplace.data.job_title}}</div>
+              {{#if workplace.data.manager}}
+                <div class="manager-box">
+                  {{paper-icon "security"}} Manager
+                </div>
+              {{/if}}
+            </div>
+            <div class="outline-btn" {{action "promptCancelEmployement"}}>Cancel Employement</div>
+          {{/if}}
+        </div>
+
 
       {{else}}
         <div class="rich-info">
@@ -102,5 +108,24 @@
       successMsg="Request successfully sent"
     }}
 
+  {{/custom-dialog}}
+{{/if}}
+
+{{#if cancelingEmpolyement}}
+  {{#custom-dialog
+    title="Cancel Employement"
+    active=cancelingEmpolyement
+  }}
+    <p class="prompt-info">Do you realy want to cancel employement?</p>
+
+    {{custom-dialog-actions
+      active=cancelingEmpolyement
+      confirmLabel="Yes, Cancel Now"
+      confirmAction=(action "cancelEmployement")
+      waiting=ce_waiting
+      success=ce_success
+      error=ce_error      
+      successMsg="You successfully canceled employement"
+    }}
   {{/custom-dialog}}
 {{/if}}

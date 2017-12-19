@@ -15,8 +15,11 @@ export default Service.extend({
   employees: service(),
   notifications: service(),
 
-  ready: false,
   data: null,
+
+  ready: false,
+  onReady: [],
+
 
   setup(){
     let self = this;
@@ -51,10 +54,18 @@ export default Service.extend({
               businessObj.pending = true;
               set(self, 'data', businessObj);
               set(self, 'ready', true);
+              self.onReady.forEach((fn) => { fn(); });
 
             } else {
               businessEmployees.once('value', snap => {
                 console.log('businessEmployees :', snap.val());
+
+                if (!snap.val()) {
+                  set(self, 'data', null);
+                  set(self, 'ready', true);
+                  self.onReady.forEach((fn) => { fn(); });
+                  return;
+                }
 
                 businessObj.pending = false;
                 businessObj.business_id = key;
@@ -63,6 +74,7 @@ export default Service.extend({
                 businessObj.manager = snap.val().manager;
                 set(self, 'data', businessObj);
                 set(self, 'ready', true);
+                self.onReady.forEach((fn) => { fn(); });
 
                 if (snap.val().manager) {
                   employees.setup(key);
@@ -73,8 +85,8 @@ export default Service.extend({
         });
 
       } else {
-        set(self, 'ready', true);
         set(self, 'data', null);
+        set(self, 'ready', true);
       }
     });
   },

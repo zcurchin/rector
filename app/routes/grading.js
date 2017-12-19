@@ -11,6 +11,7 @@ const {
 
 
 export default Route.extend({
+  workplace: service(),
   firebaseApp: service(),
   // overlap_treshold: 135, // minutes
   overlap_treshold: 1, // minutes
@@ -20,7 +21,28 @@ export default Route.extend({
     console.log('=====================================');
 
     let self = this;
-    // let firebaseApp = get(this, 'firebaseApp');
+    let workplace = get(this, 'workplace');
+
+    return new RSVP.Promise(resolve => {
+      if (!workplace.ready) {
+        workplace.onReady.pushObject(() => {
+          console.log(workplace.data);
+          self.initCheck().then(data => {
+            resolve(data);
+          });
+        });
+
+      } else {
+        self.initCheck().then(data => {
+          resolve(data);
+        });
+      }
+    });
+  },
+
+
+  initCheck(){
+    let self = this;
     let uid = get(this, 'session').get('uid');
 
     // default model
@@ -112,26 +134,40 @@ export default Route.extend({
 
   getCoworkers(){
     let firebaseApp = get(this, 'firebaseApp');
+    let workplace = get(this, 'workplace');
     let uid = get(this, 'session').get('uid');
+    let business_id = workplace.data.business_id;
+    let businessEmployeesRef = firebaseApp.database().ref('businessEmployees').child(business_id);
 
-    return firebaseApp.database().ref('userProfiles').once('value').then(snapshot => {
-      let snap = snapshot.val();
-      let objKeys = Object.keys(snap);
-      let profiles = [];
+    return new RSVP.Promise(resolve => {
+      businessEmployeesRef.once('value').then(snapshot => {
+        let snap = snapshot.val();
+        let objKeys = Object.keys(snap);
+        let profiles = [];
 
-      objKeys.forEach(function(key){
-        if (uid !== key) {
-          snap[key].id = key;
-          profiles.push(snap[key]);
-        }
+        objKeys.forEach(function(key, index){
+          if (uid !== key) {
+            snap[key].id = key;
+
+            let employeeProfileRef = firebaseApp.database().ref('userProfiles').child(key);
+
+            employeeProfileRef.once('value').then(snapshot => {              
+              let employeeProfile = snapshot.val();
+              let joinedObj = Object.assign(employeeProfile, snap[key]);
+              profiles.push(joinedObj);
+
+              if (objKeys.length === index + 1) {
+                if (profiles.length === 0) {
+                  resolve(false);
+
+                } else {
+                  resolve(profiles);
+                }
+              }
+            });
+          }
+        });
       });
-
-      if (profiles.length === 0) {
-        return false;
-
-      } else {
-        return profiles;
-      }
     });
   },
 

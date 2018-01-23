@@ -1,0 +1,44 @@
+
+{{#if label}}
+  <div class="label">{{label}}</div>
+{{/if}}
+
+<div class="date">{{date}}</div>
+
+<div class="time-input">
+  <span class="hm">{{hours}}</span>
+  <span class="devider">:</span>
+  <span class="hm">{{minutes}}</span>
+</div>
+
+<div class="controls layout-row layout-align-center-center">
+  <div class="group">
+    <div class="ctrl-btn" {{action "increaseHours"}}>
+      {{paper-icon "add"}}
+    </div>
+
+    <div class="ctrl-btn" {{action "decreaseHours"}}>
+      {{paper-icon "remove"}}
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="ctrl-btn" {{action "increaseMinutes"}}>
+      {{paper-icon "add"}}
+    </div>
+
+    <div class="ctrl-btn" {{action "decreaseMinutes"}}>
+      {{paper-icon "remove"}}
+    </div>
+  </div>
+</div>
+
+<div class="offset">
+  {{#if offsetLabel}}
+    {{#if offsetHours}}
+        <span>{{offsetLabel}}
+          <span class="offset-hours">{{offsetHours}}</span>
+        </span>
+    {{/if}}
+  {{/if}}
+</div>

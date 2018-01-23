@@ -9,9 +9,10 @@ const {
 
 
 export default Service.extend({
-  firebaseApp: service(),
   session: service(),
+  firebaseApp: service(),
 
+  ready: false,
   staff: [],
   management: [],
 

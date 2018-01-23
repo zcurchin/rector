@@ -12,40 +12,17 @@ const {
 
 export default Controller.extend({
   user: service(),
+  checking: service(),
+  timeChooser: service(),
+
   preloader: false,
   checkout_preloader: false,
 
-  checkedIn: false,
   checkingIn: false,
   checkingOut: false,
-
-  autoCheckOut: null,
-  checkedOut_value: false,
-
   editingAutoCheckOut: false,
 
-  checkOutHours: 6,
-
-  checkOutTime: computed('checkOutHours', function(){
-    let checkOutMilis = this.getCheckOutMilis();
-    let dateNow = new Date();
-    let dateNow_num = dateNow.getDate();
-    let checkOutDate = new Date(checkOutMilis);
-    let checkOutDate_num = checkOutDate.getDate();
-    let time = null;
-
-    console.log('dateNow_num :', dateNow_num);
-    console.log('checkOutDate_num :', checkOutDate_num);
-
-    if (checkOutDate_num > dateNow_num) {
-      time = moment(checkOutMilis).format('hh:mm a, dddd');
-
-    } else {
-      time = moment(checkOutMilis).format('hh:mm a');
-    }
-
-    return time;
-  }),
+  checkedOut_value: false,
 
   co_waiting: false,
   co_success: false,
@@ -62,45 +39,33 @@ export default Controller.extend({
   ua_error: false,
   ua_errorMsg: '',
 
-  history: [],
-
-
-  updateHistory: function(type, obj){
-    let history = get(this, 'history');
-
-    if (type === 'checkOut') {
-      history.unshiftObject(obj);
-    }
-  },
-
-
-  getCheckOutMilis(){
-    let checkOutHours = get(this, 'checkOutHours');
-    let milisHours = parseFloat(checkOutHours) * (60000 * 60);
-    let now = Date.now();
-    let checkOutMilis = now + milisHours;
-
-    return checkOutMilis;
-  },
-
 
   actions: {
     checkInEdit(){
+      let dateNow = new Date();
+      let workingHoursDefault = get(this, 'workingHours');
+      let currentHours = dateNow.getHours();
+      let currentMinutes = dateNow.getMinutes();
+
+      set(this, 'autoCheckOutHours', currentHours + workingHoursDefault);
+      set(this, 'autoCheckOutMinutes', currentMinutes);
+
       set(this, 'checkingIn', true);
     },
 
 
     checkIn(){
       let self = this;
-      let user = this.get('user');
-      let checkOutMilis = this.getCheckOutMilis();
-      let now = Date.now();
+      let checking = this.get('checking');
+      let timeChooser = this.get('timeChooser');
 
       set(self, 'ci_waiting', true);
 
-      user.checkIn(checkOutMilis).then(() => {
-        set(self, 'checkedIn', now);
-        set(self, 'autoCheckOut', checkOutMilis);
+      let milis = timeChooser.getTime();
+
+      console.log(milis);
+
+      checking.checkIn(milis).then(() => {
         set(self, 'ci_success', true);
 
       }).catch(error => {
@@ -117,22 +82,12 @@ export default Controller.extend({
 
     checkOut(){
       let self = this;
-      let user = get(this, 'user');
-      let checkedIn = get(this, 'checkedIn');
-      let now = Date.now();
+      let checking = get(this, 'checking');
 
       set(this, 'co_waiting', true);
 
-      user.checkOut().then(() => {
-        set(self, 'checkedIn', false);
-        set(self, 'checkedOut_value', now);
-
+      checking.checkOut().then(() => {
         set(self, 'co_success', true);
-
-        self.updateHistory('checkOut', {
-          in: checkedIn,
-          out: now
-        });
 
       }).catch(error => {
         set(self, 'co_errorMsg', error);
@@ -148,13 +103,13 @@ export default Controller.extend({
 
     updateAutoCheckOut(){
       let self = this;
-      let user = get(this, 'user');
-      let timestamp = this.getCheckOutMilis();
+      let checking = get(this, 'checking');
+      let timeChooser = get(this, 'timeChooser');
+      let timestamp = timeChooser.getTime();
 
       set(this, 'ua_waiting', true);
 
-      user.checkOut(timestamp, 'update').then(() => {
-        set(self, 'autoCheckOut', timestamp);
+      checking.checkOut(timestamp, 'update').then(() => {
         set(self, 'ua_success', true);
 
       }).catch(error => {

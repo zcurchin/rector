@@ -14,11 +14,10 @@ export default Service.extend({
   firebaseApp: service(),
   firebaseUtil: service(),
 
+  checking: service(),
   workplace: service(),
   notifications: service(),
   employees: service(),
-
-  checkedIn: false,
 
   accountType: {
     user: false,
@@ -155,11 +154,12 @@ export default Service.extend({
     let workplace = get(self, 'workplace');
     let notifications = get(self, 'notifications');
     let employees = get(self, 'employees');
+    let checking = get(self, 'checking');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
-          self.isCheckedIn();
+          checking.initialize();
           workplace.setup();
           notifications.setup();
           resolve();
@@ -173,93 +173,6 @@ export default Service.extend({
         reject(err);
       });
     });
-  },
-
-
-  // --------------------------------------------
-  // Checking
-  // --------------------------------------------
-
-  isCheckedIn(){
-    let self = this;
-
-    this.getLastCheckIn().then(data => {
-      // console.log(data.val());
-      // console.log(data.val()[keys[0]]);
-
-      if (data.val()) {
-        let keys = Object.keys(data.val());
-        let obj = data.val()[keys[0]];
-
-        if (obj.out > Date.now()) {
-          set(self, 'checkedIn', true);
-        } else {
-          set(self, 'checkedIn', false);
-        }
-
-      } else {
-        set(self, 'checkedIn', false);
-      }
-    });
-  },
-
-
-  checkIn(checkOut){
-    let self = this;
-    let firebaseApp = get(this, 'firebaseApp');
-    let checkIns = firebaseApp.database().ref('checkIns');
-    let uid = get(this, 'session.currentUser.uid');
-
-    let data = {
-      in: Date.now(),
-      out: checkOut
-    };
-
-    set(self, 'checkedIn', true);
-
-    return checkIns.child(uid).push(data);
-  },
-
-
-  checkOut(timestamp, type){
-    let self = this;
-
-    return this.getLastCheckIn().then(data => {
-      let uid = get(this, 'session.currentUser.uid');
-      let checkIn_id = Object.keys(data.val())[0];
-      let firebaseApp = get(this, 'firebaseApp');
-      let checkInRef = firebaseApp.database().ref('checkIns/'+uid+'/'+checkIn_id);
-
-      if (type !== 'update') {
-        set(self, 'checkedIn', false);
-      }
-
-      let outTime = timestamp || Date.now();
-
-      return checkInRef.update({
-        out: outTime
-      });
-    });
-  },
-
-
-  getCheckIns(){
-    let firebaseApp = get(this, 'firebaseApp');
-    let uid = get(this, 'session.currentUser.uid');
-    let checkIns = firebaseApp.database().ref('checkIns');
-    let userCheckins = checkIns.child(uid);
-
-    return userCheckins.orderByKey().limitToLast(10).once('value');
-  },
-
-
-  getLastCheckIn(){
-    let firebaseApp = get(this, 'firebaseApp');
-    let uid = get(this, 'session.currentUser.uid');
-    let checkIns = firebaseApp.database().ref('checkIns');
-    let userCheckins = checkIns.child(uid);
-
-    return userCheckins.orderByKey().limitToLast(1).once('value');
   },
 
 

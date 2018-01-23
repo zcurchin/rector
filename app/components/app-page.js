@@ -8,5 +8,7 @@ const {
 export default Component.extend(RecognizerMixin, {
   recognizers: 'swipe',
   classNames: ['app-page'],
-  title: null
+  title: null,
+  classNameBindings: ['contentReady:hidden-preloader:visible-preloader'],
+  contentReady: null
 });

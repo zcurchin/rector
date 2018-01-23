@@ -100,18 +100,6 @@ export default Route.extend({
   },
 
 
-  // getModel(){
-  //
-  // },
-  //
-  //
-  // getProfiles(){
-  //   let firebaseApp = get(this, 'firebaseApp');
-  //
-  //
-  // },
-
-
   actions: {
     refreshRealtimeList(){
       console.log('refreshRealtimeList');

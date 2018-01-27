@@ -10,18 +10,24 @@ const {
 
 export default Route.extend({
   firebaseApp: service(),
+  user: service(),
 
   model(){
-    //let user = get(this, 'user');
+    let user = get(this, 'user');
     let firebaseApp = get(this, 'firebaseApp');
     let userProfiles = firebaseApp.database().ref('userProfiles');
     let publicGrades = firebaseApp.database().ref('publicGrades');
 
     let model = [];
 
+    console.log('ACCOUNT TYPE : USER :', user.accountType.user);
+
     return new RSVP.Promise((resolve, reject) => {
       userProfiles.once('value').then(profiles => {
         let value = profiles.val();
+
+        console.log('oooooooooooooooooo');
+        console.log(value);
 
         if (value === null) {
           resolve([]);

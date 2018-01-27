@@ -40,6 +40,8 @@ export default Component.extend({
     'Porter'
   ],
 
+  //categories of staff: Server, lounge server,  Busser, Runner, Host, Expo, Bartender, Barback, Sommalier; Managers: GM, AGM, Floor manager, event manager
+
   preloader: false,
 
 

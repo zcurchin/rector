@@ -1,5 +1,5 @@
 import Ember from 'ember';
-//import RSVP from 'rsvp';
+import RSVP from 'rsvp';
 
 const {
   Service,
@@ -11,12 +11,14 @@ const {
 export default Service.extend({
   session: service(),
   firebaseApp: service(),
+  notifications: service(),
 
   ready: false,
   staff: [],
   management: [],
 
-  setup(business_id){
+
+  initialize(business_id){
     let staff = get(this, 'staff');
     let management = get(this, 'management');
 
@@ -24,6 +26,9 @@ export default Service.extend({
     let uid = business_id || get(this, 'session.currentUser').uid;
     let rootRef = firebaseApp.database().ref();
     let employeesRef = rootRef.child('businessEmployees').child(uid);
+
+    // TO DO:
+    // fix duplicated items after delete
 
     employeesRef.on('child_added', snap => {
       let userProfileRef = rootRef.child('userProfiles').child(snap.key);
@@ -60,10 +65,20 @@ export default Service.extend({
 
   deleteEmployee(user_uid){
     let firebaseApp = get(this, 'firebaseApp');
+    let notifications = get(this, 'notifications');
     let business_uid = get(this, 'session.currentUser').uid;
     let rootRef = firebaseApp.database().ref();
-    let employeesRef = rootRef.child('businessEmployees').child(business_uid);
+    let employeesRef = rootRef.child('businessEmployees').child(business_uid).child(user_uid);
+    let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
 
-    employeesRef.child(user_uid).remove();
+    return new RSVP.Promise((resolve, reject) => {
+      employeesRef.remove().then(() => {
+        userWorkplacesRef.remove().then(() => {
+          notifications.sendMessage(user_uid, 'We canceled your employement!').then(() => {
+            resolve();
+          });
+        });
+      });
+    });
   }
 });

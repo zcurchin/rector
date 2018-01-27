@@ -35,7 +35,7 @@ export default Service.extend({
   }),
 
 
-  setup(){
+  initialize(){
     let self = this;
     let accountType = get(this, 'user').accountType;
 

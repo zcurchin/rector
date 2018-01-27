@@ -13,81 +13,92 @@ export default Service.extend({
   firebaseApp: service(),
   session: service(),
   employees: service(),
+  checking: service(),
   notifications: service(),
 
   data: null,
-
   ready: false,
-  onReady: [],
 
 
-  setup(){
+  initialize(){
     let self = this;
     let firebaseApp = get(this, 'firebaseApp');
     let employees = get(this, 'employees');
+    let checking = get(this, 'checking');
     let uid = get(this, 'session.currentUser.uid');
     let userWorkplaces = firebaseApp.database().ref('userWorkplaces').child(uid);
 
-    console.log('# Service : Workplace : setup :', uid);
+    console.log('# Service : Workplace : initialize :', uid);
 
-    userWorkplaces.on('value', snap => {
-      console.log('# Service : Workplace : on value :', snap.val());
+    return new RSVP.Promise((resolve, reject) => {
+      userWorkplaces.on('value', snap => {
+        console.log('# Service : Workplace : on value :', snap.val());
 
-      let val = snap.val();
+        let val = snap.val();
 
-      if (val) {
-        let keys = Object.keys(val);
+        if (val) {
+          let keys = Object.keys(val);
 
-        keys.forEach((key, index) => {
-          let pending = val[key].pending;
-          console.log('# Service : Workplace : pending :', val[key].pending);
+          keys.forEach((key, index) => {
+            let pending = val[key].pending;
+            console.log('# Service : Workplace : pending :', val[key].pending);
 
-          let businessEmployees = firebaseApp.database().ref('businessEmployees').child(key).child(uid);
-          let businessProfiles = firebaseApp.database().ref('businessProfiles').child(key);
+            let businessEmployees = firebaseApp.database().ref('businessEmployees').child(key).child(uid);
+            let businessProfiles = firebaseApp.database().ref('businessProfiles').child(key);
 
-          businessProfiles.once('value', snap => {
-            console.log('# Service : Workplace : businessProfile :', snap.val());
+            businessProfiles.once('value', snap => {
+              //console.log('# Service : Workplace : businessProfile :', snap.val());
 
-            let businessObj = snap.val();
+              let businessObj = snap.val();
 
-            if (pending) {
-              businessObj.pending = true;
-              set(self, 'data', businessObj);
-              set(self, 'ready', true);
-              self.onReady.forEach((fn) => { fn(); });
-
-            } else {
-              businessEmployees.once('value', snap => {
-                console.log('businessEmployees :', snap.val());
-
-                if (!snap.val()) {
-                  set(self, 'data', null);
-                  set(self, 'ready', true);
-                  self.onReady.forEach((fn) => { fn(); });
-                  return;
-                }
-
-                businessObj.pending = false;
-                businessObj.business_id = key;
-                businessObj.created = snap.val().created;
-                businessObj.job_title = snap.val().job_title;
-                businessObj.manager = snap.val().manager;
+              if (pending) {
+                businessObj.pending = true;
                 set(self, 'data', businessObj);
                 set(self, 'ready', true);
-                self.onReady.forEach((fn) => { fn(); });
 
-                if (snap.val().manager) {
-                  employees.setup(key);
-                }
-              });
-            }
+                resolve(businessObj);
+
+              } else {
+                businessEmployees.once('value', snap => {
+                  //console.log('businessEmployees :', snap.val());
+
+                  if (!snap.val()) {
+                    set(self, 'data', null);
+                    set(self, 'ready', true);
+
+                    resolve(null);
+
+                  } else {
+                    businessObj.pending = false;
+                    businessObj.business_id = key;
+                    businessObj.created = snap.val().created;
+                    businessObj.job_title = snap.val().job_title;
+                    businessObj.manager = snap.val().manager;
+                    set(self, 'data', businessObj);
+                    set(self, 'ready', true);
+
+
+                    if (snap.val().manager) {
+                      employees.initialize(key);
+                    }
+
+                    set(checking, 'workplaceExist', true);
+
+                    resolve(businessObj);
+                  }
+                });
+              }
+            });
           });
-        });
 
-      } else {
-        set(self, 'data', null);
-        set(self, 'ready', true);
-      }
+        } else {
+          set(checking, 'workplaceExist', false);
+          set(self, 'data', null);
+          set(self, 'ready', true);
+
+          resolve(null);
+        }
+      });
     });
   },
 
@@ -98,13 +109,18 @@ export default Service.extend({
     let notifications = get(this, 'notifications');
     let firebaseApp = get(this, 'firebaseApp');
     let uid = get(this, 'session.currentUser.uid');
-    let businessEmployees = firebaseApp.database().ref('businessEmployees').child(data.business_id).child(uid);
+    let businessEmployeesRef = firebaseApp.database().ref('businessEmployees').child(data.business_id).child(uid);
+    let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(uid).child(data.business_id);
+
+    console.log(self.data);
 
     return new RSVP.Promise((resolve) => {
-      businessEmployees.remove().then(() => {
-        notifications.sendMessage(data.business_id, 'I canceled employement!').then(() => {
-          set(self, 'data', null);
-          resolve();
+      businessEmployeesRef.remove().then(() => {
+        userWorkplacesRef.remove().then(() => {
+          notifications.sendMessage(data.business_id, 'I canceled employement!').then(() => {
+            set(self, 'data', null);
+            resolve();
+          });
         });
       });
     });

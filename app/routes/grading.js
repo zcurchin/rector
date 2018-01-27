@@ -24,19 +24,9 @@ export default Route.extend({
     let workplace = get(this, 'workplace');
 
     return new RSVP.Promise(resolve => {
-      if (!workplace.ready) {
-        workplace.onReady.pushObject(() => {
-          console.log(workplace.data);
-          self.initCheck().then(data => {
-            resolve(data);
-          });
-        });
-
-      } else {
-        self.initCheck().then(data => {
-          resolve(data);
-        });
-      }
+      self.initCheck().then(data => {
+        resolve(data);
+      });
     });
   },
 
@@ -142,30 +132,37 @@ export default Route.extend({
     return new RSVP.Promise(resolve => {
       businessEmployeesRef.once('value').then(snapshot => {
         let snap = snapshot.val();
-        let objKeys = Object.keys(snap);
+        let ids = Object.keys(snap).filter(id => {
+          return uid !== id ? id : false;
+        });
         let profiles = [];
 
-        objKeys.forEach(function(key, index){
-          if (uid !== key) {
-            snap[key].id = key;
+        console.log(Object.keys(snap).length, ids.length);
 
-            let employeeProfileRef = firebaseApp.database().ref('userProfiles').child(key);
+        ids.forEach(function(id, index){
+          snap[id].id = id;
 
-            employeeProfileRef.once('value').then(snapshot => {              
-              let employeeProfile = snapshot.val();
-              let joinedObj = Object.assign(employeeProfile, snap[key]);
-              profiles.push(joinedObj);
+          console.log(snap[id]);
 
-              if (objKeys.length === index + 1) {
-                if (profiles.length === 0) {
-                  resolve(false);
+          let employeeProfileRef = firebaseApp.database().ref('userProfiles').child(id);
 
-                } else {
-                  resolve(profiles);
-                }
+          employeeProfileRef.once('value').then(snapshot => {
+            let employeeProfile = snapshot.val();
+            let joinedObj = Object.assign(employeeProfile, snap[id]);
+            profiles.push(joinedObj);
+
+            if (ids.length === index + 1) {
+              //console.log('LLLLLLLLLLLLLLL:', objKeys);
+
+              if (profiles.length === 0) {
+                resolve(false);
+
+              } else {
+                resolve(profiles);
               }
-            });
-          }
+            }
+          });
+
         });
       });
     });

@@ -6,52 +6,61 @@
     resizeable=true
     info="This is your current status. Here you can check out manually and edit check in time. Check in for the shift will enable you to grade and to be graded by coworkers for the time you worked togeather."
   }}
-    {{#if checking.checkedIn}}
-      <div class="checkin-status-box">
-        <div class="header layout-row layout-align-start-center">
-          <div class="title">Checked In</div>
-          <span class="flex"></span>
-          <div class="status-icon">
-            {{paper-icon "alarm-on"}}
+    {{#if checking.workplaceExist}}
+      {{#if checking.checkedIn}}
+        <div class="checkin-status-box">
+          <div class="header layout-row layout-align-start-center">
+            <div class="title">Checked In</div>
+            <span class="flex"></span>
+            <div class="status-icon">
+              {{paper-icon "alarm-on"}}
+            </div>
           </div>
-        </div>
-        <div class="meta-box">
-          <div class="from-now">{{moment-from-now checking.checkedInAt}}</div>
-          <div class="full-time">{{moment-format checking.checkedInAt "dddd, MMMM Do, h:mm a"}}</div>
-        </div>
-      </div>
-
-      <div class="auto-checkout" {{action "editAutoCheckOut"}}>
-        <span>Auto check out at: <br> <span class="date">{{moment-format checking.autoCheckOutAt "dddd, MMMM Do, h:mm a"}}</span></span>
-          <div class="edit-btn">
-            {{paper-icon "edit"}}
-          </div>
-      </div>
-
-      <div class="outline-btn center" {{action "checkOutEdit"}}>Check Out</div>
-
-    {{else}}
-      <div class="checkin-status-box out">
-        <div class="header layout-row layout-align-start-center">
-          <div class="title">Checked Out</div>
-          <span class="flex"></span>
-          <div class="status-icon">
-            {{paper-icon "alarm-off"}}
-          </div>
-        </div>
-
-        {{#if checking.checkedOutAt}}
           <div class="meta-box">
-            <div class="from-now">{{moment-from-now checking.checkedOutAt}}</div>
-            <div class="full-time">{{moment-format checking.checkedOutAt "dddd, MMMM Do, h:mm a"}}</div>
+            <div class="from-now">{{moment-from-now checking.checkedInAt}}</div>
+            <div class="full-time">{{moment-format checking.checkedInAt "dddd, MMMM Do, h:mm a"}}</div>
           </div>
-        {{/if}}
+        </div>
+
+        <div class="auto-checkout" {{action "editAutoCheckOut"}}>
+          <span>Auto check out at: <br> <span class="date">{{moment-format checking.autoCheckOutAt "dddd, MMMM Do, h:mm a"}}</span></span>
+            <div class="edit-btn">
+              {{paper-icon "edit"}}
+            </div>
+        </div>
+
+        <div class="outline-btn center" {{action "checkOutEdit"}}>Check Out</div>
+
+      {{else}}
+        <div class="checkin-status-box out">
+          <div class="header layout-row layout-align-start-center">
+            <div class="title">Checked Out</div>
+            <span class="flex"></span>
+            <div class="status-icon">
+              {{paper-icon "alarm-off"}}
+            </div>
+          </div>
+
+          {{#if checking.checkedOutAt}}
+            <div class="meta-box">
+              <div class="from-now">{{moment-from-now checking.checkedOutAt}}</div>
+              <div class="full-time">{{moment-format checking.checkedOutAt "dddd, MMMM Do, h:mm a"}}</div>
+            </div>
+          {{/if}}
+        </div>
+
+        {{#unless checkInEdit}}
+          <div class="outline-btn center" {{action "checkInEdit"}}>Check In</div>
+        {{/unless}}
+
+      {{/if}}
+
+    <!-- WORKPLACE DOESNT EXIST -->
+    {{else}}
+      <div class="rich-info">
+        {{paper-icon "alarm-on"}}
+        <p>You are not added to any business or your request is pending at this moment. Please got to Workplace page and check your currrent status.</p>
       </div>
-
-      {{#unless checkInEdit}}
-        <div class="outline-btn center" {{action "checkInEdit"}}>Check In</div>
-      {{/unless}}
-
     {{/if}}
   {{/app-page-card}}
 

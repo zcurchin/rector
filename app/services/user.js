@@ -113,34 +113,61 @@ export default Service.extend({
 
   setAccountType(){
     let self = this;
+    let firebaseApp = get(this, 'firebaseApp');
+    let userProfilesRef = firebaseApp.database().ref('userProfiles');
+    let businessProfilesRef = firebaseApp.database().ref('businessProfiles');
+    let session = get(this, 'session');
+    let user_uid = session.get('currentUser').uid;
+
+    console.log('# Service : User : setAccountType');
 
     return new RSVP.Promise((resolve, reject) => {
-      console.log('# Service : User : setAccountType');
 
-      self.get('profile').then(profile => {
-        console.log('# Service : User : profile :', Object.keys(profile).length > 0);
+      userProfilesRef.child(user_uid).once('value').then(snap => {
+        let userProfile = snap.val();
 
-        if (Object.keys(profile).length > 0) {
-          set(self, 'accountType.user', true);
+        if (userProfile) {
           console.log('# Service : User : accountType : user');
+          set(self, 'accountType.user', true);
           resolve();
 
         } else {
-          console.log('# Service : User : setAccountType : check businessProfiles');
-          self.get('businessProfile').then(businessProfile => {
-            console.log('business profile:', Object.keys(businessProfile).length > 0);
+          businessProfilesRef.child(user_uid).once('value').then(snap => {
+            let businessProfile = snap.val();
 
-            if (Object.keys(businessProfile).length > 0) {
-              set(self, 'accountType.business', true);
+            if (businessProfile) {
               console.log('# Service : User : accountType : business');
+              set(self, 'accountType.business', true);
               resolve();
             }
           });
         }
-
-      }).catch(err => {
-        reject(err);
       });
+
+      // self.get('profile').then(profile => {
+      //   console.log('# Service : User : profile :', Object.keys(profile).length > 0);
+      //
+      //   if (Object.keys(profile).length > 0) {
+      //     console.log('# Service : User : accountType : user');
+      //     set(self, 'accountType.user', true);
+      //     resolve();
+      //
+      //   } else {
+      //     console.log('# Service : User : setAccountType : check businessProfiles');
+      //     self.get('businessProfile').then(businessProfile => {
+      //       console.log('business profile:', Object.keys(businessProfile).length > 0);
+      //
+      //       if (Object.keys(businessProfile).length > 0) {
+      //         set(self, 'accountType.business', true);
+      //         console.log('# Service : User : accountType : business');
+      //         resolve();
+      //       }
+      //     });
+      //   }
+
+      // }).catch(err => {
+      //   reject(err);
+      // });
     });
   },
 
@@ -159,14 +186,15 @@ export default Service.extend({
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
-          checking.initialize();
-          workplace.setup();
-          notifications.setup();
-          resolve();
+          workplace.initialize().then(() => {
+            checking.initialize();
+            notifications.initialize();
+            resolve();            
+          });
 
         } else {
-          employees.setup();
-          notifications.setup();
+          employees.initialize();
+          notifications.initialize();
           resolve();
         }
       }).catch(err => {

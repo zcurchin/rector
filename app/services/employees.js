@@ -71,7 +71,7 @@ export default Service.extend({
     let employeesRef = rootRef.child('businessEmployees').child(business_uid).child(user_uid);
     let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       employeesRef.remove().then(() => {
         userWorkplacesRef.remove().then(() => {
           notifications.sendMessage(user_uid, 'We canceled your employement!').then(() => {

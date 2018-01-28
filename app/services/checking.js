@@ -33,7 +33,7 @@ export default Ember.Service.extend({
     console.log('# Service : Checking : initialize');
     console.log('# Service : Checking : workplace :', workplace.data);
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       if (!workplace.data || (workplace.data && workplace.data.pending)) {
         set(self, 'ready', true);
         resolve();
@@ -78,15 +78,6 @@ export default Ember.Service.extend({
   },
 
 
-  updateHistory: function(obj){
-    let history = get(this, 'history');
-
-    if (type === 'checkOut') {
-      history.unshiftObject(obj);
-    }
-  },
-
-
   checkIn(checkOutMilis){
     let self = this;
     let user_uid = get(this, 'session.currentUser.uid');
@@ -101,11 +92,12 @@ export default Ember.Service.extend({
       out: checkOutMilis
     };
 
-    return checkInsRef.push(data).then(() => {
+    return checkInsRef.push(data).then((snap) => {
+      console.log(snap.key);
       set(self, 'checkedIn', true);
       set(self, 'checkedInAt', data.in);
       set(self, 'autoCheckOutAt', data.out);
-      set(self, 'currentCheckInId', data.in);
+      set(self, 'currentCheckInId', snap.key);
     });
   },
 
@@ -120,6 +112,14 @@ export default Ember.Service.extend({
     let checkedInAt = get(this, 'checkedInAt');
     let checkInRef = firebaseApp.database().ref('businessCheckIns').child(workplace_uid).child(user_uid).child(checkIn_id);
 
+    console.log('-----------------------------');
+    console.log('timestamp:', timestamp);
+    console.log('type:', type);
+    console.log('checkIn_id:', checkIn_id);
+    console.log('workplace_uid:', workplace_uid);
+    console.log('user_uid:', user_uid);
+    console.log('-----------------------------');
+
     if (type !== 'update') {
       set(self, 'checkedIn', false);
     }
@@ -129,17 +129,17 @@ export default Ember.Service.extend({
     return checkInRef.update({
       out: outTime
 
-    }).then(data => {
+    }).then(() => {
       if (type === 'update') {
         set(self, 'autoCheckOutAt', outTime);
+
       } else {
         set(self, 'checkedOutAt', outTime);
+        history.unshiftObject({
+          in: checkedInAt,
+          out: outTime
+        });
       }
-
-      history.unshiftObject({
-        in: checkedInAt,
-        out: outTime
-      });
     });
   },
 

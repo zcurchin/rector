@@ -113,9 +113,7 @@ export default Component.extend({
 
 
     denyRequest(){
-      let self = this;
-      let notifications = get(this, 'notifications');
-      let paperToaster = get(this, 'paperToaster');
+      let notifications = get(this, 'notifications');      
       let request = get(this, 'item');
 
       notifications.denyRequest(request);

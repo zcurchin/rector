@@ -70,7 +70,7 @@ export default Service.extend({
 
     console.log('# Service : Notifications : handleRequests');
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       businessRequestsRef.child(uid).on('value', snap => {
         let val = snap.val();
 
@@ -127,7 +127,7 @@ export default Service.extend({
 
     console.log('# Service : Notifications : handleMessages');
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       messagesRef.child(uid).on('value', snap => {
         let val = snap.val();
 
@@ -204,7 +204,7 @@ export default Service.extend({
       manager: isManager
     };
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       businessEmployeesRef.child(userId).once('value', function(snapshot) {
         var exists = (snapshot.val() !== null);
         //userExistsCallback(userId, exists);

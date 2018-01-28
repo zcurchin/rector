@@ -121,7 +121,7 @@ export default Service.extend({
 
     console.log('# Service : User : setAccountType');
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
 
       userProfilesRef.child(user_uid).once('value').then(snap => {
         let userProfile = snap.val();
@@ -189,7 +189,7 @@ export default Service.extend({
           workplace.initialize().then(() => {
             checking.initialize();
             notifications.initialize();
-            resolve();            
+            resolve();
           });
 
         } else {

@@ -19,9 +19,7 @@ export default Route.extend({
 
   model(){
     console.log('=====================================');
-
     let self = this;
-    let workplace = get(this, 'workplace');
 
     return new RSVP.Promise(resolve => {
       self.initCheck().then(data => {
@@ -167,16 +165,6 @@ export default Route.extend({
       });
     });
   },
-
-
-  // getCheckedInCoworkers(){
-  //   return this.getCoworkers().then(coworkers => {
-  //     return coworkers;
-  //
-  //   }).then(coworkers => {
-  //     return
-  //   });
-  // },
 
 
   getStartTime(type){
@@ -347,7 +335,8 @@ export default Route.extend({
 
   getUserCheckIns(uid){
     let firebaseApp = get(this, 'firebaseApp');
-    let refcheckIns = firebaseApp.database().ref('checkIns').child(uid);
+    let business_id = get(this, 'workplace').data.business_id;
+    let refcheckIns = firebaseApp.database().ref('businessCheckIns').child(business_id).child(uid);
     let start = this.getStartTime();
 
     return new RSVP.Promise((resolve, reject) => {

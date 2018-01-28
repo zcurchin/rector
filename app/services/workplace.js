@@ -30,7 +30,7 @@ export default Service.extend({
 
     console.log('# Service : Workplace : initialize :', uid);
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       userWorkplaces.on('value', snap => {
         console.log('# Service : Workplace : on value :', snap.val());
 
@@ -39,7 +39,7 @@ export default Service.extend({
         if (val) {
           let keys = Object.keys(val);
 
-          keys.forEach((key, index) => {
+          keys.forEach((key) => {
             let pending = val[key].pending;
             console.log('# Service : Workplace : pending :', val[key].pending);
 
@@ -110,6 +110,7 @@ export default Service.extend({
     let firebaseApp = get(this, 'firebaseApp');
     let uid = get(this, 'session.currentUser.uid');
     let businessEmployeesRef = firebaseApp.database().ref('businessEmployees').child(data.business_id).child(uid);
+    let businessCheckInsRef = firebaseApp.database().ref('businessCheckIns').child(data.business_id).child(uid);
     let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(uid).child(data.business_id);
 
     console.log(self.data);
@@ -117,9 +118,11 @@ export default Service.extend({
     return new RSVP.Promise((resolve) => {
       businessEmployeesRef.remove().then(() => {
         userWorkplacesRef.remove().then(() => {
-          notifications.sendMessage(data.business_id, 'I canceled employement!').then(() => {
-            set(self, 'data', null);
-            resolve();
+          businessCheckInsRef.remove().then(() => {
+            notifications.sendMessage(data.business_id, 'I canceled employement!').then(() => {
+              set(self, 'data', null);
+              resolve();
+            });
           });
         });
       });

@@ -9,6 +9,8 @@ const {
 
 export default Controller.extend({
   firebaseApp: service(),
+  grading: service(),
+  checking: service(),
   //session: service(),
   preloader: false,
   yesterday: false,

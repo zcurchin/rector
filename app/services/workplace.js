@@ -18,7 +18,7 @@ export default Service.extend({
 
   data: null,
   ready: false,
-
+  active: false,
 
   initialize(){
     let self = this;
@@ -32,8 +32,6 @@ export default Service.extend({
 
     return new RSVP.Promise((resolve) => {
       userWorkplaces.on('value', snap => {
-        console.log('# Service : Workplace : on value :', snap.val());
-
         let val = snap.val();
 
         if (val) {
@@ -41,10 +39,10 @@ export default Service.extend({
 
           keys.forEach((key) => {
             let pending = val[key].pending;
-            console.log('# Service : Workplace : pending :', val[key].pending);
+            //console.log('# Service : Workplace : pending :', val[key].pending);
 
-            let businessEmployees = firebaseApp.database().ref('businessEmployees').child(key).child(uid);
             let businessProfiles = firebaseApp.database().ref('businessProfiles').child(key);
+            let businessEmployees = firebaseApp.database().ref('businessEmployees').child(key).child(uid);
 
             businessProfiles.once('value', snap => {
               //console.log('# Service : Workplace : businessProfile :', snap.val());
@@ -56,6 +54,9 @@ export default Service.extend({
                 set(self, 'data', businessObj);
                 set(self, 'ready', true);
 
+                console.log('# Service : Workplace : active :', true);
+                console.log('# Service : Workplace : READY');
+
                 resolve(businessObj);
 
               } else {
@@ -66,6 +67,9 @@ export default Service.extend({
                     set(self, 'data', null);
                     set(self, 'ready', true);
 
+                    console.log('# Service : Workplace : active :', false);
+                    console.log('# Service : Workplace : READY');
+
                     resolve(null);
 
                   } else {
@@ -75,14 +79,15 @@ export default Service.extend({
                     businessObj.job_title = snap.val().job_title;
                     businessObj.manager = snap.val().manager;
                     set(self, 'data', businessObj);
+                    set(self, 'active', true);
                     set(self, 'ready', true);
 
+                    console.log('# Service : Workplace : active :', true);
+                    console.log('# Service : Workplace : READY');
 
                     if (snap.val().manager) {
                       employees.initialize(key);
                     }
-
-                    set(checking, 'workplaceExist', true);
 
                     resolve(businessObj);
                   }
@@ -92,9 +97,12 @@ export default Service.extend({
           });
 
         } else {
-          set(checking, 'workplaceExist', false);
           set(self, 'data', null);
+          set(self, 'active', false);
           set(self, 'ready', true);
+
+          console.log('# Service : Workplace : active :', false);
+          console.log('# Service : Workplace : READY');
 
           resolve(null);
         }
@@ -121,6 +129,7 @@ export default Service.extend({
           businessCheckInsRef.remove().then(() => {
             notifications.sendMessage(data.business_id, 'I canceled employement!').then(() => {
               set(self, 'data', null);
+              set(self, 'active', false);
               resolve();
             });
           });

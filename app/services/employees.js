@@ -4,7 +4,8 @@ import RSVP from 'rsvp';
 const {
   Service,
   inject: { service },
-  get
+  get,
+  set
 } = Ember;
 
 
@@ -19,6 +20,8 @@ export default Service.extend({
 
 
   initialize(business_id){
+    console.log('# Service : Employees : initialize');
+    let self = this;
     let staff = get(this, 'staff');
     let management = get(this, 'management');
 
@@ -35,7 +38,7 @@ export default Service.extend({
       let employeeVal = snap.val();
       employeeVal.user_uid = snap.key;
 
-      console.log('# Service : Employees : child_added : ', snap.key);
+      //console.log('# Service : Employees : child_added : ', snap.key);
 
       userProfileRef.once('value', snap => {
         let profileVal = snap.val();
@@ -50,7 +53,7 @@ export default Service.extend({
     });
 
     employeesRef.on('child_removed', snap => {
-      console.log('# Service : Employees : child_removed : ', snap.key);
+      //console.log('# Service : Employees : child_removed : ', snap.key);
 
       let collection = snap.val().manager ? management : staff;
 
@@ -60,6 +63,10 @@ export default Service.extend({
         }
       });
     });
+
+    set(self, 'ready', true);
+
+    console.log('# Service : Employees : READY');
   },
 
 

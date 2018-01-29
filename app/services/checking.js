@@ -14,8 +14,6 @@ export default Ember.Service.extend({
   firebaseApp: service(),
 
   ready: false,
-  workplaceExist: false,
-
   checkedIn: false,
   checkedInAt: null,
   autoCheckOutAt: null,
@@ -31,28 +29,29 @@ export default Ember.Service.extend({
     let workplace = get(this, 'workplace');
 
     console.log('# Service : Checking : initialize');
-    console.log('# Service : Checking : workplace :', workplace.data);
 
     return new RSVP.Promise((resolve) => {
-      if (!workplace.data || (workplace.data && workplace.data.pending)) {
+      if (!workplace.active) {
         set(self, 'ready', true);
+        console.log('# Service : Checking : NO WORKPLACE');
+        console.log('# Service : Checking : READY');
         resolve();
 
       } else {
-        set(self, 'workplaceExist', true);
 
         self.getCheckIns().then(data => {
-          console.log(data);
+          //console.log(data);
 
           if (data) {
             let lastCheckIn = data[data.length - 1];
 
             if (lastCheckIn.out > Date.now()) {
-              console.log('### CHECKED IN');
               set(self, 'checkedIn', true);
               set(self, 'currentCheckInId', lastCheckIn.id);
               set(self, 'checkedInAt', lastCheckIn.in);
               set(self, 'autoCheckOutAt', lastCheckIn.out);
+
+              console.log('# Service : Checking : checkedIn :', true);
 
               if (data.length > 1) {
                 data.forEach((checkin, i) => {
@@ -63,12 +62,14 @@ export default Ember.Service.extend({
               }
 
             } else {
-              console.log('### CHECKED OUT');
               set(self, 'checkedOutAt', lastCheckIn.out);
               set(self, 'history', data);
+
+              console.log('# Service : Checking : checkedIn :', false);
             }
           }
 
+          console.log('# Service : Checking : READY');
           set(self, 'ready', true);
 
           resolve();

@@ -16,6 +16,7 @@ export default Service.extend({
 
   checking: service(),
   workplace: service(),
+  grading: service(),
   notifications: service(),
   employees: service(),
 
@@ -182,12 +183,15 @@ export default Service.extend({
     let notifications = get(self, 'notifications');
     let employees = get(self, 'employees');
     let checking = get(self, 'checking');
+    let grading = get(self, 'grading');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
           workplace.initialize().then(() => {
-            checking.initialize();
+            checking.initialize().then(() => {
+              grading.initialize();
+            });
             notifications.initialize();
             resolve();
           });

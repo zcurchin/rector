@@ -11,6 +11,7 @@ const {
 export default Controller.extend({
   user: service(),
   checking: service(),
+  workplace: service(),
   timeChooser: service(),
 
   preloader: false,

@@ -1,12 +1,15 @@
 {{#app-page title="Check In/Out"
   contentReady=checking.ready
 }}
-  {{#app-page-card
-    title="Current Status"
-    resizeable=true
-    info="This is your current status. Here you can check out manually and edit check in time. Check in for the shift will enable you to grade and to be graded by coworkers for the time you worked togeather."
-  }}
-    {{#if checking.workplaceExist}}
+
+  <!-- WORKPLACE ACTIVE : TRUE -->
+  {{#if workplace.active}}
+    {{#app-page-card
+      title="Current Status"
+      resizeable=true
+      info="This is your current status. Here you can check out manually and edit check in time. Check in for the shift will enable you to grade and to be graded by coworkers for the time you worked togeather."
+    }}
+
       {{#if checking.checkedIn}}
         <div class="checkin-status-box">
           <div class="header layout-row layout-align-start-center">
@@ -24,14 +27,15 @@
 
         <div class="auto-checkout" {{action "editAutoCheckOut"}}>
           <span>Auto check out at: <br> <span class="date">{{moment-format checking.autoCheckOutAt "dddd, MMMM Do, h:mm a"}}</span></span>
-            <div class="edit-btn">
-              {{paper-icon "edit"}}
-            </div>
+          <div class="edit-btn">
+            {{paper-icon "edit"}}
+          </div>
         </div>
 
         <div class="outline-btn center" {{action "checkOutEdit"}}>Check Out</div>
 
       {{else}}
+
         <div class="checkin-status-box out">
           <div class="header layout-row layout-align-start-center">
             <div class="title">Checked Out</div>
@@ -55,35 +59,46 @@
 
       {{/if}}
 
-    <!-- WORKPLACE DOESNT EXIST -->
-    {{else}}
-      <div class="rich-info">
-        {{paper-icon "alarm-on"}}
-        <p>You are not added to any business or your request is pending at this moment. Please got to Workplace page and check your currrent status.</p>
-      </div>
-    {{/if}}
-  {{/app-page-card}}
+
+    {{/app-page-card}}
 
 
-  {{#app-page-card
-    title="History"
-    resizeable=true
-    info="Preview of your check in activity."
-  }}
-    {{#if checking.history.length}}
-      <div class="checkin-history-list">
-        {{#each checking.history as |check|}}
+    {{#app-page-card
+      title="History"
+      resizeable=true
+      info="Preview of your check in activity."
+    }}
+      {{#if checking.history.length}}
+        <div class="checkin-history-list">
+          {{#each checking.history as |check|}}
           {{checkin-history-item check=check}}
-        {{/each}}
-      </div>
+          {{/each}}
+        </div>
 
-    {{else}}
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "history"}}
+          <p>No recent activity</p>
+        </div>
+      {{/if}}
+    {{/app-page-card}}
+
+
+  {{else}}
+  <!-- WORKPLACE ACTIVE : TRUE -->
+
+    {{#app-page-card
+      header=false
+    }}
       <div class="rich-info">
-        {{paper-icon "history"}}
-        <p>No recent activity</p>
+        {{paper-icon "people"}}
+        <p>No workplace</p>
       </div>
-    {{/if}}
-  {{/app-page-card}}
+    {{/app-page-card}}
+
+
+  {{/if}}
+
 {{/app-page}}
 
 

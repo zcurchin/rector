@@ -27,8 +27,8 @@ export default Service.extend({
     let requests = get(this, 'requests');
     let messages = get(this, 'messages');
 
-    console.log('######### TOTAL CHANGED');
-    console.log(messages.length, requests.length);
+    //console.log('######### TOTAL CHANGED');
+    //console.log(messages.length, requests.length);
 
     set(this, 'total', messages.length + requests.length);
 
@@ -39,7 +39,7 @@ export default Service.extend({
     let self = this;
     let accountType = get(this, 'user').accountType;
 
-    console.log('# Service : Notifications : setup');
+    console.log('# Service : Notifications : initialize');
 
     let promises;
 
@@ -56,7 +56,7 @@ export default Service.extend({
     }
 
     RSVP.hash(promises).then(data => {
-      console.log(data);
+      console.log('# Service : Notifications : READY');
       set(self, 'ready', true);
     });
   },
@@ -74,7 +74,7 @@ export default Service.extend({
       businessRequestsRef.child(uid).on('value', snap => {
         let val = snap.val();
 
-        console.log('##### REQUESTS CHANGED :', val);
+        //console.log('##### REQUESTS CHANGED :', val);
 
         if (val) {
           let total_reqs = Object.keys(val).length;
@@ -146,7 +146,7 @@ export default Service.extend({
             };
           });
 
-          console.log('# Service : Notifications : msgs :', msgs);
+          //console.log('# Service : Notifications : msgs :', msgs);
 
           msgs.forEach((msg, index) => {
             let dbRef = msg.business ? 'businessProfiles' : 'userProfiles';

@@ -1,37 +1,54 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
-import moment from 'moment';
 
 const {
-  Route,
+  Service,
   inject: { service },
   get,
-  $
+  set
 } = Ember;
 
 
-export default Route.extend({
-  workplace: service(),  
+export default Service.extend({
   firebaseApp: service(),
+
+  session: service(),
+  workplace: service(),
+  checking: service(),
   // overlap_treshold: 135, // minutes
   overlap_treshold: 1, // minutes
   after_midnight_treshold: 3, // hours
 
-  // model(){
-  //   console.log('=====================================');
-  //   let self = this;
-  //
-  //   return new RSVP.Promise(resolve => {
-  //     self.initCheck().then(data => {
-  //       resolve(data);
-  //     });
-  //   });
-  // },
+  ready: false,
+  gradableUsers: null,
+
+  initialize(){
+    let self = this;
+    let workplace = get(this, 'workplace');
+
+    console.log('------------------------------------');
+    console.log('# Service : Grading : initialize');
+    console.log('------------------------------------');
+
+    this.initCheck().then(data => {
+      set(self, 'ready', true);
+      console.log('# Servive : Grading : data :', data);
+      console.log('# Servive : Grading : READY');
+    });
+
+  },
 
 
   initCheck(){
     let self = this;
     let uid = get(this, 'session').get('uid');
+    let checking = get(this, 'checking');
+    let workplace = get(this, 'workplace');
+
+    // console.log(checking);
+
+    console.log('- workplace : active :', workplace.active);
+    console.log('- checking : checkedIn :', checking.checkedIn);
 
     // default model
     let model = {
@@ -40,10 +57,18 @@ export default Route.extend({
       history: []
     };
 
+
+
     // -----------------------------------------------
     // Step: 1
     // -----------------------------------------------
     console.log('### STEP : 1 : get my todays checkins');
+
+    return new RSVP.Promise(resolve => {
+      console.log('checkedIn :', checking.checkedIn);
+      resolve();
+    });
+
     return self.getUserCheckIns(uid).then(myTodayCheckins => {
       console.log('--- myTodayCheckins :', myTodayCheckins.length);
 
@@ -93,31 +118,31 @@ export default Route.extend({
   },
 
 
-  // deactivate(){
-  //   this._super(...arguments);
-  //
-  //   this.controller.set('yesterdayInfo', false);
-  // },
+  deactivate2(){
+    this._super(...arguments);
+
+    this.controller.set('yesterdayInfo', false);
+  },
 
 
-  // setupController(controller, model){
-  //   this._super(controller, model);
-  //
-  //   let date = new Date();
-  //   let hours = date.getHours();
-  //   let after_midnight_treshold = get(this, 'after_midnight_treshold');
-  //
-  //   console.log('# Route : Grading : hours :', hours);
-  //   console.log('# Route : Grading : after_midnight_treshold :', after_midnight_treshold);
-  //
-  //   if (hours < after_midnight_treshold) {
-  //     let startDate = this.getStartTime('date');
-  //     controller.set('yesterday', startDate);
-  //
-  //   } else {
-  //     controller.set('yesterday', false);
-  //   }
-  // },
+  setupController2(controller, model){
+    this._super(controller, model);
+
+    let date = new Date();
+    let hours = date.getHours();
+    let after_midnight_treshold = get(this, 'after_midnight_treshold');
+
+    console.log('# Route : Grading : hours :', hours);
+    console.log('# Route : Grading : after_midnight_treshold :', after_midnight_treshold);
+
+    if (hours < after_midnight_treshold) {
+      let startDate = this.getStartTime('date');
+      controller.set('yesterday', startDate);
+
+    } else {
+      controller.set('yesterday', false);
+    }
+  },
 
 
   getCoworkers(){

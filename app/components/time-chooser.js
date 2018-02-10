@@ -52,13 +52,32 @@ export default Component.extend({
   },
 
 
+  formatTime(type){
+    let dateObj = get(this, 'dateObj');
+    let number = null;
+
+    if (type === 'hours') {
+      number = dateObj.hours();
+
+    } else if (type === 'minutes') {
+      number = dateObj.minutes();
+    }
+
+    if (number < 10) {
+      return '0' + number;
+    } else {
+      return number;
+    }
+  },
+
+
   update(){
     let timeChooser = get(this, 'timeChooser');
     let dateObj = get(this, 'dateObj');
     let dateInitObj = get(this, 'dateInitObj');
 
-    set(this, 'hours', dateObj.hours());
-    set(this, 'minutes', dateObj.minutes());
+    set(this, 'hours', this.formatTime('hours'));
+    set(this, 'minutes', this.formatTime('minutes'));    
     set(this, 'date', dateObj.format('dddd, MMMM Do'));
 
     let offsetHours = dateObj.diff(dateInitObj, 'h', true);

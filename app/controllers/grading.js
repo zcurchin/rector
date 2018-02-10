@@ -11,7 +11,7 @@ export default Controller.extend({
   firebaseApp: service(),
   grading: service(),
   checking: service(),
-  //session: service(),
+  workplace: service(),
   preloader: false,
   yesterday: false,
   yesterdayInfo: false,

@@ -11,7 +11,6 @@ const {
 
 export default Service.extend({
   firebaseApp: service(),
-
   session: service(),
   workplace: service(),
   checking: service(),
@@ -20,26 +19,35 @@ export default Service.extend({
   after_midnight_treshold: 3, // hours
 
   ready: false,
-  gradableUsers: null,
+  gradableUsers: [],
+  history: [],
 
   initialize(){
     let self = this;
-    let workplace = get(this, 'workplace');
+    //let workplace = get(this, 'workplace');
 
     console.log('------------------------------------');
     console.log('# Service : Grading : initialize');
     console.log('------------------------------------');
 
-    this.initCheck().then(data => {
-      set(self, 'ready', true);
-      console.log('# Servive : Grading : data :', data);
-      console.log('# Servive : Grading : READY');
-    });
+    this.buildGradableList().then(data => {
+      if (data.gradableUsers.length > 0) {
+        set(self, 'gradableUsers', data.gradableUsers);
+      }
 
+      if (data.history.length > 0) {
+        set(self, 'history', data.history);
+      }
+
+      set(self, 'ready', true);
+
+      console.log('# Service : Grading : data :', data);
+      console.log('# Service : Grading : READY');
+    });
   },
 
 
-  initCheck(){
+  buildGradableList(){
     let self = this;
     let uid = get(this, 'session').get('uid');
     let checking = get(this, 'checking');
@@ -52,22 +60,19 @@ export default Service.extend({
 
     // default model
     let model = {
-      checkedInToday: false,
       gradableUsers: [],
       history: []
     };
-
-
 
     // -----------------------------------------------
     // Step: 1
     // -----------------------------------------------
     console.log('### STEP : 1 : get my todays checkins');
 
-    return new RSVP.Promise(resolve => {
-      console.log('checkedIn :', checking.checkedIn);
-      resolve();
-    });
+    // return new RSVP.Promise(resolve => {
+    //   console.log('checkedIn :', checking.checkedIn);
+    //   resolve();
+    // });
 
     return self.getUserCheckIns(uid).then(myTodayCheckins => {
       console.log('--- myTodayCheckins :', myTodayCheckins.length);
@@ -77,8 +82,6 @@ export default Service.extend({
         return model;
 
       } else {
-        model.checkedInToday = true;
-
         // -------------------------------------------
         // Step: 2
         // -------------------------------------------
@@ -160,12 +163,12 @@ export default Service.extend({
         });
         let profiles = [];
 
-        console.log(Object.keys(snap).length, ids.length);
+        //console.log(Object.keys(snap).length, ids.length);
 
         ids.forEach(function(id, index){
           snap[id].id = id;
 
-          console.log(snap[id]);
+          //console.log(snap[id]);
 
           let employeeProfileRef = firebaseApp.database().ref('userProfiles').child(id);
 
@@ -255,6 +258,9 @@ export default Service.extend({
 
   getGradableUsers(privateGrades, profiles, myTodayCheckins){
     let self = this;
+
+    // console.log('# Service : Grading : getGradableUsers');
+    // console.log(privateGrades, profiles, myTodayCheckins);
 
     return new RSVP.Promise((resolve) => {
       let gradableUsers = [];

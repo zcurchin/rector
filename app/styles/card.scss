@@ -14,14 +14,11 @@
     height: 4em;
     border-bottom: 1px solid $color-border;
 
-    .info-btn md-icon,
-    .folding-btn md-icon {
-      font-size: 2.5em;
+    .header-btn md-icon {
+      font-size: 2em;
       color: lighten($color-text, 30);
-      padding: 0.2em;
-      padding-right: 0.26em;
-      padding-top: 0.23em;
-      line-height: 0.7em;
+      padding: 0.5em 0.3em;
+      line-height: 1em;
       cursor: pointer;
 
       &:hover {
@@ -29,9 +26,10 @@
       }
     }
 
-    .info-btn md-icon {
-      font-size: 1.8em;
-      padding-top: 0.4em;
+    .header-btn.folding md-icon {
+      font-size: 2.5em;
+      line-height: 0.9em;
+      padding-left: 0;
     }
   }
 
@@ -76,6 +74,16 @@
 
   md-switch {
     margin-left: 0;
+  }
+
+  .card-header-preloader {
+    visibility: hidden;
+  }
+}
+
+.app-page-card.preloader {
+  .card-header-preloader {
+    visibility: visible;
   }
 }
 

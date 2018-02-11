@@ -4,7 +4,7 @@
   <span class="flex"></span>
 
   {{#if user.accountType.user}}
-    {{#if user.checkedIn}}
+    {{#if checking.checkedIn}}
       <div class="top-bar-btn green" {{action "goToChecking"}}>
         {{paper-icon "alarm-on"}}
       </div>

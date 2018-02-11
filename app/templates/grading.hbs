@@ -2,7 +2,7 @@
   title="Grading"
   contentReady=grading.ready
 }}
-  {{#if yesterday}}
+  {{#if grading.yesterday}}
     <div class="yesterday-grading-box">
       <div class="layout-row layout-align-start-center">
         <div class="yesterday">For Yesterday</div>
@@ -26,7 +26,7 @@
   {{#if workplace.active}}
     {{#app-page-card
       title="Users to grade"
-      refreshAction="buildGradableList"
+      refreshAction="refreshGrading"
       resizeable=true
       info="List of coworkers you worked with today. This list is restarted at 3 AM the next day, all grades should be given by that time. After the cutoff time list is restarted and you won't be able to grade coworkers for the previous day."
     }}
@@ -34,12 +34,11 @@
         {{#if grading.gradableUsers}}
           {{#each grading.gradableUsers as |profile|}}
             {{gradable-user
-              preloader=preloader
               first_name=profile.first_name
               last_name=profile.last_name
               profile_image=profile.profile_image
               profile_id=profile.id
-            action="gradeUser"}}
+            }}
           {{/each}}
 
           {{else}}

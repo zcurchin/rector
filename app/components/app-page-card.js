@@ -42,10 +42,10 @@ export default Component.extend({
 
       set(this, 'preloader', true);
 
-      if (refreshAction === 'buildGradableList') {
+      if (refreshAction === 'refreshGrading') {
         let grading = get(this, 'grading');
 
-        grading.buildGradableList().then(() => {
+        grading.refreshGrading().then(() => {
           set(self, 'preloader', false);
         });
       }

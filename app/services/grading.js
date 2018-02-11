@@ -17,6 +17,7 @@ export default Service.extend({
   // overlap_treshold: 135, // minutes
   overlap_treshold: 1, // minutes
   after_midnight_treshold: 3, // hours
+  yesterday: false,
 
   ready: false,
   gradableUsers: [],
@@ -31,18 +32,26 @@ export default Service.extend({
     console.log('------------------------------------');
 
     this.buildGradableList().then(data => {
-      if (data.gradableUsers.length > 0) {
-        set(self, 'gradableUsers', data.gradableUsers);
-      }
-
-      if (data.history.length > 0) {
-        set(self, 'history', data.history);
-      }
-
+      set(self, 'gradableUsers', data.gradableUsers);
+      set(self, 'history', data.history);
       set(self, 'ready', true);
+
+      self.setYesterday();
 
       console.log('# Service : Grading : data :', data);
       console.log('# Service : Grading : READY');
+    });
+  },
+
+
+  refreshGrading(){
+    let self = this;
+
+    return this.buildGradableList().then(data => {
+      set(self, 'gradableUsers', data.gradableUsers);
+      set(self, 'history', data.history);
+
+      self.setYesterday();
     });
   },
 
@@ -73,6 +82,8 @@ export default Service.extend({
     //   console.log('checkedIn :', checking.checkedIn);
     //   resolve();
     // });
+
+    console.log('### UID :', uid);
 
     return self.getUserCheckIns(uid).then(myTodayCheckins => {
       console.log('--- myTodayCheckins :', myTodayCheckins.length);
@@ -121,29 +132,69 @@ export default Service.extend({
   },
 
 
-  deactivate2(){
-    this._super(...arguments);
+  gradeUser(uid, grade, comment){
+    console.log('### GRADE :', grade);
+    console.log('### UID :', uid);
+    console.log('### COMMENT :', comment ? true : false);
 
-    this.controller.set('yesterdayInfo', false);
+    let myuid = get(this, 'session.currentUser.uid');
+    let business_id = get(this, 'workplace').data.business_id;
+    let firebaseApp = get(this, 'firebaseApp');
+    let db = firebaseApp.database();
+    let publicGrades = db.ref('publicGrades').child(uid);
+    let privateGrades = db.ref('privateGrades').child(myuid);
+    let businessGrades = db.ref('businessGrades').child(business_id).child(uid);
+    let now = Date.now();
+    let gradableUsers = get(this, 'gradableUsers');
+    let history = get(this, 'history');
+
+    let public_data = {
+      timestamp: now,
+      value: grade
+    };
+
+    return publicGrades.push(public_data).then(() => {
+      let private_data = {
+        uid: uid,
+        timestamp: now,
+        value: grade
+      };
+
+      if (comment) { private_data.comment = comment; }
+
+      return privateGrades.push(private_data);
+
+    }).then(() => {
+      if (comment) { public_data.comment = comment; }
+
+      return businessGrades.push(public_data).then(() => {
+        gradableUsers.forEach((profile) => {
+          if (profile.id === uid) {
+            gradableUsers.removeObject(profile);
+            profile.grade_value = grade;
+            profile.grade_timestamp = now;
+            history.unshiftObject(profile);
+          }
+        });
+      });
+    });
   },
 
 
-  setupController2(controller, model){
-    this._super(controller, model);
-
+  setYesterday(){
     let date = new Date();
     let hours = date.getHours();
     let after_midnight_treshold = get(this, 'after_midnight_treshold');
 
-    console.log('# Route : Grading : hours :', hours);
-    console.log('# Route : Grading : after_midnight_treshold :', after_midnight_treshold);
+    console.log('# Service : Grading : hours :', hours);
+    console.log('# Service : Grading : after_midnight_treshold :', after_midnight_treshold);
 
     if (hours < after_midnight_treshold) {
       let startDate = this.getStartTime('date');
-      controller.set('yesterday', startDate);
+      set(this, 'yesterday', startDate);
 
     } else {
-      controller.set('yesterday', false);
+      set('yesterday', false);
     }
   },
 
@@ -365,8 +416,24 @@ export default Service.extend({
 
 
   getUserCheckIns(uid){
+    let workplace = get(this, 'workplace');
+
+    if (!workplace.data) {
+      return new RSVP.Promise((resolve) => {
+        resolve([]);
+      });
+    }
+
+    console.log(workplace);
+
     let firebaseApp = get(this, 'firebaseApp');
-    let business_id = get(this, 'workplace').data.business_id;
+    // let workplace_data = get(this, 'workplace');
+    let business_id = workplace.data.business_id;
+
+    // if (workplace_data) {
+    //   console.log('BUSINESS_ID:', false);
+    // }
+
     let refcheckIns = firebaseApp.database().ref('businessCheckIns').child(business_id).child(uid);
     let start = this.getStartTime();
 

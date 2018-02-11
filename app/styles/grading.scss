@@ -43,6 +43,7 @@
 // ----------------------------------------------
 
 .gradable-user {
+  cursor: pointer;
   border-bottom: 1px solid $color-border;
   padding: 0.3em 0;
 
@@ -70,8 +71,10 @@
 
   .grade-btn {
     cursor: pointer;
-    padding: 0.5em 1em;
-    padding-right: 0;
+    display: block;
+    padding: 0.5em 0 1em 0.5em 0.5em;
+    //padding-right: 0;
+    color: color($primary);
 
     md-icon {
       font-size: 1.8em;
@@ -83,7 +86,6 @@
   .grading-box {
     height: 4em;
     width: 100%;
-    margin: 1em 0;
   }
 
   .star-box {
@@ -92,7 +94,6 @@
 
     md-icon {
       font-size: 1.6em;
-      padding: 0.2em;
       color: lighten($color-text, 10);
     }
 
@@ -102,14 +103,13 @@
   }
 
   .star-box > div {
-    display: inline-block;
     cursor: pointer;
-    padding: 0;
-
+    display: inline-block;
+    padding: 0.5em;
   }
 
   .star-box.grade-0 {
-    .nei-icon.enabled {
+    .nei-icon {
       md-icon {
         color: color($primary);
       }
@@ -156,48 +156,44 @@
     }
   }
 
-  .pusher {
-    margin-left: auto;
-  }
-
-  .grade-value {
-    color: $color-green;
-    font-size: 1.3em;
-    font-weight: 700;
-  }
-
-  .confirm-btn {
+  .add-comment-btn {
     cursor: pointer;
-    padding: 0.5em 0.7em;
-    padding-right: 0;
+    padding: 0.4em;
 
     md-icon {
-      font-size: 2em;
-      height: 1em;
-      // color: $color-green;
-      // border: 2px solid $color-green;
-      color: #FFF;
-      background-color: $color-green;
-      border-radius: 10em;
-      padding: 0.1em;
+      color: lighten($color-text, 10);
     }
   }
 
-  .confirm-btn.disabled {
+  .add-comment-btn.active {
     md-icon {
-      // color: lighten($color-text, 40);
-      // border-color: lighten($color-text, 40);
-      background-color: lighten($color-text, 45);
+      color: color($primary);
     }
   }
 
   .nei {
     font-size: 1em;
     line-height: 1.5em;
-    padding: 0 5em 2em 0.5em;
-    padding-bottom: 2em;
-    padding-right: 5em;
+    padding: 0 0.5em;
     color: $color-text;
+  }
+
+  md-input-container.md-default-theme {
+    margin: 1em 0.5em 0;
+    width: auto;
+  }
+
+  .preloader {
+    visibility: hidden;
+  }
+
+  .preloader.visible {
+    visibility: visible;
+  }
+
+  .outline-btn {
+    margin-bottom: 2em;
+    margin-left: 0.5em;
   }
 }
 

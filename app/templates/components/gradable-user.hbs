@@ -1,4 +1,4 @@
-<div class="user-info layout-row layout-align-start-center">
+<div class="user-info layout-row layout-align-start-center" {{action "toggleGrading"}}>
   <div class="profile-image">
     {{#if profile_image}}
       <img class="flex-none" src="{{profile_image}}">
@@ -10,10 +10,9 @@
     {{first_name}} {{last_name}}
   </div>
 
-  <!-- <div class="grade-btn" {{action "grade" profile.id}}> -->
-  <div class="grade-btn" {{action "toggleGrading"}}>
+  <div class="grade-btn">
     {{#if selected}}
-      {{paper-icon "close"}}
+      cancel {{paper-icon "close"}}
     {{else}}
       {{paper-icon "star"}}
     {{/if}}
@@ -28,16 +27,14 @@
       <div class="star-3" {{action "setGrade" 3}}>{{paper-icon "star"}}</div>
       <div class="star-4" {{action "setGrade" 4}}>{{paper-icon "star"}}</div>
       <div class="star-5" {{action "setGrade" 5}}>{{paper-icon "star"}}</div>
-      <div class="nei-icon {{confirmBtnClass}}" {{action "setGrade" 0}}>{{paper-icon "visibility-off"}}</div>
+      <div class="nei-icon" {{action "setGrade" 0}}>{{paper-icon "visibility-off"}}</div>
     </div>
 
-    <div class="pusher"></div>
+    <span class="flex"></span>
 
-    {{#if grade}}
-      <div class="grade-value">{{grade}}</div>
-    {{/if}}
-
-    <div class="confirm-btn {{confirmBtnClass}} " {{action "confirmGrade" profile_id}}>{{paper-icon "check"}}</div>
+    <div class="add-comment-btn {{if showComment "active"}}" {{action "toggleComment"}}>
+      {{paper-icon "chat"}}
+    </div>
   </div>
 
   {{#if nei}}
@@ -45,4 +42,22 @@
       I don't have enough informations to grade this user.
     </div>
   {{/if}}
+
+  {{#if showComment}}
+    {{paper-input
+      label="Write Comment"
+      textarea=true
+      block=true
+      value=comment
+      maxlength=150
+      passThru=(hash rows=1 maxRows=10)
+      onChange=(action (mut comment))
+    }}
+  {{/if}}
+
+  <div class="preloader {{if showPreloader "visible"}}">
+    {{paper-progress-linear}}
+  </div>
+
+  <div class="outline-btn" {{action "confirmGrade" profile_id}}>Grade {{first_name}} {{last_name}}</div>
 {{/if}}

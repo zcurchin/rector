@@ -13,6 +13,7 @@ export default Component.extend({
   paperSidenav: service(),
   user: service(),
   workplace: service(),
+  checking: service(),
 
   classNames: ['app-container'],
 

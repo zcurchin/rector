@@ -28,7 +28,9 @@ export default Ember.Service.extend({
     let history = get(this, 'history');
     let workplace = get(this, 'workplace');
 
+    console.log('------------------------------------');
     console.log('# Service : Checking : initialize');
+    console.log('------------------------------------');
 
     return new RSVP.Promise((resolve) => {
       if (!workplace.active) {

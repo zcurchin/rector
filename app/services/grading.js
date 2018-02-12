@@ -23,24 +23,30 @@ export default Service.extend({
   gradableUsers: [],
   history: [],
 
+
   initialize(){
     let self = this;
-    //let workplace = get(this, 'workplace');
+    let workplace = get(this, 'workplace');
 
     console.log('------------------------------------');
     console.log('# Service : Grading : initialize');
     console.log('------------------------------------');
 
-    this.buildGradableList().then(data => {
-      set(self, 'gradableUsers', data.gradableUsers);
-      set(self, 'history', data.history);
+    if (workplace.active) {
+      this.buildGradableList().then(data => {
+        set(self, 'gradableUsers', data.gradableUsers);
+        set(self, 'history', data.history);
+        set(self, 'ready', true);
+
+        self.setYesterday();
+
+        //console.log('# Service : Grading : data :', data);
+        console.log('# Service : Grading : READY');
+      });
+
+    } else {
       set(self, 'ready', true);
-
-      self.setYesterday();
-
-      console.log('# Service : Grading : data :', data);
-      console.log('# Service : Grading : READY');
-    });
+    }
   },
 
 
@@ -194,7 +200,7 @@ export default Service.extend({
       set(this, 'yesterday', startDate);
 
     } else {
-      set('yesterday', false);
+      set(this, 'yesterday', false);
     }
   },
 
@@ -417,23 +423,8 @@ export default Service.extend({
 
   getUserCheckIns(uid){
     let workplace = get(this, 'workplace');
-
-    if (!workplace.data) {
-      return new RSVP.Promise((resolve) => {
-        resolve([]);
-      });
-    }
-
-    console.log(workplace);
-
     let firebaseApp = get(this, 'firebaseApp');
-    // let workplace_data = get(this, 'workplace');
     let business_id = workplace.data.business_id;
-
-    // if (workplace_data) {
-    //   console.log('BUSINESS_ID:', false);
-    // }
-
     let refcheckIns = firebaseApp.database().ref('businessCheckIns').child(business_id).child(uid);
     let start = this.getStartTime();
 

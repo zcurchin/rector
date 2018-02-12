@@ -39,7 +39,9 @@ export default Service.extend({
     let self = this;
     let accountType = get(this, 'user').accountType;
 
-    console.log('# Service : Notifications : initialize');
+    console.log('------------------------------------');
+    console.log('# Service : Notifications : initialize');    
+    console.log('------------------------------------');
 
     let promises;
 

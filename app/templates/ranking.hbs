@@ -1,43 +1,55 @@
 {{#app-page
-  title="Ranking"
-  contentReady=true
+  title="Rank List"
+  contentReady=ranking.ready
 }}
-  {{#app-page-card
-    title="Realtime List"
-    resizeable=true
-    info="Ranking of OTIUM's staff members. Arhitmetic mean/quantity of grades."
-    refresh=refreshRealtimeList
-  }}
+  {{#if ranking.workplaceActive}}
+    {{#app-page-card
+      title="Realtime List"
+      resizeable=true
+      info="Ranking of OTIUM's staff members. Arhitmetic mean/quantity of grades."
+      refresh=refreshRealtimeList
+    }}
 
-    {{#if model}}
-      {{#each model as |user index|}}
-        <div class="ranking-user layout-row layout-align-start-center">
-          <div class="order-num">
+      {{#if ranking.workers}}
+        {{#each ranking.workers as |user index|}}
+          <div class="ranking-user layout-row layout-align-start-center">
+            <div class="order-num">
+              {{order-num}}
+            </div>
+            <div class="image">
+              {{#if user.profile_image}}
+                <img src="{{user.profile_image}}" alt="">
+              {{else}}
+                {{paper-icon "account-circle"}}
+              {{/if}}
+            </div>
+            <div class="name">
+              {{user.first_name}} {{user.first_name}}
+            </div>
+            <span class="flex"></span>
+            <div class="grade">
+              <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
+            </div>
+          </div>
+        {{/each}}
 
-          </div>
-          <div class="image">
-            {{#if user.profileImage}}
-            <img src="{{user.profileImage}}" alt="">
-            {{else}}
-            {{paper-icon "account-circle"}}
-            {{/if}}
-          </div>
-          <div class="name">
-            {{user.profileName}}
-          </div>
-          <span class="flex"></span>
-          <div class="grade">
-            <span class="value">{{user.grade_average}}</span> / <span>{{user.grade_total}}</span>
-          </div>
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "equalizer"}}
+          <p>There are no graded users so far</p>
         </div>
-      {{/each}}
+      {{/if}}
 
-    {{else}}
+    {{/app-page-card}}
+
+  {{else}}
+    {{#app-page-card
+      header=false
+    }}
       <div class="rich-info">
-        {{paper-icon "equalizer"}}
-        <p>There are no graded users so far</p>
+        {{paper-icon "people"}}
+        <p>No workplace</p>
       </div>
-    {{/if}}
-
-  {{/app-page-card}}
+    {{/app-page-card}}
+  {{/if}}
 {{/app-page}}

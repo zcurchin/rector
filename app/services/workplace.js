@@ -15,22 +15,39 @@ export default Service.extend({
   employees: service(),
   checking: service(),
   notifications: service(),
+  user: service(),
 
   data: null,
   ready: false,
   active: false,
 
+
   initialize(){
     let self = this;
     let firebaseApp = get(this, 'firebaseApp');
     let employees = get(this, 'employees');
+    let user = get(this, 'user');
     let checking = get(this, 'checking');
     let uid = get(this, 'session.currentUser.uid');
     let userWorkplaces = firebaseApp.database().ref('userWorkplaces').child(uid);
 
-    console.log('# Service : Workplace : initialize :', uid);
+    console.log('------------------------------------');
+    console.log('# Service : Workplace : initialize');
+    console.log('------------------------------------');
+
+    // console.log('# Service : Workplace : USER is BUSINESS :', user.accountType.business);
 
     return new RSVP.Promise((resolve) => {
+      // user is business so set workplace proprely
+      if (user.accountType.business) {
+        set(this, 'active', true);
+        set(this, 'ready', true);
+        // set(this, 'data', )
+        //return;
+        resolve();
+        return;
+      }
+
       userWorkplaces.on('value', snap => {
         let val = snap.val();
 
@@ -54,7 +71,7 @@ export default Service.extend({
                 set(self, 'data', businessObj);
                 set(self, 'ready', true);
 
-                console.log('# Service : Workplace : active :', true);
+                console.log('# Service : Workplace : active :', false);
                 console.log('# Service : Workplace : READY');
 
                 resolve(businessObj);

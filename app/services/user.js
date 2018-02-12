@@ -17,6 +17,7 @@ export default Service.extend({
   checking: service(),
   workplace: service(),
   grading: service(),
+  ranking: service(),
   notifications: service(),
   employees: service(),
 
@@ -175,15 +176,17 @@ export default Service.extend({
 
   setup(){
     let self = this;
-    // console.log('--------------------------------');
+
+    console.log('------------------------------------');
     console.log('# Service : User : setup');
-    // console.log('--------------------------------');
+    console.log('------------------------------------');
 
     let workplace = get(self, 'workplace');
     let notifications = get(self, 'notifications');
     let employees = get(self, 'employees');
     let checking = get(self, 'checking');
     let grading = get(self, 'grading');
+    let ranking = get(self, 'ranking');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
@@ -192,14 +195,18 @@ export default Service.extend({
             checking.initialize().then(() => {
               grading.initialize();
             });
+            ranking.initialize();
             notifications.initialize();
             resolve();
           });
 
         } else {
-          employees.initialize();
-          notifications.initialize();
-          resolve();
+          workplace.initialize().then(() => {
+            employees.initialize();
+            notifications.initialize();
+            ranking.initialize();
+            resolve();
+          });
         }
       }).catch(err => {
         reject(err);

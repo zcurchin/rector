@@ -46,6 +46,7 @@
     "ember-paper": "1.0.0-beta.3",
     "ember-resolver": "^4.3.0",
     "ember-service-worker": "^0.6.7",
+    "ember-truth-helpers": "^2.0.0",
     "ember-web-app": "^2.0.0",
     "ember-web-app-rename": "^1.0.0",
     "emberfire": "^2.0.7",

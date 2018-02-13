@@ -6,5 +6,7 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  ranking: service()
+  ranking: service(),
+  workplace: service(),
+  user: service()
 });

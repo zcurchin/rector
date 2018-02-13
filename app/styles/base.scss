@@ -69,7 +69,7 @@ md-toast .md-toast-content {
     -webkit-overflow-scrolling: touch;
     width: 100%;
     height: 100%;
-    background: #F6F9FC;
+    background: #f2f3f5;
   }
 }
 
@@ -167,8 +167,8 @@ md-sidenav.md-locked-open {
   .app-page-header {
 
     .app-page-title {
-      font-size: 1.4em;
-      padding: 1em;
+      font-size: 1.7em;
+      padding: 1.2em 0.86em;
       color: $color-text;
     }
   }
@@ -301,13 +301,13 @@ md-sidenav.md-locked-open {
   margin: 0;
   line-height: 1.6em;
   padding: 0.5em 1.5em;
-  font-size: 1.1em;
+  font-size: 1.3em;
   text-align: center;
 
   md-icon {
     color: lighten($color-text, 50);
-    font-size: 2.5em;
-    margin: 0.3em 0;
+    font-size: 3.7em;
+    margin: 0.3em 0 0.8em;
   }
 }
 

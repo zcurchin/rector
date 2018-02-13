@@ -2,7 +2,7 @@
   title="Rank List"
   contentReady=ranking.ready
 }}
-  {{#if ranking.workplaceActive}}
+  {{#if workplace.active}}
     {{#app-page-card
       title="Realtime List"
       resizeable=true
@@ -13,9 +13,6 @@
       {{#if ranking.workers}}
         {{#each ranking.workers as |user index|}}
           <div class="ranking-user layout-row layout-align-start-center">
-            <div class="order-num">
-              {{order-num}}
-            </div>
             <div class="image">
               {{#if user.profile_image}}
                 <img src="{{user.profile_image}}" alt="">
@@ -24,7 +21,7 @@
               {{/if}}
             </div>
             <div class="name">
-              {{user.first_name}} {{user.first_name}}
+              {{user.first_name}} {{user.last_name}}
             </div>
             <span class="flex"></span>
             <div class="grade">
@@ -38,6 +35,31 @@
           {{paper-icon "equalizer"}}
           <p>There are no graded users so far</p>
         </div>
+      {{/if}}
+
+      {{#if (or user.accountType.business workplace.data.manager)}}
+        {{#if ranking.managers}}
+          <div class="managers-label">Managers</div>
+
+          {{#each ranking.managers as |user index|}}
+            <div class="ranking-user layout-row layout-align-start-center">
+              <div class="image">
+                {{#if user.profile_image}}
+                  <img src="{{user.profile_image}}" alt="">
+                {{else}}
+                  {{paper-icon "account-circle"}}
+                {{/if}}
+              </div>
+              <div class="name">
+                {{user.first_name}} {{user.last_name}}
+              </div>
+              <span class="flex"></span>
+              <div class="grade">
+                <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
+              </div>
+            </div>
+          {{/each}}
+        {{/if}}
       {{/if}}
 
     {{/app-page-card}}

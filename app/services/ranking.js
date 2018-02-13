@@ -29,22 +29,20 @@ export default Service.extend({
     let session = get(this, 'session');
     let workplace = get(this, 'workplace');
 
+    if (user.accountType.user && !workplace.active) {
+      set(this, 'ready', true);
+      return;
+
+    } else {
+      set(this, 'workplaceActive', true);
+    }
+
     let firebaseApp = get(this, 'firebaseApp');
     let db = firebaseApp.database();
     let userProfiles = db.ref('userProfiles');
     let business_id = user.accountType.user ? workplace.data.business_id : uid;
     let businessEmployees = db.ref('businessEmployees').child(business_id);
     let businessGrades = db.ref('businessGrades').child(business_id);
-
-    if (user.accountType.user && !workplace.active) {
-      set(this, 'ready', true);
-      return;
-
-    } else {
-      set(this, 'ready', true);
-      set(this, 'workplaceActive', true);
-    }
-
     let workers = [];
     let managers = [];
 
@@ -56,12 +54,16 @@ export default Service.extend({
 
     console.log('business_id:', business_id);
 
-
     businessEmployees.once('value').then(snap => {
       let employees = snap.val();
       return employees;
 
     }).then(employees => {
+      if (!employees) {
+        set(self, 'ready', true);
+        return;
+      }
+
       Object.keys(employees).forEach((uid, index) => {
         let employee_data = employees[uid];
 
@@ -77,16 +79,18 @@ export default Service.extend({
             let user_grades_obj = snap.val();
             let user_grades_arr = [];
 
-            Object.keys(user_grades_obj).forEach(grade => {
-              user_grades_arr.push(user_grades_obj[grade].value);
-            });
+            if (user_grades_obj) {
+              Object.keys(user_grades_obj).forEach(grade => {
+                user_grades_arr.push(user_grades_obj[grade].value);
+              });
 
-            user_data.grades = self.formatGrades(user_grades_arr);
-            // console.log(user_data);
-            if (user_data.manager) {
-              managers.push(user_data);
-            } else {
-              workers.push(user_data);
+              user_data.grades = self.formatGrades(user_grades_arr);
+              // console.log(user_data);
+              if (user_data.manager) {
+                managers.push(user_data);
+              } else {
+                workers.push(user_data);
+              }
             }
 
             if (Object.keys(employees).length === index + 1) {

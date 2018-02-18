@@ -3,9 +3,9 @@
   border-bottom: 1px solid $color-border;
 
   .image {
-    width: 3em;
-    height: 3em;
-    margin-right: 1.4em;
+    width: 3.5em;
+    height: 3.5em;
+    margin-right: 1em;
 
     img {
       overflow: hidden;
@@ -16,18 +16,21 @@
     }
 
     md-icon {
-      font-size: 3.7em;
+      font-size: 3.8em;
       height: 1em;
       color: lighten($color-text, 30);
+      line-height: 1em;
       position: relative;
-      left: -0.1em;
-      top: -0.1em;
     }
   }
 
   .name {
     font-size: 1.2em;
     color: $color-text;
+  }
+
+  .job-title {
+    color: lighten($color-text, 25);
   }
 
   .grade {
@@ -47,7 +50,7 @@
 .managers-label {
   font-size: 1.1em;
   font-weight: 500;
-  margin: 5em 0 1em;
+  margin: 2em 0 1em;
   padding: 0.4em 0.9em;
   background-color: lighten(color($primary), 15);
   display: inline-block;

@@ -20,9 +20,16 @@
                 {{paper-icon "account-circle"}}
               {{/if}}
             </div>
-            <div class="name">
-              {{user.first_name}} {{user.last_name}}
+
+            <div>
+              <div class="name">
+                {{user.first_name}} {{user.last_name}}
+              </div>
+              <div class="job-title">
+                {{user.job_title}}
+              </div>
             </div>
+
             <span class="flex"></span>
             <div class="grade">
               <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
@@ -50,9 +57,16 @@
                   {{paper-icon "account-circle"}}
                 {{/if}}
               </div>
-              <div class="name">
-                {{user.first_name}} {{user.last_name}}
+
+              <div>
+                <div class="name">
+                  {{user.first_name}} {{user.last_name}}
+                </div>
+                <div class="job-title">
+                  {{user.job_title}}
+                </div>
               </div>
+
               <span class="flex"></span>
               <div class="grade">
                 <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>

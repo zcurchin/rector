@@ -1,0 +1,61 @@
+.comment-box {
+  border-bottom: 1px solid $color-border;
+  padding: 1em 0;
+
+  .left-wrapper {
+    padding-right: 2em;
+    box-sizing: border-box;
+    width: 85%;
+  }
+
+  .comment-text {
+    font-size: 1.2em;
+    color: $color-text;
+    margin-bottom: 0.7em;
+  }
+
+  .comment-date {
+    margin-bottom: 0.5em;
+    color: lighten($color-text, 35);
+  }
+
+  .grade-box {
+    width: 15%;
+    position: relative;
+  }
+
+  .grade-value {
+    position: relative;
+    top: 0.06em;
+    font-size: 0.9em;
+  }
+
+  .grade-inner {
+    position: absolute;
+    right: 0;
+    top: -0.5em;
+  }
+}
+
+.comment-box:last-child {
+  border: none;
+}
+
+.comment-box.folded {
+  .comment-date {
+    color: $color-text;
+  }
+
+  .comment-text {
+    color: lighten($color-text, 35);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .grade-inner {
+    md-icon {
+      color: lighten($color-text, 35  );
+    }
+  }
+}

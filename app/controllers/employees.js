@@ -14,10 +14,9 @@ export default Controller.extend({
 
 
   actions: {
-    deleteEmployee(employee){
+    showInfo(employee){
       let employees = get(this, 'employees');
-
-      employees.deleteEmployee(employee.user_uid);
+      this.transitionToRoute('employee-info', employee.user_uid);      
     }
   }
 });

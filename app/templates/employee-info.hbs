@@ -1,0 +1,137 @@
+{{#app-page
+  title="Employee Info"
+  contentReady=true
+  backButton=true
+}}
+  {{#app-page-card
+    header=false
+    class="profile-card"
+  }}
+    <div class="action-btn left" {{action "goBack"}}>
+      {{paper-icon "arrow_back"}}
+    </div>
+
+    <div class="action-btn right">
+      {{paper-icon "delete"}}
+    </div>
+
+    <div class="profile-intro">
+      <div class="profile-image">
+        {{#if model.profile_image}}
+          <img src="{{model.profile_image}}" alt="">
+        {{else}}
+          {{paper-icon "account-circle"}}
+        {{/if}}
+      </div>
+
+      <div class="profile-name">
+        <h1>{{model.first_name}} {{model.last_name}}</h1>
+        <h2>{{model.job_title}}</h2>
+      </div>
+    </div>
+  {{/app-page-card}}
+
+  {{#app-page-card
+    title="Grades"
+    resizeable=true
+    info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
+  }}
+    {{#if model.all_grades}}
+      <div class="main-grade layout-row layout-align-start-center">
+        <div class="grade-avg-box">
+          <div class="grade">{{grade-html "avg" model.all_grades}}</div>
+          <div class="label">Average</div>
+        </div>
+
+        <span class="flex"></span>
+
+        <div class="grade-total-box">
+          <div class="label">Total</div>
+          <div class="grade">{{grade-html "total" model.all_grades}}</div>
+        </div>
+      </div>
+
+      <div class="grade-details">
+        <div class="individual-grade-box layout-row layout-align-start-center">
+          <div class="grade-index">5</div>
+          <div class="star-box">
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+          </div>
+          <span class="flex"></span>
+          <div class="number-of-grades">{{grade-html "5" model.all_grades}}</div>
+        </div>
+
+        <div class="individual-grade-box layout-row layout-align-start-center">
+          <div class="grade-index">4</div>
+          <div class="star-box">
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+          </div>
+          <span class="flex"></span>
+          <div class="number-of-grades">{{grade-html "4" model.all_grades}}</div>
+        </div>
+
+        <div class="individual-grade-box layout-row layout-align-start-center">
+          <div class="grade-index">3</div>
+          <div class="star-box">
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+          </div>
+          <span class="flex"></span>
+          <div class="number-of-grades">{{grade-html "3" model.all_grades}}</div>
+        </div>
+
+        <div class="individual-grade-box layout-row layout-align-start-center">
+          <div class="grade-index">2</div>
+          <div class="star-box">
+            {{paper-icon "star"}}
+            {{paper-icon "star"}}
+          </div>
+          <span class="flex"></span>
+          <div class="number-of-grades">{{grade-html "2" model.all_grades}}</div>
+        </div>
+
+        <div class="individual-grade-box layout-row layout-align-start-center">
+          <div class="grade-index">1</div>
+          <div class="star-box">
+            {{paper-icon "star"}}
+          </div>
+          <span class="flex"></span>
+          <div class="number-of-grades">{{grade-html "1" model.all_grades}}</div>
+        </div>
+      </div>
+
+    {{else}}
+      <div class="rich-info">
+        {{paper-icon "star"}}
+        <p>User is not graded</p>
+      </div>
+    {{/if}}
+  {{/app-page-card}}
+
+
+  {{#app-page-card
+    title="Comments"
+    resizeable=true
+    info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
+  }}
+    {{#if model.comments}}
+      {{#each model.comments as |comment|}}
+        {{comment-box comment=comment}}        
+      {{/each}}
+
+    {{else}}
+      <div class="rich-info">
+        {{paper-icon "chat"}}
+        <p>User doesn't have comments yet</p>
+      </div>
+    {{/if}}
+  {{/app-page-card}}
+{{/app-page}}

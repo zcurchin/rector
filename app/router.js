@@ -19,9 +19,10 @@ Router.map(function() {
   this.route('forgot-password');
   this.route('sign-up-business');
   this.route('workplace');
-  this.route('employees');
+  this.route('employees', function(){});
   this.route('business-profile');
   this.route('business-requests');
+  this.route('employee-info', { path: ':id' });
 });
 
 export default Router;

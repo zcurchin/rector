@@ -10,7 +10,7 @@
   }}
     {{#if employees.staff}}
       {{#each employees.staff as |employee|}}
-        <div class="user-list-box layout-row layout-align-start-center">
+        <div class="user-list-box layout-row layout-align-start-center" {{action "showInfo" employee}}>
           <div class="avatar">
             {{#if employee.profile_image}}
               <img src="{{employee.profile_image}}">
@@ -18,9 +18,24 @@
               {{paper-icon "account-circle"}}
             {{/if}}
           </div>
-          <div class="name">{{employee.first_name}} {{employee.last_name}}</div>
+
+          <div>
+            <div class="name">
+              {{employee.first_name}} {{employee.last_name}}
+            </div>
+            <div class="job-title">{{employee.job_title}}</div>
+          </div>
+
           <span class="flex"></span>
-          <div class="icon no-color" {{action "deleteEmployee" employee}}>{{paper-icon "delete"}}</div>
+
+          {{#if employee.average_grade}}
+            <div class="grade">
+              <span class="value">{{employee.average_grade}}</span> / <span>{{employee.total_grades}}</span>
+            </div>
+
+          {{else}}
+            <div class="no-grades">No Grades</div>
+          {{/if}}
         </div>
       {{/each}}
 
@@ -40,7 +55,7 @@
   }}
     {{#if employees.management}}
       {{#each employees.management as |employee|}}
-        <div class="user-list-box layout-row layout-align-start-center">
+        <div class="user-list-box layout-row layout-align-start-center" {{action "showInfo" employee}}>
           <div class="avatar">
             {{#if employee.profile_image}}
               <img src="{{employee.profile_image}}">
@@ -48,9 +63,24 @@
               {{paper-icon "account-circle"}}
             {{/if}}
           </div>
-          <div class="name">{{employee.first_name}} {{employee.last_name}}</div>
+
+          <div>
+            <div class="name">
+              {{employee.first_name}} {{employee.last_name}}
+            </div>
+            <div class="job-title">{{employee.job_title}}</div>
+          </div>
+
           <span class="flex"></span>
-          <div class="icon no-color" {{action "deleteEmployee" employee}}>{{paper-icon "delete"}}</div>
+
+          {{#if employee.average_grade}}
+            <div class="grade">
+              <span class="value">{{employee.average_grade}}</span> / <span>{{employee.total_grades}}</span>
+            </div>
+
+          {{else}}
+            <div class="no-grades">No Grades</div>
+          {{/if}}
         </div>
       {{/each}}
 

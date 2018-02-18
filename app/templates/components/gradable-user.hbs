@@ -6,9 +6,17 @@
       {{paper-icon "account-circle"}}
     {{/if}}
   </div>
-  <div class="profile-name flex">
-    {{first_name}} {{last_name}}
+
+  <div>
+    <div class="profile-name">
+      {{first_name}} {{last_name}}
+    </div>
+    <div class="job-title">
+      {{job_title}}
+    </div>
   </div>
+
+  <span class="flex"></span>
 
   <div class="grade-btn">
     {{#if selected}}

@@ -9,6 +9,32 @@
   padding-top: 1em;
 }
 
+.profile-card {
+  position: relative;
+}
+
+.action-btn {
+  padding: 1em;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+
+  md-icon {
+    font-size: 2.5em;
+    line-height: 1em;
+    height: 1em;
+    color: color($primary);
+  }
+}
+
+.action-btn.left {
+  left: 0;
+}
+
+.action-btn.right {
+  right: 0;
+}
+
 .profile-image {
   margin: 0 auto;
   overflow: hidden;
@@ -31,12 +57,21 @@
 
 .profile-name {
   display: block;
+  padding: 2em;
 
   h1 {
     font-size: 1.6em;
     color: darken($color-text, 20);
     font-weight: 400;
-    padding: 1em;
+    padding: 0;
+    text-align: center;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    color: lighten($color-text, 20);
+    font-weight: 400;
     text-align: center;
     margin: 0;
   }

@@ -27,7 +27,7 @@ export default Service.extend({
     let firebaseApp = get(this, 'firebaseApp');
     let employees = get(this, 'employees');
     let user = get(this, 'user');
-    let checking = get(this, 'checking');
+    //let checking = get(this, 'checking');
     let uid = get(this, 'session.currentUser.uid');
     let userWorkplaces = firebaseApp.database().ref('userWorkplaces').child(uid);
 

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
+//import RSVP from 'rsvp';
 
 const {
   Service,
@@ -26,7 +26,7 @@ export default Service.extend({
     let self = this;
     let uid = get(this, 'session').get('uid');
     let user = get(this, 'user');
-    let session = get(this, 'session');
+    //let session = get(this, 'session');
     let workplace = get(this, 'workplace');
 
     if (user.accountType.user && !workplace.active) {

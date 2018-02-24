@@ -4,8 +4,7 @@ const {
   Component,
   inject: { service },
   set,
-  get,
-  computed
+  get
 } = Ember;
 
 export default Component.extend({
@@ -59,14 +58,13 @@ export default Component.extend({
 
 
     confirmGrade(id){
-      let self = this;
       let grading = get(this, 'grading');
       let paperToaster = get(this, 'paperToaster');
       let grade = get(this, 'grade');
       let first_name = get(this, 'first_name');
       let last_name = get(this, 'last_name');
       let comment = get(this, 'comment');
-      let error_msg = 'You have to write comment if you want to grade user below grade 3'
+      let error_msg = 'You have to write comment if you want to grade user below grade 3';
       let success_msg = 'You successfully graded ' + first_name + ' ' + last_name;
 
       if ((grade === 1 || grade === 2) && !comment) {
@@ -79,8 +77,6 @@ export default Component.extend({
         set(this, 'showPreloader', true);
 
         grading.gradeUser(id, grade, comment).then(() => {
-          //set(self, 'showPreloader', false);
-
           paperToaster.show(success_msg, {
             duration: 3000,
             position: 'bottom right'

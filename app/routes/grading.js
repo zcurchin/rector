@@ -1,21 +1,14 @@
 import Ember from 'ember';
-import RSVP from 'rsvp';
-import moment from 'moment';
 
-const {
-  Route,
-  inject: { service },
-  get,
-  $
-} = Ember;
+const { Route } = Ember;
 
 
 export default Route.extend({
-  deactivate(){
-    this._super(...arguments);
-
-    this.controller.set('yesterdayInfo', false);
-  }
+  // deactivate(){
+  //   this._super(...arguments);
+  //
+  //   this.controller.set('yesterdayInfo', false);
+  // }
 
 
   // setupController(controller, model){

@@ -42,6 +42,8 @@ export default Service.extend({
     // fix duplicated items after delete
 
     employeesRef.on('child_added', snap => {
+      console.log(snap);
+
       let userProfileRef = rootRef.child('userProfiles').child(snap.key);
       let gradesRef = rootRef.child('businessGrades').child(uid).child(snap.key);
       let employeeVal = snap.val();
@@ -136,15 +138,15 @@ export default Service.extend({
   },
 
 
-  deleteEmployee(user_uid){
+  deleteEmployee(/*user_uid*/){
     console.log('HHHHHHH');
 
-    let firebaseApp = get(this, 'firebaseApp');
-    let notifications = get(this, 'notifications');
-    let business_uid = get(this, 'session.currentUser').uid;
-    let rootRef = firebaseApp.database().ref();
-    let employeesRef = rootRef.child('businessEmployees').child(business_uid).child(user_uid);
-    let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
+    //let firebaseApp = get(this, 'firebaseApp');
+    //let notifications = get(this, 'notifications');
+    //let business_uid = get(this, 'session.currentUser').uid;
+    //let rootRef = firebaseApp.database().ref();
+    //let employeesRef = rootRef.child('businessEmployees').child(business_uid).child(user_uid);
+    //let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
 
     return new RSVP.Promise((resolve) => {
       resolve();

@@ -1,11 +1,13 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
+import moment from 'moment';
 
 const {
   Service,
   inject: { service },
   get,
-  set
+  set,
+  $
 } = Ember;
 
 

@@ -40,7 +40,7 @@ export default Service.extend({
     let accountType = get(this, 'user').accountType;
 
     console.log('------------------------------------');
-    console.log('# Service : Notifications : initialize');    
+    console.log('# Service : Notifications : initialize');
     console.log('------------------------------------');
 
     let promises;
@@ -57,7 +57,7 @@ export default Service.extend({
       };
     }
 
-    RSVP.hash(promises).then(data => {
+    RSVP.hash(promises).then(() => {
       console.log('# Service : Notifications : READY');
       set(self, 'ready', true);
     });

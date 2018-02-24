@@ -15,8 +15,7 @@ export default Component.extend({
   dateObj: null,
   dateInitObj: null,
   defaultOffset: null,
-  hours: null,
-  minutes: null,
+  time: null,
   date: null,
   label: null,
   offsetLabel: null,
@@ -76,8 +75,7 @@ export default Component.extend({
     let dateObj = get(this, 'dateObj');
     let dateInitObj = get(this, 'dateInitObj');
 
-    set(this, 'hours', this.formatTime('hours'));
-    set(this, 'minutes', this.formatTime('minutes'));    
+    set(this, 'time', dateObj.format('hh:mm a'));
     set(this, 'date', dateObj.format('dddd, MMMM Do'));
 
     let offsetHours = dateObj.diff(dateInitObj, 'h', true);

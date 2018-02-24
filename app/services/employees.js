@@ -130,6 +130,11 @@ export default Service.extend({
       }
     });
 
+    console.log('OPOPOPOPOOPOOPOOPOPOPOPPOPOPOPOPOPOPOPPOOPOPOP');
+    obj.comments.sort(function(a, b) {
+      return a.timestamp - b.timestamp;
+    });
+
     let formated = this.formatGrades(obj.all_grades);
     obj.average_grade = formated.average;
     obj.total_grades = formated.total;

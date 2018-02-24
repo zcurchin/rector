@@ -11,13 +11,11 @@ export default Route.extend({
 
 
   model(data){
-    let staff = get(this, 'employees').staff;
     let employees = get(this, 'employees');
+    let staff = employees.staff;
     let management = employees.management;
 
     var userData = null;
-
-    // if (employees.ready)
 
     staff.forEach(person => {
       if (person.user_uid === data.id) {
@@ -29,9 +27,7 @@ export default Route.extend({
       if (person.user_uid === data.id) {
         userData = person;
       }
-    });
-
-    //console.log(userData);
+    });    
 
     if (userData) {
       return userData;

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-// import RSVP from 'rsvp';
 
 const {
   Controller,
@@ -15,6 +14,7 @@ export default Controller.extend({
   error_msg: '',
   preloader: false,
   hideTemplate: false,
+
 
   actions: {
     signIn() {

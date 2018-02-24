@@ -15,16 +15,19 @@ export default PaperDialog.extend({
   bottomMargin: true,
   onClosed: null,
 
+
   willDestroyElement() {
     this._super(...arguments);
 
     if (this.onClosed) { this.onClosed(); }
   },
 
+
   actions: {
     close(){
       set(this, 'active', false);
     },
+
 
     toggleInfo(){
       this.toggleProperty('showInfo');

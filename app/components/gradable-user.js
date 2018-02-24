@@ -24,9 +24,7 @@ export default Component.extend({
     toggleGrading(){
       this.toggleProperty('selected');
 
-      let selected = get(this, 'selected');
-
-      console.log('selected:', selected);
+      let selected = get(this, 'selected');      
 
       if (!selected) {
         set(this, 'grade', 4);

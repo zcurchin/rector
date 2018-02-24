@@ -8,7 +8,8 @@ const {
 
 
 export default Controller.extend({
-  session: service(),  
+  session: service(),
+
 
   actions: {
     signOut(){
@@ -20,9 +21,11 @@ export default Controller.extend({
       });
     },
 
+
     goToChecking(){
       this.transitionToRoute('checking');
     },
+
 
     goToNotifications(){
       this.transitionToRoute('notifications');

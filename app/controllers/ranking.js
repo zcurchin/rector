@@ -5,6 +5,7 @@ const {
   inject: { service }
 } = Ember;
 
+
 export default Controller.extend({
   ranking: service(),
   workplace: service(),

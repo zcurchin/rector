@@ -2,13 +2,14 @@ import Ember from 'ember';
 import RSVP from 'rsvp';
 
 const {
+  Service,
   inject: { service },
   get,
   set
 } = Ember;
 
 
-export default Ember.Service.extend({
+export default Service.extend({
   session: service(),
   workplace: service(),
   firebaseApp: service(),

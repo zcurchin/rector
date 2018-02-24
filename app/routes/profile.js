@@ -11,6 +11,7 @@ const {
 export default Route.extend({
   user: service(),
 
+
   model(){
     // let self = this;
     let user = get(this, 'user');
@@ -31,6 +32,7 @@ export default Route.extend({
       });
     });
   },
+
 
   deactivate(){
     this.controller.set('editingProfile', false);

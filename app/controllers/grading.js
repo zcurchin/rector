@@ -14,6 +14,7 @@ export default Controller.extend({
   preloader: false,
   yesterdayInfo: false,
 
+
   actions: {
     toggleYesterdayInfo(){
       this.toggleProperty('yesterdayInfo');

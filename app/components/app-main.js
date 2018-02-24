@@ -51,8 +51,7 @@ export default Component.extend({
       this.sendAction('goToChecking');
     },
 
-    goToNotifications(){
-      console.log('OOOOOPPPPPPPPAAAAAAAA');
+    goToNotifications(){      
       this.sendAction('goToNotifications');
     }
   }

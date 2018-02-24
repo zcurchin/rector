@@ -11,9 +11,11 @@
       {{paper-icon "arrow_back"}}
     </div>
 
-    <div class="action-btn right">
-      {{paper-icon "delete"}}
-    </div>
+    {{#if user.accountType.business}}
+      <div class="action-btn right">
+        {{paper-icon "delete"}}
+      </div>
+    {{/if}}
 
     <div class="profile-intro">
       <div class="profile-image">
@@ -124,7 +126,7 @@
   }}
     {{#if model.comments}}
       {{#each model.comments as |comment|}}
-        {{comment-box comment=comment}}        
+        {{comment-box comment=comment}}
       {{/each}}
 
     {{else}}

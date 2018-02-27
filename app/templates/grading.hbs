@@ -2,28 +2,28 @@
   title="Grading"
   contentReady=grading.ready
 }}
-  {{#if grading.yesterday}}
-    <div class="yesterday-grading-box">
-      <div class="layout-row layout-align-start-center">
-        <div class="yesterday">For Yesterday</div>
-        <span class="flex"></span>
-        <div>{{yesterday}}</div>
-        <div class="toggle-btn" {{action "toggleYesterdayInfo"}}>
-          {{#if yesterdayInfo}}
-            {{paper-icon "info"}}
-          {{else}}
-            {{paper-icon "info-outline"}}
-          {{/if}}
-        </div>
-      </div>
-
-      {{#if yesterdayInfo}}
-        <p>Cutoff time is at 3AM after that grading list is restarted! Please grade coworkers performance before cutoff time (after that you won't be able to grade who you worked with today).</p>
-      {{/if}}
-    </div>
-  {{/if}}
-
   {{#if workplace.active}}
+    {{#if grading.yesterday}}
+      <div class="yesterday-grading-box">
+        <div class="layout-row layout-align-start-center">
+          <div class="yesterday">For Yesterday</div>
+          <span class="flex"></span>
+          <div>{{yesterday}}</div>
+          <div class="toggle-btn" {{action "toggleYesterdayInfo"}}>
+            {{#if yesterdayInfo}}
+              {{paper-icon "info"}}
+            {{else}}
+              {{paper-icon "info-outline"}}
+            {{/if}}
+          </div>
+        </div>
+
+        {{#if yesterdayInfo}}
+          <p>Cutoff time is at 3AM after that grading list is restarted! Please grade coworkers performance before cutoff time (after that you won't be able to grade who you worked with today).</p>
+        {{/if}}
+      </div>
+    {{/if}}
+    
     {{#app-page-card
       title="Users to grade"
       refreshAction="refreshGrading"

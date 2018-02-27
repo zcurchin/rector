@@ -1,6 +1,10 @@
 <div class="top-bar layout-row layout-align-start-center">
   <img class="logo" src="assets/images/yograde_logo.svg">
 
+  {{#if user.accountType.business}}
+    <div class="business">Business</div>
+  {{/if}}
+
   <span class="flex"></span>
 
   {{#if user.accountType.user}}
@@ -13,10 +17,6 @@
         {{paper-icon "alarm-off"}}
       </div>
     {{/if}}
-  {{/if}}
-
-  {{#if user.accountType.business}}
-    <div class="business">Business</div>
   {{/if}}
 
   {{#if notifications.total}}

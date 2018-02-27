@@ -12,7 +12,7 @@
     </div>
 
     {{#if user.accountType.business}}
-      <div class="action-btn right">
+      <div class="action-btn right" {{action "deleteEmployee" model}}>
         {{paper-icon "delete"}}
       </div>
     {{/if}}

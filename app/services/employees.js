@@ -13,6 +13,7 @@ export default Service.extend({
   session: service(),
   firebaseApp: service(),
   notifications: service(),
+  paperToaster: service(),
 
   ready: false,
   staff: null,
@@ -142,25 +143,32 @@ export default Service.extend({
   },
 
 
-  deleteEmployee(/*user_uid*/){
-    console.log('HHHHHHH');
-
-    //let firebaseApp = get(this, 'firebaseApp');
-    //let notifications = get(this, 'notifications');
-    //let business_uid = get(this, 'session.currentUser').uid;
-    //let rootRef = firebaseApp.database().ref();
-    //let employeesRef = rootRef.child('businessEmployees').child(business_uid).child(user_uid);
-    //let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
+  deleteEmployee(employee){
+    // console.log(employee);
+    let user_uid = employee.user_uid;
+    let paperToaster = get(this, 'paperToaster');
+    let firebaseApp = get(this, 'firebaseApp');
+    let notifications = get(this, 'notifications');
+    let business_uid = get(this, 'session.currentUser').uid;
+    let rootRef = firebaseApp.database().ref();
+    let employeesRef = rootRef.child('businessEmployees').child(business_uid).child(user_uid);
+    let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
 
     return new RSVP.Promise((resolve) => {
-      resolve();
-      // employeesRef.remove().then(() => {
-      //   userWorkplacesRef.remove().then(() => {
-      //     notifications.sendMessage(user_uid, 'We canceled your employement!').then(() => {
-      //       resolve();
-      //     });
-      //   });
-      // });
+      window.history.back();
+
+      employeesRef.remove().then(() => {
+        userWorkplacesRef.remove().then(() => {
+          notifications.sendMessage(user_uid, 'We canceled your employement!').then(() => {
+            let toasterText = 'You deleted ' + employee.first_name + ' ' + employee.last_name + ' from your business';
+            paperToaster.show(toasterText, {
+              duration: 7000,
+              position: 'top right'
+            });
+            resolve();
+          });
+        });
+      });
     });
   }
 });

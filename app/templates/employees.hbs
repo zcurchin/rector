@@ -7,37 +7,44 @@
     title_count=employees.staff.length
     resizeable=true
     info="Info goes here"
+    class="sorting"
   }}
     {{#if employees.staff}}
-      {{#each employees.staff as |employee|}}
-        <div class="user-list-box layout-row layout-align-start-center" {{action "showInfo" employee}}>
-          <div class="avatar">
-            {{#if employee.profile_image}}
-              <img src="{{employee.profile_image}}">
+      {{#sort-box
+        props=(arr 'average_grade' 'total_grades' 'first_name')
+        labels=(arr 'by average grade' 'by number of grades' 'alphabetically')
+        unsortedList=employees.staff as |sortedList|
+      }}
+        {{#each sortedList as |employee|}}
+          <div class="user-list-box layout-row layout-align-start-center" {{action "showInfo" employee}}>
+            <div class="avatar">
+              {{#if employee.profile_image}}
+                <img src="{{employee.profile_image}}">
+              {{else}}
+                {{paper-icon "account-circle"}}
+              {{/if}}
+            </div>
+
+            <div>
+              <div class="name">
+                {{employee.first_name}} {{employee.last_name}}
+              </div>
+              <div class="job-title">{{employee.job_title}}</div>
+            </div>
+
+            <span class="flex"></span>
+
+            {{#if employee.average_grade}}
+              <div class="grade">
+                <span class="value">{{employee.average_grade}}</span> / <span>{{employee.total_grades}}</span>
+              </div>
+
             {{else}}
-              {{paper-icon "account-circle"}}
+              <div class="no-grades">No Grades</div>
             {{/if}}
           </div>
-
-          <div>
-            <div class="name">
-              {{employee.first_name}} {{employee.last_name}}
-            </div>
-            <div class="job-title">{{employee.job_title}}</div>
-          </div>
-
-          <span class="flex"></span>
-
-          {{#if employee.average_grade}}
-            <div class="grade">
-              <span class="value">{{employee.average_grade}}</span> / <span>{{employee.total_grades}}</span>
-            </div>
-
-          {{else}}
-            <div class="no-grades">No Grades</div>
-          {{/if}}
-        </div>
-      {{/each}}
+        {{/each}}
+      {{/sort-box}}
 
     {{else}}
       <div class="rich-info">
@@ -52,37 +59,44 @@
     title_count=employees.management.length
     resizeable=true
     info="Info goes here"
+    class="sorting"
   }}
     {{#if employees.management}}
-      {{#each employees.management as |employee|}}
-        <div class="user-list-box layout-row layout-align-start-center" {{action "showInfo" employee}}>
-          <div class="avatar">
-            {{#if employee.profile_image}}
-              <img src="{{employee.profile_image}}">
+      {{#sort-box
+        props=(arr 'average_grade' 'total_grades' 'first_name')
+        labels=(arr 'by average grade' 'by number of grades' 'alphabetically')
+        unsortedList=employees.management as |sortedList|
+      }}
+        {{#each sortedList as |employee|}}
+          <div class="user-list-box layout-row layout-align-start-center" {{action "showInfo" employee}}>
+            <div class="avatar">
+              {{#if employee.profile_image}}
+                <img src="{{employee.profile_image}}">
+              {{else}}
+                {{paper-icon "account-circle"}}
+              {{/if}}
+            </div>
+
+            <div>
+              <div class="name">
+                {{employee.first_name}} {{employee.last_name}}
+              </div>
+              <div class="job-title">{{employee.job_title}}</div>
+            </div>
+
+            <span class="flex"></span>
+
+            {{#if employee.average_grade}}
+              <div class="grade">
+                <span class="value">{{employee.average_grade}}</span> / <span>{{employee.total_grades}}</span>
+              </div>
+
             {{else}}
-              {{paper-icon "account-circle"}}
+              <div class="no-grades">No Grades</div>
             {{/if}}
           </div>
-
-          <div>
-            <div class="name">
-              {{employee.first_name}} {{employee.last_name}}
-            </div>
-            <div class="job-title">{{employee.job_title}}</div>
-          </div>
-
-          <span class="flex"></span>
-
-          {{#if employee.average_grade}}
-            <div class="grade">
-              <span class="value">{{employee.average_grade}}</span> / <span>{{employee.total_grades}}</span>
-            </div>
-
-          {{else}}
-            <div class="no-grades">No Grades</div>
-          {{/if}}
-        </div>
-      {{/each}}
+        {{/each}}
+      {{/sort-box}}
 
     {{else}}
       <div class="rich-info">

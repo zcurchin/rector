@@ -49,7 +49,7 @@ export default Service.extend({
       let employeeVal = snap.val();
       employeeVal.user_uid = snap.key;
 
-      //console.log('# Service : Employees : child_added : ', snap.key);
+      console.log('# Service : Employees : child_added : ', snap.key);
 
       userProfileRef.once('value', snap => {
         let profileVal = snap.val();
@@ -130,7 +130,6 @@ export default Service.extend({
       }
     });
 
-    console.log('OPOPOPOPOOPOOPOOPOPOPOPPOPOPOPOPOPOPOPPOOPOPOP');
     obj.comments.sort(function(a, b) {
       return a.timestamp - b.timestamp;
     });

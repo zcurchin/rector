@@ -1,0 +1,34 @@
+.app-page-card.sorting {
+  .card-content {
+    padding-top: 0;
+  }
+}
+
+.sort-box {
+  height: 3em;
+  color: lighten($color-text, 10);
+  font-size: 1.1em;
+  border-bottom: 1px solid $color-border;
+
+  .sort-label {
+    padding-left: 0.2em;
+  }
+
+  .sort-prop {
+    padding: 0.3em;
+    padding-right: 0;
+    cursor: pointer;
+  }
+
+  .sort-direction {
+    cursor: pointer;
+    margin-left: 0.5em;
+    padding: 0.3em;
+    position: relative;
+    right: -0.2em;
+
+    md-icon {
+      color: lighten($color-text, 20);
+    }
+  }
+}

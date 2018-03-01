@@ -18,7 +18,14 @@
     "businessCheckIns": {
       "$business_id": {
         "$uid": {
-          ".indexOn": "in"          
+          ".indexOn": "in"
+        }
+      }
+    },
+    "businessGrades": {
+      "$business_id": {
+        "$uid": {
+          ".indexOn": "timestamp"          
         }
       }
     },

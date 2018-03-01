@@ -15,7 +15,7 @@ export default Service.extend({
   employees: service(),
   checking: service(),
   notifications: service(),
-  user: service(),
+  user: service(),  
 
   data: null,
   ready: false,

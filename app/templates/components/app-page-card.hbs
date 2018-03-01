@@ -7,6 +7,15 @@
       {{/if}}
     {{/if}}
 
+    {{#if rankList}}
+      {{#paper-select
+        selected=rankListSelectedPeriod
+        options=rankListPeriods
+        onChange=(action (mut rankListSelectedPeriod)) as |rankListSelectedPeriod|}}
+        {{rankListSelectedPeriod.label}}
+      {{/paper-select}}
+    {{/if}}
+
     <span class="flex"></span>
 
     {{#if refreshAction}}

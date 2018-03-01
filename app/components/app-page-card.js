@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   inject: { service },
+  observer,
   set,
   get
 } = Ember;
@@ -10,6 +11,7 @@ const {
 
 export default Component.extend({
   grading: service(),
+  ranking: service(),
 
   classNames: ['app-page-card'],
   classNameBindings: ['preloader'],
@@ -24,6 +26,49 @@ export default Component.extend({
   header: true,
   refreshAction: null,
   preloader: false,
+
+  rankListSelectedPeriod: {
+    value: 'this_week',
+    label: 'This Week'
+  },
+
+
+  init(){
+    this._super(...arguments);
+
+    let rankListPeriods = get(this, 'rankListPeriods');
+
+    set(this, 'rankListSelectedPeriod', rankListPeriods[0]);
+  },
+
+  onPeriodChange: observer('rankListSelectedPeriod', function(){
+    let ranking = get(this, 'ranking');
+    let period = get(this, 'rankListSelectedPeriod.value');
+
+    set(ranking, 'period', period);
+  }),
+
+  rankListPeriods: [{
+    value: 'this_week',
+    label: 'This Week'
+  }, {
+    value: 'last_week',
+    label: 'Last Week'
+  }, {
+    value: 'this_month',
+    label: 'This Month'
+  }, {
+    value: 'last_month',
+    label: 'Last Month'
+  }],
+
+
+  init(){
+    this._super(...arguments);
+
+
+  },
+
 
   actions: {
     toggleFolding(){
@@ -49,6 +94,11 @@ export default Component.extend({
           set(self, 'preloader', false);
         });
       }
+    },
+
+
+    periodChanged(){
+      console.log('PERIOD CHANGED');
     }
   }
 });

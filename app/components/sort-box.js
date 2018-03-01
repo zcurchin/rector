@@ -11,8 +11,7 @@ export default Component.extend({
   unsortedList: null,
 
   // sortBy: 'average_grade',
-  sortBy: 'default',
-  sortByAverageGrade: true,
+  sortBy: 'default',  
 
   reverseSort: true,
   sortDefinition: computed('sortBy', 'reverseSort', function(){

@@ -1,3 +1,35 @@
+.rank-list {
+  .card-header {
+    md-input-container {
+      width: 100%;
+
+      md-select {
+        font-size: 1.3em;
+        padding: 0 0.7em;
+        color: color($primary);
+
+        md-select-value {
+          .ember-power-select-selected-item {
+            color: color($primary);
+          }
+        }
+      }
+
+      .md-errors-spacer {
+        min-height: 0;
+      }
+
+      .md-select-icon {
+        display: none;
+      }
+    }
+
+    .md-select-value {
+      border: none !important;
+    }
+  }
+}
+
 .ranking-user {
   padding: 1em 0;
   border-bottom: 1px solid $color-border;

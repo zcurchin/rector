@@ -1,9 +1,11 @@
 import Ember from 'ember';
 //import RSVP from 'rsvp';
+import moment from 'moment';
 
 const {
   Service,
   inject: { service },
+  observer,
   get,
   set
 } = Ember;
@@ -15,18 +17,34 @@ export default Service.extend({
   workplace: service(),
   user: service(),
 
+  after_midnight_treshold: 3, // hours
+
   ready: false,
   workplaceActive: false,
-  showManagers: false,
+
+  period: 'this_week',
+
+  onPeriodChange: observer('period', function(){
+    let period = get(this, 'period');
+    this.createList(period);
+  }),
+
   workers: [],
   managers: [],
 
 
   initialize(){
+    let period = get(this, 'period');
+
+    this.createList(period);
+  },
+
+
+  createList(period){
     let self = this;
     let uid = get(this, 'session').get('uid');
     let user = get(this, 'user');
-    //let session = get(this, 'session');
+    let sortByDefault = get(this, 'sortBy') === 'default' ? true : false ;
     let workplace = get(this, 'workplace');
 
     if (user.accountType.user && !workplace.active) {
@@ -47,7 +65,7 @@ export default Service.extend({
     let managers = [];
 
     console.log('------------------------------------');
-    console.log('# Service : Ranking : initialize');
+    console.log('# Service : Ranking : createList : ', period);
     console.log('------------------------------------');
 
     // console.log('ACCOUNT TYPE : USER :', user.accountType.user);
@@ -74,10 +92,18 @@ export default Service.extend({
           return user_data;
 
         }).then(user_data => {
+          let period = get(self, 'period');
+          let periodObj = self.getPeriod(period);
 
-          businessGrades.child(uid).once('value').then(snap => {
+          // console.log(periodObj);
+
+          businessGrades.child(uid).orderByChild('timestamp').startAt(periodObj.start).endAt(periodObj.end).once('value').then(snap => {
             let user_grades_obj = snap.val();
             let user_grades_arr = [];
+
+            // console.log('======================');
+            // console.log(user_grades_obj);
+            // console.log('======================');
 
             if (user_grades_obj) {
               Object.keys(user_grades_obj).forEach(grade => {
@@ -106,6 +132,41 @@ export default Service.extend({
         });
       });
     });
+  },
+
+
+  getPeriod(period){
+    let after_midnight_treshold = get(this, 'after_midnight_treshold');
+
+    let startTime = null;
+    let endTime = null;
+
+    switch (period) {
+      case 'this_week':
+        startTime = moment().startOf('isoWeek').add(after_midnight_treshold, 'hours').format('x');
+        endTime = moment().endOf('isoWeek').add(after_midnight_treshold, 'hours').format('x');
+      break;
+
+      case 'last_week':
+        startTime = moment().startOf('isoWeek').subtract(7, 'days').add(after_midnight_treshold, 'hours').format('x');
+        endTime = moment().endOf('isoWeek').subtract(7, 'days').add(after_midnight_treshold, 'hours').format('x');
+      break;
+
+      case 'this_month':
+        startTime = moment().startOf('month').add(after_midnight_treshold, 'hours').format('x');
+        endTime = moment().endOf('month').add(after_midnight_treshold, 'hours').format('x');
+      break;
+
+      case 'last_month':
+        startTime = moment().startOf('month').subtract(1, 'month').add(after_midnight_treshold, 'hours').format('x');
+        endTime = moment().endOf('month').subtract(1, 'month').add(after_midnight_treshold, 'hours').format('x');
+      break;
+    }
+
+    return {
+      start: parseInt(startTime),
+      end: parseInt(endTime)
+    };
   },
 
 

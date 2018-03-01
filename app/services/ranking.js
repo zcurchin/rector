@@ -1,5 +1,5 @@
 import Ember from 'ember';
-//import RSVP from 'rsvp';
+import RSVP from 'rsvp';
 import moment from 'moment';
 
 const {
@@ -34,13 +34,12 @@ export default Service.extend({
 
 
   initialize(){
-    let period = get(this, 'period');
-
-    this.createList(period);
+    this.createList();
   },
 
 
-  createList(period){
+  createList(){
+    let period = get(this, 'period');
     let self = this;
     let uid = get(this, 'session').get('uid');
     let user = get(this, 'user');
@@ -72,62 +71,66 @@ export default Service.extend({
 
     console.log('business_id:', business_id);
 
-    businessEmployees.once('value').then(snap => {
-      let employees = snap.val();
-      return employees;
+    return new RSVP.Promise((resolve) => {
+      businessEmployees.once('value').then(snap => {
+        let employees = snap.val();
+        return employees;
 
-    }).then(employees => {
-      if (!employees) {
-        set(self, 'ready', true);
-        return;
-      }
+      }).then(employees => {
+        if (!employees) {
+          set(self, 'ready', true);
+          return;
+        }
 
-      Object.keys(employees).forEach((uid, index) => {
-        let employee_data = employees[uid];
+        Object.keys(employees).forEach((uid, index) => {
+          let employee_data = employees[uid];
 
-        userProfiles.child(uid).once('value').then(snap => {
-          let profile_data = snap.val();
-          let user_data = Object.assign(employee_data, profile_data);
+          userProfiles.child(uid).once('value').then(snap => {
+            let profile_data = snap.val();
+            let user_data = Object.assign(employee_data, profile_data);
 
-          return user_data;
+            return user_data;
 
-        }).then(user_data => {
-          let period = get(self, 'period');
-          let periodObj = self.getPeriod(period);
+          }).then(user_data => {
+            let period = get(self, 'period');
+            let periodObj = self.getPeriod(period);
 
-          // console.log(periodObj);
+            // console.log(periodObj);
 
-          businessGrades.child(uid).orderByChild('timestamp').startAt(periodObj.start).endAt(periodObj.end).once('value').then(snap => {
-            let user_grades_obj = snap.val();
-            let user_grades_arr = [];
+            businessGrades.child(uid).orderByChild('timestamp').startAt(periodObj.start).endAt(periodObj.end).once('value').then(snap => {
+              let user_grades_obj = snap.val();
+              let user_grades_arr = [];
 
-            // console.log('======================');
-            // console.log(user_grades_obj);
-            // console.log('======================');
+              // console.log('======================');
+              // console.log(user_grades_obj);
+              // console.log('======================');
 
-            if (user_grades_obj) {
-              Object.keys(user_grades_obj).forEach(grade => {
-                user_grades_arr.push(user_grades_obj[grade].value);
-              });
+              if (user_grades_obj) {
+                Object.keys(user_grades_obj).forEach(grade => {
+                  user_grades_arr.push(user_grades_obj[grade].value);
+                });
 
-              user_data.grades = self.formatGrades(user_grades_arr);
-              // console.log(user_data);
-              if (user_data.manager) {
-                managers.push(user_data);
-              } else {
-                workers.push(user_data);
+                user_data.grades = self.formatGrades(user_grades_arr);
+                // console.log(user_data);
+                if (user_data.manager) {
+                  managers.push(user_data);
+                } else {
+                  workers.push(user_data);
+                }
               }
-            }
 
-            if (Object.keys(employees).length === index + 1) {
-              console.log('LAST EMPLOYEE');
-              let sortedManagers = self.sortList(managers);
-              let sortedWorkers = self.sortList(workers);
+              if (Object.keys(employees).length === index + 1) {
+                console.log('LAST EMPLOYEE');
+                let sortedManagers = self.sortList(managers);
+                let sortedWorkers = self.sortList(workers);
 
-              set(self, 'managers', sortedManagers);
-              set(self, 'workers', sortedWorkers);
-              set(self, 'ready', true);
-            }
+                set(self, 'managers', sortedManagers);
+                set(self, 'workers', sortedWorkers);
+                set(self, 'ready', true);
+
+                resolve();
+              }
+            });
           });
         });
       });

@@ -1,10 +1,11 @@
 {{#app-page
-  title="Rank List"
+  title="Rank list"
   contentReady=ranking.ready
 }}
   {{#if workplace.active}}
     {{#app-page-card
       class="rank-list"
+      refreshAction="refreshRankList"
       rankList=true
       info="Ranking of OTIUM's staff members. Arhitmetic mean/quantity of grades."
       refresh=refreshRealtimeList

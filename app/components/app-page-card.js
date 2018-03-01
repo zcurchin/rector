@@ -29,7 +29,7 @@ export default Component.extend({
 
   rankListSelectedPeriod: {
     value: 'this_week',
-    label: 'This Week'
+    label: 'This week'
   },
 
 
@@ -50,16 +50,16 @@ export default Component.extend({
 
   rankListPeriods: [{
     value: 'this_week',
-    label: 'This Week'
+    label: 'This week'
   }, {
     value: 'last_week',
-    label: 'Last Week'
+    label: 'Last week'
   }, {
     value: 'this_month',
-    label: 'This Month'
+    label: 'This month'
   }, {
     value: 'last_month',
-    label: 'Last Month'
+    label: 'Last month'
   }],
 
 
@@ -91,6 +91,13 @@ export default Component.extend({
         let grading = get(this, 'grading');
 
         grading.refreshGrading().then(() => {
+          set(self, 'preloader', false);
+        });
+
+      } else if (refreshAction === 'refreshRankList') {
+        let ranking = get(this, 'ranking');
+
+        ranking.createList().then(() => {
           set(self, 'preloader', false);
         });
       }

@@ -1,31 +1,23 @@
 .rank-list {
   .card-header {
     md-input-container {
-      width: 100%;
+      margin: 0;
+      margin-left: 0.7em;
+
+      .md-errors-spacer {
+        display: none;
+      }
 
       md-select {
-        font-size: 1.3em;
-        padding: 0 0.7em;
-        color: color($primary);
+        .md-select-value {
+          border: none;
 
-        md-select-value {
-          .ember-power-select-selected-item {
-            color: color($primary);
+          .md-select-icon {
+            //margin: 4px 4px 0;
+            color: $color-text;
           }
         }
       }
-
-      .md-errors-spacer {
-        min-height: 0;
-      }
-
-      .md-select-icon {
-        display: none;
-      }
-    }
-
-    .md-select-value {
-      border: none !important;
     }
   }
 }

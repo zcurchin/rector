@@ -44,7 +44,7 @@
 
     .icon {
       cursor: pointer;
-      
+
       md-icon {
         color: color($primary);
       }
@@ -68,6 +68,17 @@
 
   .respond-box {
     margin: 2em 0;
+  }
+}
+
+.requests {
+  .user-box {
+    margin-bottom: 2em;
+  }
+
+  md-input-container {
+    width: 60%;
+    display: block;
   }
 }
 

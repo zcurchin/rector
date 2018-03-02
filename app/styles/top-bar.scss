@@ -28,12 +28,6 @@
     }
   }
 
-  .md-button.md-icon-button.menu-btn {
-    padding: 0.3em;
-    width: auto;
-    height: auto;
-  }
-
   .top-bar-btn {
     cursor: pointer;
 
@@ -61,5 +55,29 @@
     color: color($primary);
     font-size: 1.2em;
     padding-top: 0.4em;
+  }
+}
+
+.bottom-bar {
+  width: 100%;
+  height: 4em;
+  z-index: 120;
+  background: #FFF;
+  box-shadow: 0 0 3px rgba(0,0,0,0.15);
+
+  .bottom-bar-btn {
+    cursor: pointer;
+    padding: 0.5em;
+
+    md-icon {
+      font-size: 2.2em;
+      padding: 0.2em;
+      color: #99a0b4;
+      height: 1em;
+    }
+  }
+
+  .active .bottom-bar-btn md-icon {
+    color: color($primary);
   }
 }

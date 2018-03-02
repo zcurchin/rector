@@ -39,6 +39,13 @@ export default Component.extend({
       this.sendAction('signOut');
     },
 
+    goBack(){
+      // console.log(window.history.state.path);
+      // console.log(window.history.length);
+      // if ()
+      window.history.back();
+    },
+
     signUpRestaurant(){
       this.sendAction('signUpRestaurant');
     },
@@ -51,7 +58,7 @@ export default Component.extend({
       this.sendAction('goToChecking');
     },
 
-    goToNotifications(){      
+    goToNotifications(){
       this.sendAction('goToNotifications');
     }
   }

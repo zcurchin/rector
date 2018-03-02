@@ -24,12 +24,6 @@
       {{paper-icon "notifications"}}
     </div>
   {{/if}}
-
-  {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
-    <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
-      {{paper-icon "more-vert"}}
-    </div>
-  {{/paper-sidenav-toggle}}
 </div>
 
 {{#paper-sidenav-container class="inner-sidenav"}}
@@ -187,3 +181,54 @@
   {{/paper-card-content}}
 
 {{/paper-sidenav-container}}
+
+<div class="bottom-bar hide-gt-sm layout-row layout-align-start-center">
+  <div class="bottom-bar-btn" {{action "goBack"}}>
+    {{paper-icon "arrow-back"}}
+  </div>
+
+  <span class="flex"></span>
+
+  {{#if user.accountType.user}}
+    {{#link-to "checking"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "alarm-on"}}
+      </div>
+    {{/link-to}}
+
+    {{#link-to "grading"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "star"}}
+      </div>
+    {{/link-to}}
+
+    {{#link-to "ranking"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "equalizer"}}
+      </div>
+    {{/link-to}}
+
+    {{#if workplace.data.manager}}
+      {{#link-to "employees"}}
+        <div class="bottom-bar-btn">
+          {{paper-icon "people"}}
+        </div>
+      {{/link-to}}
+
+    {{else}}
+      {{#link-to "profile"}}
+        <div class="bottom-bar-btn">
+          {{paper-icon "person"}}
+        </div>
+      {{/link-to}}
+    {{/if}}
+  {{/if}}
+
+  <span class="flex"></span>
+
+  {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
+    <div class="bottom-bar-btn" {{action toggleAction}}>
+      {{paper-icon "more-vert"}}
+    </div>
+  {{/paper-sidenav-toggle}}
+</div>

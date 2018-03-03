@@ -40,9 +40,6 @@ export default Component.extend({
     },
 
     goBack(){
-      // console.log(window.history.state.path);
-      // console.log(window.history.length);
-      // if ()
       window.history.back();
     },
 

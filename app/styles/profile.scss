@@ -4,9 +4,10 @@
 // ----------------------------------------------
 
 .profile-intro .profile-image {
-  width: 10em;
-  height: 10em;
-  padding-top: 1em;
+  width: 13em;
+  height: 13em;
+  position: relative;
+  margin-top: -3em;
 }
 
 .profile-card {
@@ -42,14 +43,14 @@
   cursor: pointer;
 
   md-icon {
-    font-size: 10em;
+    font-size: 13em;
     height: 1em;
     color: lighten($color-text, 40);
   }
 
   img {
-    width: 10em;
-    height: 10em;
+    width: 13em;
+    height: 13em;
     border-radius: 10em;
     background-color: lighten($color-text, 40);
   }

@@ -23,7 +23,7 @@
         {{/if}}
       </div>
     {{/if}}
-    
+
     {{#app-page-card
       title="Users to grade"
       refreshAction="refreshGrading"
@@ -33,13 +33,7 @@
       {{#if checking.checkedIn}}
         {{#if grading.gradableUsers}}
           {{#each grading.gradableUsers as |profile|}}
-            {{gradable-user
-              first_name=profile.first_name
-              last_name=profile.last_name
-              profile_image=profile.profile_image
-              profile_id=profile.id
-              job_title=profile.job_title
-            }}
+            {{gradable-user user=profile}}
           {{/each}}
 
           {{else}}

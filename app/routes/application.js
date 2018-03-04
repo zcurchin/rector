@@ -43,6 +43,10 @@ export default Route.extend({
             this.replaceWith('ranking');
           }
         }
+
+        if (target === 'employee-info') {
+          this.replaceWith('employees');
+        }
       });
     }
   }

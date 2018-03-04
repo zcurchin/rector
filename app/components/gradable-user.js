@@ -19,12 +19,14 @@ export default Component.extend({
   showComment: false,
   comment: '',
 
+  user: null,
+
 
   actions: {
     toggleGrading(){
       this.toggleProperty('selected');
 
-      let selected = get(this, 'selected');      
+      let selected = get(this, 'selected');
 
       if (!selected) {
         set(this, 'grade', 4);
@@ -59,8 +61,8 @@ export default Component.extend({
       let grading = get(this, 'grading');
       let paperToaster = get(this, 'paperToaster');
       let grade = get(this, 'grade');
-      let first_name = get(this, 'first_name');
-      let last_name = get(this, 'last_name');
+      let first_name = get(this, 'user.first_name');
+      let last_name = get(this, 'user.last_name');
       let comment = get(this, 'comment');
       let error_msg = 'You have to write comment if you want to grade user below grade 3';
       let success_msg = 'You successfully graded ' + first_name + ' ' + last_name;

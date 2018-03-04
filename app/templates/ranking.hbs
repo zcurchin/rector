@@ -13,29 +13,7 @@
 
       {{#if ranking.workers}}
         {{#each ranking.workers as |user index|}}
-          <div class="ranking-user layout-row layout-align-start-center">
-            <div class="image">
-              {{#if user.profile_image}}
-                <img src="{{user.profile_image}}" alt="">
-              {{else}}
-                {{paper-icon "account-circle"}}
-              {{/if}}
-            </div>
-
-            <div>
-              <div class="name">
-                {{user.first_name}} {{user.last_name}}
-              </div>
-              <div class="job-title">
-                {{user.job_title}}
-              </div>
-            </div>
-
-            <span class="flex"></span>
-            <div class="grade">
-              <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
-            </div>
-          </div>
+          {{user-list-item user=user}}
         {{/each}}
 
       {{else}}
@@ -50,29 +28,7 @@
           <div class="managers-label">Managers</div>
 
           {{#each ranking.managers as |user index|}}
-            <div class="ranking-user layout-row layout-align-start-center">
-              <div class="image">
-                {{#if user.profile_image}}
-                  <img src="{{user.profile_image}}" alt="">
-                {{else}}
-                  {{paper-icon "account-circle"}}
-                {{/if}}
-              </div>
-
-              <div>
-                <div class="name">
-                  {{user.first_name}} {{user.last_name}}
-                </div>
-                <div class="job-title">
-                  {{user.job_title}}
-                </div>
-              </div>
-
-              <span class="flex"></span>
-              <div class="grade">
-                <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
-              </div>
-            </div>
+            {{user-list-item user=user}}
           {{/each}}
         {{/if}}
       {{/if}}

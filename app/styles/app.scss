@@ -1,5 +1,6 @@
 
 $primary: 'deep-orange';
+//$primary: 'purple';
 $accent: "pink";
 $warn: "red";
 
@@ -28,6 +29,7 @@ $color-border: #eef2f5;
 
 // COMPONENTS
 
+@import 'user-list-item';
 @import 'comment-box';
 @import 'sort-box';
 

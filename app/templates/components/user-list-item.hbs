@@ -1,0 +1,39 @@
+<div class="image layout-row layout-column layout-align-center-center">
+  {{#if user.profile_image}}
+    <img src="{{user.profile_image}}" alt="">
+  {{else}}
+    <div class="initials">
+      {{initials}}
+    </div>
+  {{/if}}
+</div>
+
+<div>
+  <div class="name">
+    {{user.first_name}} {{user.last_name}}
+  </div>
+
+  {{#if user.job_title}}
+    <div class="meta">
+      {{user.job_title}}
+    </div>
+  {{/if}}
+</div>
+
+<span class="flex"></span>
+
+{{#if icon}}
+  {{#if toggleState}}
+    {{paper-icon "close"}}
+  {{else}}
+    {{paper-icon icon}}
+  {{/if}}
+{{/if}}
+
+{{#if user.grades.average}}
+  <div class="grade">
+    <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
+  </div>
+{{/if}}
+
+{{yield}}

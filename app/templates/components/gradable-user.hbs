@@ -1,31 +1,9 @@
-<div class="user-info layout-row layout-align-start-center" {{action "toggleGrading"}}>
-  <div class="profile-image">
-    {{#if profile_image}}
-      <img class="flex-none" src="{{profile_image}}">
-    {{else}}
-      {{paper-icon "account-circle"}}
-    {{/if}}
-  </div>
-
-  <div>
-    <div class="profile-name">
-      {{first_name}} {{last_name}}
-    </div>
-    <div class="job-title">
-      {{job_title}}
-    </div>
-  </div>
-
-  <span class="flex"></span>
-
-  <div class="grade-btn">
-    {{#if selected}}
-      cancel {{paper-icon "close"}}
-    {{else}}
-      {{paper-icon "star"}}
-    {{/if}}
-  </div>
-</div>
+{{user-list-item
+  user=user
+  icon="star"
+  toggle=true
+  action=(action "toggleGrading")
+}}
 
 {{#if selected}}
   <div class="grading-box layout-row layout-align-start-center">
@@ -67,5 +45,5 @@
     {{paper-progress-linear}}
   </div>
 
-  <div class="outline-btn" {{action "confirmGrade" profile_id}}>Grade {{first_name}} {{last_name}}</div>
+  <div class="outline-btn" {{action "confirmGrade" user.id}}>Grade {{user.first_name}} {{user.last_name}}</div>
 {{/if}}

@@ -57,7 +57,9 @@ export default Service.extend({
 
         gradesRef.once('value', snap => {
           let gradeObj = self.getGradeObjects(snap.val());
-          let joinedObj = Object.assign(employeeVal, profileVal, gradeObj);
+          let joinedObj = Object.assign(employeeVal, profileVal);
+
+          joinedObj.grades = gradeObj;
 
           if (joinedObj.manager) {
             management.addObject(joinedObj);
@@ -136,8 +138,8 @@ export default Service.extend({
     });
 
     let formated = this.formatGrades(obj.all_grades);
-    obj.average_grade = formated.average;
-    obj.total_grades = formated.total;
+    obj.average = formated.average;
+    obj.total = formated.total;
 
     return obj;
   },

@@ -46,7 +46,7 @@
   border-bottom: 1px solid $color-border;
 
   .grading-box {
-    margin-top: 0.5em;
+    margin: 1em 0 0;
   }
 
   .star-box {
@@ -160,6 +160,7 @@
 
   .preloader {
     visibility: hidden;
+    margin-bottom: 1em;
   }
 
   .preloader.visible {
@@ -169,7 +170,6 @@
   .outline-btn {
     margin-top: 0;
     margin-bottom: 4em;
-    margin-left: 0.5em;
   }
 }
 

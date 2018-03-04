@@ -38,6 +38,9 @@ export default Component.extend({
     if (get(this, 'toggle')) {
       this.toggleProperty('toggleState');
     }
-    this.action();
+
+    if (get(this, 'action')) {
+      this.action();      
+    }
   }
 });

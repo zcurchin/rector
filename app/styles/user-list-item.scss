@@ -8,7 +8,7 @@
     margin-right: 0.7em;
     overflow: hidden;
     border-radius: 20em;
-    background: lighten($color-text, 50);
+    background: lighten($color-text, 58);
 
     img {
       width: 100%;
@@ -42,6 +42,11 @@
 
   md-icon {
     color: lighten($color-text, 15);
+  }
+
+  .no-grades {
+    color: lighten($color-text, 15);
+    font-size: 0.9em;
   }
 }
 

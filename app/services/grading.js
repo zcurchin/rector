@@ -157,6 +157,7 @@ export default Service.extend({
     let history = get(this, 'history');
 
     let public_data = {
+      business_id: business_id,
       timestamp: now,
       value: grade
     };

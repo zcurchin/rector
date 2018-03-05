@@ -174,18 +174,28 @@ export default Service.extend({
 
 
   sortList(list){
-    list.sort(function(a, b) {
+    let sorted_1 = list.sort(function(a, b) {
       //console.log(a, b);
       if (a.grades.average > b.grades.average) {
         return -1;
+
       } else if (a.grades.average < b.grades.average) {
         return 1;
+
       } else if (a.grades.average === b.grades.average) {
-        return 0;
+        if (a.grades.total > b.grades.total) {
+          return -1;
+
+        } else if (a.grades.total < b.grades.total) {
+          return 1;
+
+        } else {
+          return 0;
+        }
       }
     });
 
-    return list;
+    return sorted_1;
   },
 
 

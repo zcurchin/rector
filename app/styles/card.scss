@@ -40,6 +40,11 @@
     font-weight: 500;
   }
 
+  .card-title-count {
+    color: lighten($color-text, 20);
+    font-weight: 400;
+  }
+
   .card-info, .info-message {
     color: lighten($color-text, 10);
     margin: 0;

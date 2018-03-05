@@ -27,7 +27,9 @@ export default Route.extend({
       if (person.user_uid === data.id) {
         userData = person;
       }
-    });    
+    });
+
+    console.log(userData);
 
     if (userData) {
       return userData;

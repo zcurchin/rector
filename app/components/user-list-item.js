@@ -8,7 +8,7 @@ const {
 
 
 export default Component.extend({
-  classNames: ['user-list-item', 'layout-row', 'layout-align-start-center'],
+  classNames: ['user-list-item'],
   classNameBindings: ['clickable'],
   clickable: false,
 
@@ -16,6 +16,7 @@ export default Component.extend({
   initials: null,
   action: null,
   icon: null,
+  icon2: null,
   toggle: false,
   toggleState: false, // OFF true is ON
 
@@ -28,19 +29,30 @@ export default Component.extend({
 
     set(this, 'initials', initials);
 
-    if (get(this, 'action')) {
+    if (get(this, 'action') || get(this, 'toggle')) {
       set(this, 'clickable', true);
-    }
+    }    
   },
 
 
-  click(){
-    if (get(this, 'toggle')) {
-      this.toggleProperty('toggleState');
-    }
+  didInsertElement(){
+    let self = this;
+    this._super(...arguments);
 
-    if (get(this, 'action')) {
-      this.action();      
-    }
+    this.$('.user-list-item-profile').on('click', function(){
+      if (get(self, 'toggle')) {
+        self.toggleProperty('toggleState');
+      }
+
+      if (get(self, 'action')) {
+        self.action();
+      }
+    });
+  },
+
+
+  willDestroyElement(){
+    this._super(...arguments);
+    this.$('.user-list-item-profile').off('click');
   }
 });

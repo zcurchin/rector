@@ -169,7 +169,7 @@
 
   .outline-btn {
     margin-top: 0;
-    margin-bottom: 4em;
+    margin-bottom: 3em;
   }
 }
 
@@ -183,57 +183,9 @@
 // HISTORY
 // ----------------------------------------------
 
-.history-item {
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-
-  .avatar {
-    img {
-      width: 2.5em;
-      height: 2.5em;
-      border-radius: 10em;
-      margin: 0.233em;
-      background: lighten($color-text, 40);
-    }
-
-    md-icon {
-      font-size: 3em;
-      height: 1em;
-      color: lighten($color-text, 40);
-    }
-  }
-
-  .user-info-box {
-    color: darken($color-text, 20);
-    margin-left: 1em;
-
-    .name {
-      margin-bottom: 0;
-      margin-top: 0.8em;
-    }
-
-    .date {
-      color: $color-text;
-      font-size: 0.8em;
-      margin-top: 0.2em;
-    }
-  }
-
-  .grade-value {
-    margin-left: auto;
-    color: $color-text;
-    font-weight: 500;
-    font-size: 1.3em;
-
-    md-icon {
-      color: lighten($color-text, 15);
-    }
-  }
-
-  .grade-value.number {
-    margin-right: 0.36em;
-  }
-}
-
-.history-item:last-child {
-  border: none;
+.graded-comment {
+  font-size: 1.2em;
+  line-height: 1.4;
+  color: $color-text;
+  padding: 1em 0.5em;
 }

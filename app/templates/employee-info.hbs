@@ -18,11 +18,11 @@
     {{/if}}
 
     <div class="profile-intro">
-      <div class="profile-image">
+      <div class="profile-image layout-row layout-align-center-center">
         {{#if model.profile_image}}
           <img src="{{model.profile_image}}" alt="">
         {{else}}
-          {{paper-icon "account-circle"}}
+          {{paper-icon "person"}}
         {{/if}}
       </div>
 
@@ -38,10 +38,10 @@
     resizeable=true
     info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
   }}
-    {{#if model.all_grades}}
+    {{#if model.grades.all_grades}}
       <div class="main-grade layout-row layout-align-start-center">
         <div class="grade-avg-box">
-          <div class="grade">{{grade-html "avg" model.all_grades}}</div>
+          <div class="grade">{{grade-html "avg" model.grades.all_grades}}</div>
           <div class="label">Average</div>
         </div>
 
@@ -49,7 +49,7 @@
 
         <div class="grade-total-box">
           <div class="label">Total</div>
-          <div class="grade">{{grade-html "total" model.all_grades}}</div>
+          <div class="grade">{{grade-html "total" model.grades.all_grades}}</div>
         </div>
       </div>
 
@@ -64,7 +64,7 @@
             {{paper-icon "star"}}
           </div>
           <span class="flex"></span>
-          <div class="number-of-grades">{{grade-html "5" model.all_grades}}</div>
+          <div class="number-of-grades">{{grade-html "5" model.grades.all_grades}}</div>
         </div>
 
         <div class="individual-grade-box layout-row layout-align-start-center">
@@ -76,7 +76,7 @@
             {{paper-icon "star"}}
           </div>
           <span class="flex"></span>
-          <div class="number-of-grades">{{grade-html "4" model.all_grades}}</div>
+          <div class="number-of-grades">{{grade-html "4" model.grades.all_grades}}</div>
         </div>
 
         <div class="individual-grade-box layout-row layout-align-start-center">
@@ -87,7 +87,7 @@
             {{paper-icon "star"}}
           </div>
           <span class="flex"></span>
-          <div class="number-of-grades">{{grade-html "3" model.all_grades}}</div>
+          <div class="number-of-grades">{{grade-html "3" model.grades.all_grades}}</div>
         </div>
 
         <div class="individual-grade-box layout-row layout-align-start-center">
@@ -97,7 +97,7 @@
             {{paper-icon "star"}}
           </div>
           <span class="flex"></span>
-          <div class="number-of-grades">{{grade-html "2" model.all_grades}}</div>
+          <div class="number-of-grades">{{grade-html "2" model.grades.all_grades}}</div>
         </div>
 
         <div class="individual-grade-box layout-row layout-align-start-center">
@@ -106,7 +106,7 @@
             {{paper-icon "star"}}
           </div>
           <span class="flex"></span>
-          <div class="number-of-grades">{{grade-html "1" model.all_grades}}</div>
+          <div class="number-of-grades">{{grade-html "1" model.grades.all_grades}}</div>
         </div>
       </div>
 
@@ -124,8 +124,8 @@
     resizeable=true
     info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
   }}
-    {{#if model.comments}}
-      {{#each model.comments as |comment|}}
+    {{#if model.grades.comments}}
+      {{#each model.grades.comments as |comment|}}
         {{comment-box comment=comment}}
       {{/each}}
 

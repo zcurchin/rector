@@ -117,8 +117,6 @@ export default Service.extend({
 
   getGradeObjects(grades){
     let obj = {
-      average_grade: null,
-      total_grades: 0,
       all_grades: [],
       comments: []
     };

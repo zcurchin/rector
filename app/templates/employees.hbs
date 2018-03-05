@@ -11,12 +11,15 @@
   }}
     {{#if employees.staff}}
       {{#sort-box
-        props=(arr 'average_grade' 'total_grades' 'first_name')
+        props=(arr 'grades.average' 'grades.total' 'first_name')
         labels=(arr 'by average grade' 'by number of grades' 'alphabetically')
         unsortedList=employees.staff as |sortedList|
       }}
         {{#each sortedList as |employee|}}
-          {{user-list-item user=employee}}
+          {{user-list-item
+            user=employee
+            action=(action "showInfo" employee)
+          }}
         {{/each}}
       {{/sort-box}}
 
@@ -37,12 +40,15 @@
   }}
     {{#if employees.management}}
       {{#sort-box
-        props=(arr 'average_grade' 'total_grades' 'first_name')
+        props=(arr 'grades.average' 'grades.total' 'first_name')
         labels=(arr 'by average grade' 'by number of grades' 'alphabetically')
         unsortedList=employees.management as |sortedList|
       }}
         {{#each sortedList as |employee|}}
-          {{user-list-item user=employee}}
+          {{user-list-item
+            user=employee
+            action=(action "showInfo" employee)
+          }}
         {{/each}}
       {{/sort-box}}
 

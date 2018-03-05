@@ -13,6 +13,7 @@ export default Controller.extend({
   user: service(),
   firebaseApp: service(),
   session: service(),
+  paperToaster: service(),
 
   currentEmail: '',
   emailVerified: false,
@@ -83,15 +84,31 @@ export default Controller.extend({
     verifyEmail(){
       let self = this;
       let user = get(this, 'session.currentUser');
+      let paperToaster = get(this, 'paperToaster');
 
       set(self, 'preloader2', true);
 
       user.sendEmailVerification().then(() => {
         set(self, 'preloader2', false);
         set(self, 'verifyEmailSent', true);
+
+        let message = 'We sent you an email with instructions on how to verfy you email address';
+
+        paperToaster.show(message, {
+          duration: 7000,
+          position: 'bottom right'
+        });
+
       }).catch(error => {
         set(self, 'preloader2', false);
+        let message = error.message;
+
         console.log(error.message);
+
+        paperToaster.show(message, {
+          duration: 7000,
+          position: 'bottom right'
+        });
       });
     },
 

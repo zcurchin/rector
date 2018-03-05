@@ -40,8 +40,11 @@
     }
   }
 
-  md-icon {
-    color: lighten($color-text, 15);
+  .user-list-item-profile {
+    md-icon {
+      color: lighten($color-text, 15);
+      margin-left: 0.3em;
+    }
   }
 
   .no-grades {
@@ -54,6 +57,15 @@
   border: none;
 }
 
+.user-list-item-content {
+  // font-size: 1.2em;
+  // color: $color-text;
+  // line-height: 1.4;
+  // padding: 1em 0;
+}
+
 .user-list-item.clickable {
-  cursor: pointer;
+  .user-list-item-profile {
+    cursor: pointer;
+  }
 }

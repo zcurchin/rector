@@ -181,7 +181,18 @@ export default Service.extend({
             gradableUsers.removeObject(profile);
             profile.grade_value = grade;
             profile.grade_timestamp = now;
-            history.unshiftObject(profile);
+
+            let obj = {
+              first_name: profile.first_name,
+              last_name: profile.last_name,
+              profile_image: profile.profile_image,
+              grade_timestamp: now,
+              grade_value: grade,
+              nei: grade === 0 ? true : false,
+              comment: comment || null
+            };
+
+            history.unshiftObject(obj);
           }
         });
       });
@@ -299,7 +310,9 @@ export default Service.extend({
               last_name: profile.last_name,
               profile_image: profile.profile_image,
               grade_timestamp: grade.timestamp,
-              grade_value: grade.value
+              grade_value: grade.value,
+              nei: grade.value === 0 ? true : false,
+              comment: grade.comment || null
             };
 
             historyProfiles.push(obj);

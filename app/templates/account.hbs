@@ -68,13 +68,9 @@
         {{paper-progress-linear}}
       </div>
 
-      {{#if verifyEmailSent}}
-        <div class="card-info.no-border">
-          We sent you a email. Go to your email and complete verification proccess.
-        </div>
-      {{else}}
+      {{#unless verifyEmailSent}}
         <div class="outline-btn" {{action "verifyEmail"}}>Verify Email Address</div>
-      {{/if}}
+      {{/unless}}
     {{/if}}
   {{/app-page-card}}
 
@@ -131,7 +127,7 @@
 
       {{else}}
         <div class="outline-btn" {{action "editPassword"}}>Change Password</div>
-        <div class="outline-btn" {{action "forgotPassword"}}>I Forgot My Password</div>
+        <!-- <div class="outline-btn" {{action "forgotPassword"}}>I Forgot My Password</div> -->
       {{/if}}
     {{/app-page-card}}
   {{/if}}

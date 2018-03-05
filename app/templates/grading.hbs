@@ -60,7 +60,46 @@
     }}
       {{#if grading.history}}
         {{#each grading.history as |user|}}
-          <div class="history-item layout-row layout-align-start-center">
+
+          {{#if user.nei}}
+            {{#if user.comment}}
+              {{#user-list-item
+                user=user
+                icon="comment"
+                icon2="visibility-off"
+                toggle=true
+              }}
+                <div class="graded-comment">
+                  {{user.comment}}
+                </div>
+              {{/user-list-item}}
+
+            {{else}}
+              {{user-list-item
+                user=user
+                icon="visibility-off"
+              }}
+            {{/if}}
+
+          {{else}}
+            {{#if user.comment}}
+              {{#user-list-item
+                user=user
+                icon="comment"
+                toggle=true
+              }}
+                <div class="graded-comment">
+                  {{user.comment}}
+                </div>
+              {{/user-list-item}}
+
+            {{else}}
+              {{user-list-item user=user}}
+            {{/if}}
+          {{/if}}
+
+
+          <!-- <div class="history-item layout-row layout-align-start-center">
             <div class="avatar">
               {{#if user.profile_image}}
                 <img class="flex-none" src="{{user.profile_image}}">
@@ -84,7 +123,7 @@
               </div>
             {{/if}}
 
-          </div>
+          </div> -->
         {{/each}}
 
       {{else}}

@@ -1,11 +1,9 @@
-{{user-list-item
+{{#user-list-item
   user=user
   icon="star"
   toggle=true
-  action=(action "toggleGrading")
 }}
 
-{{#if selected}}
   <div class="grading-box layout-row layout-align-start-center">
     <div class="star-box grade-{{grade}}">
       <div class="star-1" {{action "setGrade" 1}}>{{paper-icon "star"}}</div>
@@ -46,4 +44,5 @@
   </div>
 
   <div class="outline-btn" {{action "confirmGrade" user.id}}>Grade {{user.first_name}} {{user.last_name}}</div>
-{{/if}}
+
+{{/user-list-item}}

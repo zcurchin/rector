@@ -7,6 +7,7 @@ const {
   get
 } = Ember;
 
+
 export default Controller.extend({
   user: service(),
   firebaseApp: service(),

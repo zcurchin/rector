@@ -10,6 +10,7 @@ const {
 export default Controller.extend({
   session: service(),
 
+
   actions: {
     signOut(){
       get(this, 'session').close().then(() => {
@@ -20,9 +21,11 @@ export default Controller.extend({
       });
     },
 
+
     goToChecking(){
       this.transitionToRoute('checking');
     },
+
 
     goToNotifications(){
       this.transitionToRoute('notifications');

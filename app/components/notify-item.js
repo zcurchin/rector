@@ -29,16 +29,22 @@ export default Component.extend({
 
   jobTitles: [
     'Server',
+    'Lounge Server',
+    'Busser',
     'Runner',
-    'Expo',
     'Host',
+    'Expo',
     'Bartender',
-    'Bar Back',
-    'Barista',
-    'Sommelier',
-    'Polisher',
-    'Porter'
+    'Barback',
+    'Sommalier',
+    'General Manager',
+    'Assistant General Manager',
+    'Floor Manager',
+    'Event Manager'
   ],
+
+  // Staff: Server, lounge server, Busser, Runner, Host, Expo, Bartender, Barback, Sommalier;
+  // Managers: GM, AGM, Floor manager, event manager;
 
   preloader: false,
 
@@ -103,10 +109,18 @@ export default Component.extend({
     },
 
 
-    denyRequest(){
+    promptDenyRequest(){
       set(this, 'isDeny', true);
       set(this, 'isApprove', false);
       set(this, 'isInitial', false);
+    },
+
+
+    denyRequest(){
+      let notifications = get(this, 'notifications');
+      let request = get(this, 'item');
+
+      notifications.denyRequest(request);
     },
 
 

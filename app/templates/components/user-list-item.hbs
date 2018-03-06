@@ -1,0 +1,68 @@
+<div class="user-list-item-profile layout-row layout-align-start-center">
+  <div class="image layout-row layout-column layout-align-center-center">
+    {{#if user.profile_image}}
+      <img src="{{user.profile_image}}" alt="">
+    {{else}}
+      <div class="initials">
+        {{initials}}
+      </div>
+    {{/if}}
+  </div>
+
+  <div>
+    <div class="name">
+      {{user.first_name}} {{user.last_name}}
+    </div>
+
+    {{#if user.job_title}}
+      <div class="meta">
+        {{user.job_title}}
+      </div>
+    {{/if}}
+
+    {{#if user.grade_timestamp}}
+      <div class="meta">
+        {{moment-format user.grade_timestamp "h:mm a"}}
+      </div>
+    {{/if}}
+  </div>
+
+  <span class="flex"></span>
+
+  {{#if icon}}
+    {{#if toggleState}}
+      {{paper-icon "close"}}
+    {{else}}
+      {{paper-icon icon}}
+      {{#if icon2}}
+        {{paper-icon icon2}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+
+  {{#if user.grade_value}}
+    {{#unless toggleState}}
+      <div class="grade">
+        <span class="value">{{user.grade_value}}</span>
+      </div>
+    {{/unless}}
+  {{/if}}
+
+  {{#if user.grades}}
+    {{#unless toggleState}}
+      {{#if user.grades.average}}
+        <div class="grade">
+          <span class="value">{{user.grades.average}}</span> / <span>{{user.grades.total}}</span>
+        </div>
+      {{else}}
+        <div class="no-grades">No Grades</div>
+      {{/if}}
+    {{/unless}}
+  {{/if}}
+</div>
+
+{{#if toggleState}}
+  <div class="user-list-item-content">
+    {{yield}}
+  </div>
+{{/if}}

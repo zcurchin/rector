@@ -13,6 +13,7 @@ export default Controller.extend({
   user: service(),
   firebaseApp: service(),
   session: service(),
+  paperToaster: service(),
 
   currentEmail: '',
   emailVerified: false,
@@ -46,6 +47,7 @@ export default Controller.extend({
     });
   },
 
+
   clearEmailForm(){
     this.set('newEmail', '');
     this.set('password', '');
@@ -53,6 +55,7 @@ export default Controller.extend({
     this.set('error_msg', '');
     this.set('editEmail', false);
   },
+
 
   clearPasswordForm(){
     this.set('newPassword', '');
@@ -63,10 +66,12 @@ export default Controller.extend({
     this.set('editPassword', false);
   },
 
+
   clearForms(){
     this.clearEmailForm();
     this.clearPasswordForm();
   },
+
 
   actions: {
     // EMAIL
@@ -75,24 +80,43 @@ export default Controller.extend({
       this.clearPasswordForm();
     },
 
+
     verifyEmail(){
       let self = this;
       let user = get(this, 'session.currentUser');
+      let paperToaster = get(this, 'paperToaster');
 
       set(self, 'preloader2', true);
 
       user.sendEmailVerification().then(() => {
         set(self, 'preloader2', false);
         set(self, 'verifyEmailSent', true);
+
+        let message = 'We sent you an email with instructions on how to verfy you email address';
+
+        paperToaster.show(message, {
+          duration: 7000,
+          position: 'bottom right'
+        });
+
       }).catch(error => {
         set(self, 'preloader2', false);
+        let message = error.message;
+
         console.log(error.message);
+
+        paperToaster.show(message, {
+          duration: 7000,
+          position: 'bottom right'
+        });
       });
     },
+
 
     cancelEditEmail(){
       this.clearEmailForm();
     },
+
 
     saveNewEmail(){
       let self = this;
@@ -119,19 +143,23 @@ export default Controller.extend({
       });
     },
 
+
     // PAASWORD
     forgotPassword(){
       this.transitionToRoute('forgot-password');
     },
+
 
     editPassword(){
       this.set('editPassword', true);
       this.clearEmailForm();
     },
 
+
     cancelEditPassword(){
       this.clearPasswordForm();
     },
+
 
     saveNewPassword(){
       let self = this;

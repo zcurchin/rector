@@ -1,0 +1,21 @@
+<div class="left-wrapper">
+  <div class="comment-date">{{moment-format comment.timestamp "dddd, MMMM Do"}}</div>
+
+  <div class="comment-text">
+    {{comment.comment}}
+  </div>
+</div>
+
+<div class="grade-box">
+  <div class="grade-inner">
+    {{#if comment.value}}
+      <span class="grade-value">
+        {{comment.value}}
+      </span>
+      {{paper-icon 'star'}}
+
+    {{else}}
+      {{paper-icon 'visibility-off'}}
+    {{/if}}
+  </div>
+</div>

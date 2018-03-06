@@ -5,13 +5,14 @@ const {
   Service,
   inject: { service },
   get
-  //set
 } = Ember;
+
 
 export default Service.extend({
   session: service(),
   firebaseApp: service(),
   firebaseUtil: service(),
+
 
   create(params){
     let self = this;

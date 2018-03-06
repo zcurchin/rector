@@ -1,26 +1,59 @@
 .workplace-box {
   .avatar {
     background-color: lighten($color-text, 55);
-    padding: 1em;
     border-radius: 0.9em;
     margin-right: 1em;
+    overflow: hidden;
+    width: 7em;
+    height: 7em;
 
     img {
-
+      width: 100%;
+      height: 100%;
     }
 
     md-icon {
+      padding: 0.67em;
       color: lighten($color-text, 40);
       font-size: 3em;
       height: 1em;
     }
   }
 
+  .info-box {
+    padding: 2em 0;
+  }
+
+  .work-meta {
+    font-size: 1.1em;
+    color: $color-text;
+    padding-bottom: 0.3em;
+  }
+
+  .manager-box {
+    color: $color-green;
+    font-size: 1.1em;
+    border: 1px solid $color-green;
+    padding: 0.4em;
+    padding-right: 0.7em;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 1em;
+
+    md-icon {
+      color: $color-green;
+    }
+  }
+
+  .outline-btn {
+    margin-top: 1em;
+  }
+
   .business-info {
     display: inline-block;
 
     .name {
-      font-size: 1.2em;
+      font-size: 1.6em;
       color: $color-text;
       padding-bottom: 0.2em;
     }
@@ -30,7 +63,6 @@
     }
 
     .address {
-      font-size: 0.8em;
       color: lighten($color-text, 20);
     }
   }

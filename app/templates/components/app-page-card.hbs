@@ -7,10 +7,25 @@
       {{/if}}
     {{/if}}
 
+    {{#if rankList}}
+      {{#paper-select
+        selected=rankListSelectedPeriod
+        options=rankListPeriods
+        onChange=(action (mut rankListSelectedPeriod)) as |rankListSelectedPeriod|}}
+        {{rankListSelectedPeriod.label}}
+      {{/paper-select}}
+    {{/if}}
+
     <span class="flex"></span>
 
+    {{#if refreshAction}}
+      <div class="header-btn" {{action "refresh"}}>
+        {{paper-icon "cached"}}
+      </div>
+    {{/if}}
+
     {{#if info}}
-      <div class="info-btn" {{action "toggleInfo"}}>
+      <div class="header-btn" {{action "toggleInfo"}}>
         {{#if info_on}}
           {{paper-icon "info"}}
         {{else}}
@@ -20,7 +35,7 @@
     {{/if}}
 
     {{#if resizeable}}
-      <div class="folding-btn" {{action "toggleFolding"}}>
+      <div class="header-btn folding" {{action "toggleFolding"}}>
         {{#if folded}}
           {{paper-icon "expand-more"}}
         {{else}}
@@ -29,6 +44,14 @@
       </div>
     {{/if}}
   </div>
+{{/if}}
+
+{{#if refreshAction}}
+  {{#unless folded}}
+    <div class="card-header-preloader">
+      {{paper-progress-linear}}
+    </div>
+  {{/unless}}
 {{/if}}
 
 {{#if info_on}}

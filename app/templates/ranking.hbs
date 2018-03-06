@@ -1,40 +1,48 @@
-{{#app-page title="Ranking"}}
-  {{#app-page-card
-    title="Realtime List"
-    resizeable=true
-    info="Ranking of OTIUM's staff members. Arhitmetic mean/quantity of grades."
-    refresh=refreshRealtimeList
-  }}
+{{#app-page
+  title="Rank list"
+  contentReady=ranking.ready
+}}
+  {{#if workplace.active}}
+    {{#app-page-card
+      class="rank-list"
+      refreshAction="refreshRankList"
+      rankList=true
+      info="Ranking of OTIUM's staff members. Arhitmetic mean/quantity of grades."
+      refresh=refreshRealtimeList
+    }}
 
-    {{#if model}}
-      {{#each model as |user index|}}
-        <div class="ranking-user layout-row layout-align-start-center">
-          <div class="order-num">
+      {{#if ranking.workers}}
+        {{#each ranking.workers as |user index|}}
+          {{user-list-item user=user}}
+        {{/each}}
 
-          </div>
-          <div class="image">
-            {{#if user.profileImage}}
-            <img src="{{user.profileImage}}" alt="">
-            {{else}}
-            {{paper-icon "account-circle"}}
-            {{/if}}
-          </div>
-          <div class="name">
-            {{user.profileName}}
-          </div>
-          <span class="flex"></span>
-          <div class="grade">
-            <span class="value">{{user.grade_average}}</span> / <span>{{user.grade_total}}</span>
-          </div>
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "equalizer"}}
+          <p>There are no graded users so far</p>
         </div>
-      {{/each}}
+      {{/if}}
 
-    {{else}}
+      {{#if (or user.accountType.business workplace.data.manager)}}
+        {{#if ranking.managers}}
+          <div class="managers-label">Managers</div>
+
+          {{#each ranking.managers as |user index|}}
+            {{user-list-item user=user}}
+          {{/each}}
+        {{/if}}
+      {{/if}}
+
+    {{/app-page-card}}
+
+  {{else}}
+    {{#app-page-card
+      header=false
+    }}
       <div class="rich-info">
-        {{paper-icon "equalizer"}}
-        <p>There are no graded users so far</p>
+        {{paper-icon "people"}}
+        <p>No workplace</p>
       </div>
-    {{/if}}
-
-  {{/app-page-card}}
+    {{/app-page-card}}
+  {{/if}}
 {{/app-page}}

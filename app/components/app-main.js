@@ -12,13 +12,15 @@ export default Component.extend({
   notifications: service(),
   paperSidenav: service(),
   user: service(),
+  workplace: service(),
+  checking: service(),
 
   classNames: ['app-container'],
 
   didInsertElement(){
     this.$('md-card-content').css({
       height: this.$('.inner-sidenav').height()
-    });    
+    });
 
     this.$(window).on('resize', () => {
       this.$('md-card-content').css({
@@ -37,6 +39,10 @@ export default Component.extend({
       this.sendAction('signOut');
     },
 
+    goBack(){
+      window.history.back();
+    },
+
     signUpRestaurant(){
       this.sendAction('signUpRestaurant');
     },
@@ -50,7 +56,6 @@ export default Component.extend({
     },
 
     goToNotifications(){
-      console.log('OOOOOPPPPPPPPAAAAAAAA');
       this.sendAction('goToNotifications');
     }
   }

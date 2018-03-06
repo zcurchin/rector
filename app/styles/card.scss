@@ -5,7 +5,7 @@
 .app-page-card {
   background: #FFF;
   border-radius: 8px;
-  overflow: hidden;
+  //overflow: hidden;
   //border: 1px solid #e8e6e6;
   box-shadow: 0 1px 2px rgba(50,50,93,.13);
   margin: 0 0.5em 1.5em;
@@ -14,14 +14,11 @@
     height: 4em;
     border-bottom: 1px solid $color-border;
 
-    .info-btn md-icon,
-    .folding-btn md-icon {
-      font-size: 2.5em;
+    .header-btn md-icon {
+      font-size: 2em;
       color: lighten($color-text, 30);
-      padding: 0.2em;
-      padding-right: 0.26em;
-      padding-top: 0.23em;
-      line-height: 0.7em;
+      padding: 0.5em 0.3em;
+      line-height: 1em;
       cursor: pointer;
 
       &:hover {
@@ -29,17 +26,23 @@
       }
     }
 
-    .info-btn md-icon {
-      font-size: 1.8em;
-      padding-top: 0.4em;
+    .header-btn.folding md-icon {
+      font-size: 2.5em;
+      line-height: 0.9em;
+      padding-left: 0;
     }
   }
 
   .card-title, .card-title-count {
-    font-size: 1.1em;
-    margin-left: 1em;
+    font-size: 1.26em;
+    margin-left: 0.7em;
     color: $color-text;
     font-weight: 500;
+  }
+
+  .card-title-count {
+    color: lighten($color-text, 20);
+    font-weight: 400;
   }
 
   .card-info, .info-message {
@@ -76,6 +79,16 @@
 
   md-switch {
     margin-left: 0;
+  }
+
+  .card-header-preloader {
+    visibility: hidden;
+  }
+}
+
+.app-page-card.preloader {
+  .card-header-preloader {
+    visibility: visible;
   }
 }
 

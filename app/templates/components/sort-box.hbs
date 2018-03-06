@@ -1,0 +1,16 @@
+<div class="sort-box layout-row layout-align-center-center">
+  <div class="sort-label">Sorted</div>
+  <div class="sort-prop" {{action "toggleSortProp"}}>
+    {{label}}
+  </div>
+  <span class="flex"></span>
+  <div class="sort-direction" {{action "toggleSortDirection"}}>
+    {{#if reverseSort}}
+      {{paper-icon "arrow-downward"}}
+    {{else}}
+      {{paper-icon "arrow-upward"}}
+    {{/if}}
+  </div>
+</div>
+
+{{yield sortedList}}

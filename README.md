@@ -37,6 +37,8 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `ember build` (development)
 * `ember build --environment production` (production)
 
+http://blog.88mph.io/2016/05/17/silence-your-ember-app-in-production/
+
 ### Deploying
 
 Specify what it takes to deploy your app.

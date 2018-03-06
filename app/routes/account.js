@@ -1,5 +1,4 @@
 import Ember from 'ember';
-// import RSVP from 'rsvp';
 
 const {
   Route,
@@ -11,11 +10,13 @@ const {
 export default Route.extend({
   user: service(),
 
+
   model(){
     let user = get(this, 'user');
 
     return user.get('account');
   },
+
 
   setupController(controller, model){
     this._super(controller, model);
@@ -25,6 +26,7 @@ export default Route.extend({
     controller.set('currentEmail', email);
     controller.set('emailVerified', verified);
   },
+
 
   deactivate(){
     this.controller.clearForms();

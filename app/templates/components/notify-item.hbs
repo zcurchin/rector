@@ -1,4 +1,4 @@
-<div class="layout-row layout-align-start-center" {{action "toggleRespond"}}>
+<div class="user-box layout-row layout-align-start-center" {{action "toggleRespond"}}>
   <div class="avatar">
     {{#if item.profile_image}}
       <img src="{{item.profile_image}}">
@@ -40,7 +40,7 @@
     {{#if isInitial}}
       <div class="respond-box layout-row layout-align-center-center">
         <div>
-          <div class="outline-btn" {{action "denyRequest"}}>Deny</div>
+          <div class="outline-btn" {{action "promptDenyRequest"}}>Deny</div>
           <div class="outline-btn" {{action "approveRequest"}}>Approve</div>
         </div>
       </div>
@@ -72,7 +72,7 @@
     {{#if isDeny}}
       <div class="info-message">Do you really want to deny this request?</div>
       <div class="respond-box layout-row layout-align-center-center">
-        <div class="outline-btn" {{action "approveRequest"}}>Yes, Deny</div>
+        <div class="outline-btn" {{action "denyRequest" item}}>Yes, Deny</div>
       </div>
     {{/if}}
   {{/if}}

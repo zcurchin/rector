@@ -1,9 +1,13 @@
 import Ember from 'ember';
+import RouterScroll from 'ember-router-scroll';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
-  location: config.locationType,
-  rootURL: config.rootURL
+const Router = Ember.Router.extend(RouterScroll, {
+// const Router = Ember.Router.extend({
+  // locationType: 'router-scroll',
+  // historySupportMiddleware: true
+  // location: config.locationType,
+  // rootURL: config.rootURL
 });
 
 Router.map(function() {
@@ -19,9 +23,10 @@ Router.map(function() {
   this.route('forgot-password');
   this.route('sign-up-business');
   this.route('workplace');
-  this.route('employees');
+  this.route('employees', function(){});
   this.route('business-profile');
   this.route('business-requests');
+  this.route('employee-info', { path: ':id' });
 });
 
 export default Router;

@@ -14,11 +14,12 @@ export default Service.extend({
   firebaseApp: service(),
   firebaseUtil: service(),
 
+  checking: service(),
   workplace: service(),
+  grading: service(),
+  ranking: service(),
   notifications: service(),
   employees: service(),
-
-  checkedIn: false,
 
   accountType: {
     user: false,
@@ -114,152 +115,103 @@ export default Service.extend({
 
   setAccountType(){
     let self = this;
+    let firebaseApp = get(this, 'firebaseApp');
+    let userProfilesRef = firebaseApp.database().ref('userProfiles');
+    let businessProfilesRef = firebaseApp.database().ref('businessProfiles');
+    let session = get(this, 'session');
+    let user_uid = session.get('currentUser').uid;
 
-    return new RSVP.Promise((resolve, reject) => {
-      console.log('# Service : User : setAccountType');
+    console.log('# Service : User : setAccountType');
 
-      self.get('profile').then(profile => {
-        console.log('user profile:', Object.keys(profile).length > 0);
+    return new RSVP.Promise((resolve) => {
 
-        if (Object.keys(profile).length > 0) {
-          set(self, 'accountType.user', true);
+      userProfilesRef.child(user_uid).once('value').then(snap => {
+        let userProfile = snap.val();
+
+        if (userProfile) {
           console.log('# Service : User : accountType : user');
+          set(self, 'accountType.user', true);
           resolve();
 
         } else {
-          console.log('# Service : User : setAccountType : check businessProfiles');
-          self.get('businessProfile').then(businessProfile => {
-            console.log('business profile:', Object.keys(businessProfile).length > 0);
+          businessProfilesRef.child(user_uid).once('value').then(snap => {
+            let businessProfile = snap.val();
 
-            if (Object.keys(businessProfile).length > 0) {
-              set(self, 'accountType.business', true);
+            if (businessProfile) {
               console.log('# Service : User : accountType : business');
+              set(self, 'accountType.business', true);
               resolve();
             }
           });
         }
-
-      }).catch(err => {
-        reject(err);
       });
+
+      // self.get('profile').then(profile => {
+      //   console.log('# Service : User : profile :', Object.keys(profile).length > 0);
+      //
+      //   if (Object.keys(profile).length > 0) {
+      //     console.log('# Service : User : accountType : user');
+      //     set(self, 'accountType.user', true);
+      //     resolve();
+      //
+      //   } else {
+      //     console.log('# Service : User : setAccountType : check businessProfiles');
+      //     self.get('businessProfile').then(businessProfile => {
+      //       console.log('business profile:', Object.keys(businessProfile).length > 0);
+      //
+      //       if (Object.keys(businessProfile).length > 0) {
+      //         set(self, 'accountType.business', true);
+      //         console.log('# Service : User : accountType : business');
+      //         resolve();
+      //       }
+      //     });
+      //   }
+
+      // }).catch(err => {
+      //   reject(err);
+      // });
     });
   },
 
 
   setup(){
     let self = this;
-    // console.log('--------------------------------');
+
+    console.log('------------------------------------');
     console.log('# Service : User : setup');
-    // console.log('--------------------------------');
+    console.log('------------------------------------');
 
     let workplace = get(self, 'workplace');
     let notifications = get(self, 'notifications');
     let employees = get(self, 'employees');
+    let checking = get(self, 'checking');
+    let grading = get(self, 'grading');
+    let ranking = get(self, 'ranking');
 
     return new RSVP.Promise((resolve, reject) => {
       self.setAccountType().then(() => {
         if (get(self, 'accountType.user')) {
-          self.isCheckedIn();
-          workplace.setup();
-          notifications.setup();
-          resolve();
+          workplace.initialize().then(() => {
+            checking.initialize().then(() => {
+              grading.initialize();
+            });
+            ranking.initialize();
+            notifications.initialize();
+            resolve();
+          });
 
         } else {
-          employees.setup();
-          notifications.setup();
-          resolve();
+          workplace.initialize().then(() => {
+            employees.initialize();
+            notifications.initialize();
+            ranking.initialize();
+            resolve();
+          });
         }
       }).catch(err => {
         reject(err);
       });
     });
-  },
-
-
-  // --------------------------------------------
-  // Checking
-  // --------------------------------------------
-
-  isCheckedIn(){
-    let self = this;
-
-    this.getLastCheckIn().then(data => {
-      // console.log(data.val());
-      // console.log(data.val()[keys[0]]);
-
-      if (data.val()) {
-        let keys = Object.keys(data.val());
-        let obj = data.val()[keys[0]];
-
-        if (obj.out > Date.now()) {
-          set(self, 'checkedIn', true);
-        } else {
-          set(self, 'checkedIn', false);
-        }
-
-      } else {
-        set(self, 'checkedIn', false);
-      }
-    });
-  },
-
-
-  checkIn(checkOut){
-    let self = this;
-    let firebaseApp = get(this, 'firebaseApp');
-    let checkIns = firebaseApp.database().ref('checkIns');
-    let uid = get(this, 'session.currentUser.uid');
-
-    let data = {
-      in: Date.now(),
-      out: checkOut
-    };
-
-    set(self, 'checkedIn', true);
-
-    return checkIns.child(uid).push(data);
-  },
-
-
-  checkOut(timestamp, type){
-    let self = this;
-
-    return this.getLastCheckIn().then(data => {
-      let uid = get(this, 'session.currentUser.uid');
-      let checkIn_id = Object.keys(data.val())[0];
-      let firebaseApp = get(this, 'firebaseApp');
-      let checkInRef = firebaseApp.database().ref('checkIns/'+uid+'/'+checkIn_id);
-
-      if (type !== 'update') {
-        set(self, 'checkedIn', false);
-      }
-
-      let outTime = timestamp || Date.now();
-
-      return checkInRef.update({
-        out: outTime
-      });
-    });
-  },
-
-
-  getCheckIns(){
-    let firebaseApp = get(this, 'firebaseApp');
-    let uid = get(this, 'session.currentUser.uid');
-    let checkIns = firebaseApp.database().ref('checkIns');
-    let userCheckins = checkIns.child(uid);
-
-    return userCheckins.orderByKey().limitToLast(10).once('value');
-  },
-
-
-  getLastCheckIn(){
-    let firebaseApp = get(this, 'firebaseApp');
-    let uid = get(this, 'session.currentUser.uid');
-    let checkIns = firebaseApp.database().ref('checkIns');
-    let userCheckins = checkIns.child(uid);
-
-    return userCheckins.orderByKey().limitToLast(1).once('value');
   },
 
 

@@ -27,19 +27,21 @@ export default Service.extend({
     let requests = get(this, 'requests');
     let messages = get(this, 'messages');
 
-    console.log('######### TOTAL CHANGED');
-    console.log(messages.length, requests.length);
+    //console.log('######### TOTAL CHANGED');
+    //console.log(messages.length, requests.length);
 
     set(this, 'total', messages.length + requests.length);
 
   }),
 
 
-  setup(){
+  initialize(){
     let self = this;
     let accountType = get(this, 'user').accountType;
 
-    console.log('# Service : Notifications : setup');
+    console.log('------------------------------------');
+    console.log('# Service : Notifications : initialize');
+    console.log('------------------------------------');
 
     let promises;
 
@@ -55,8 +57,8 @@ export default Service.extend({
       };
     }
 
-    RSVP.hash(promises).then(data => {
-      console.log(data);
+    RSVP.hash(promises).then(() => {
+      console.log('# Service : Notifications : READY');
       set(self, 'ready', true);
     });
   },
@@ -70,11 +72,11 @@ export default Service.extend({
 
     console.log('# Service : Notifications : handleRequests');
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       businessRequestsRef.child(uid).on('value', snap => {
         let val = snap.val();
 
-        console.log('##### REQUESTS CHANGED :', val);
+        //console.log('##### REQUESTS CHANGED :', val);
 
         if (val) {
           let total_reqs = Object.keys(val).length;
@@ -127,7 +129,7 @@ export default Service.extend({
 
     console.log('# Service : Notifications : handleMessages');
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       messagesRef.child(uid).on('value', snap => {
         let val = snap.val();
 
@@ -146,7 +148,7 @@ export default Service.extend({
             };
           });
 
-          console.log('# Service : Notifications : msgs :', msgs);
+          //console.log('# Service : Notifications : msgs :', msgs);
 
           msgs.forEach((msg, index) => {
             let dbRef = msg.business ? 'businessProfiles' : 'userProfiles';
@@ -204,7 +206,7 @@ export default Service.extend({
       manager: isManager
     };
 
-    return new RSVP.Promise((resolve, reject) => {
+    return new RSVP.Promise((resolve) => {
       businessEmployeesRef.child(userId).once('value', function(snapshot) {
         var exists = (snapshot.val() !== null);
         //userExistsCallback(userId, exists);
@@ -212,6 +214,7 @@ export default Service.extend({
 
         if (exists) {
           resolve(true);
+
         } else {
           // resolve(false);
           businessEmployeesRef.child(userId).set(data).then(() => {
@@ -224,10 +227,18 @@ export default Service.extend({
                 self.decrementProperty('total');
               }
 
-              let text = 'We added you to as ' +  jobTitle;
+              let text = 'We added you as ' +  jobTitle;
 
-              self.sendMessage(userId, text).then(() => {
-                resolve(false);
+              if (isManager) {
+                text = 'We added you as ' +  jobTitle + '. You are also a manager.';
+              }
+
+              let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(userId).child(business_id);
+
+              userWorkplacesRef.set({pending: false}).then(() => {
+                self.sendMessage(userId, text).then(() => {
+                  resolve(false);
+                });
               });
             });
           });
@@ -244,6 +255,24 @@ export default Service.extend({
     let requestRef = businessRef.child(requestId);
 
     return requestRef.remove();
+  },
+
+
+  denyRequest(request){
+    // console.log(request);
+
+    let firebaseApp = get(this, 'firebaseApp');
+    let business_id = get(this, 'session').get('uid');
+    let businessRef = firebaseApp.database().ref('businessRequests').child(business_id);
+    let requestRef = businessRef.child(request.request_id);
+
+    let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(request.sender_uid).child(business_id);
+
+    let msg = 'Your request has been denied';
+
+    this.sendMessage(request.sender_uid, msg);
+    userWorkplacesRef.remove();
+    requestRef.remove();
   },
 
 

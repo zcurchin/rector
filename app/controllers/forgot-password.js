@@ -5,6 +5,7 @@ const {
   inject: { service }
 } = Ember;
 
+
 export default Controller.extend({
   firebaseApp: service(),
   error_msg: '',

@@ -1,14 +1,17 @@
-{{#app-page title="Profile"}}
+{{#app-page
+  title="Profile"
+  contentReady=true
+}}
   {{#app-page-card
     header=false
     class="profile-card"
   }}
-    <div class="profile-intro">
-      <div class="profile-image" {{action "editAvatar"}}>
+    <div class="profile-intro business">
+      <div class="profile-image layout-row layout-align-center-cente" {{action "editAvatar"}}>
         {{#if model.profile_image}}
           <img src="{{model.profile_image}}" alt="">
         {{else}}
-          {{paper-icon "account-circle"}}
+          {{paper-icon "person"}}
         {{/if}}
       </div>
 

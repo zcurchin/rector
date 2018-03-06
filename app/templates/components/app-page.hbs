@@ -1,5 +1,12 @@
-<div class="app-page-header">
-  <div class="app-page-title">{{title}}</div>
-</div>
+{{#if contentReady}}
+  <div class="app-page-header">
+    <div class="app-page-title">{{title}}</div>
+  </div>
 
-{{yield}}
+  {{yield}}
+
+{{else}}
+  <div class="content-preloader layout-align-center-center layout-row">
+    {{paper-progress-circular diameter=60}}
+  </div>
+{{/if}}

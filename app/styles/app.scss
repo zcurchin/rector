@@ -1,5 +1,6 @@
 
 $primary: 'deep-orange';
+//$primary: 'purple';
 $accent: "pink";
 $warn: "red";
 
@@ -7,10 +8,8 @@ $color-green: #3eba96;
 $color-green-light: #defff6;
 $color-alert: #e072ba;
 
-//$color-text: #6d7793;
 $color-text: #4b5264;
 $color-border: #eef2f5;
-//$color-text: #424770;
 
 @import 'ember-paper';
 
@@ -26,6 +25,13 @@ $color-border: #eef2f5;
 @import 'card';
 @import 'custom-dialog';
 @import 'inline-preloader';
+@import 'time-chooser';
+
+// COMPONENTS
+
+@import 'user-list-item';
+@import 'comment-box';
+@import 'sort-box';
 
 @import 'profile';
 @import 'checking';

@@ -1,95 +1,149 @@
-{{#app-page title="Grading"}}
-  {{#if yesterday}}
-    <div class="yesterday-grading-box">
-      <div class="layout-row layout-align-start-center">
-        <div class="yesterday">For Yesterday</div>
-        <span class="flex"></span>
-        <div>{{yesterday}}</div>
-        <div class="toggle-btn" {{action "toggleYesterdayInfo"}}>
-          {{#if yesterdayInfo}}
-            {{paper-icon "info"}}
-          {{else}}
-            {{paper-icon "info-outline"}}
-          {{/if}}
-        </div>
-      </div>
-
-      {{#if yesterdayInfo}}
-        <p>Cutoff time is at 3AM after that grading list is restarted! Please grade coworkers performance before cutoff time (after that you won't be able to grade who you worked with today).</p>
-      {{/if}}
-    </div>
-
-  {{/if}}
-  {{#app-page-card
-    title="Users to grade"
-    resizeable=true
-    info="List of coworkers you worked with today. This list is restarted at 3 AM the next day, all grades should be given by that time. After the cutoff time list is restarted and you won't be able to grade coworkers for the previous day."
-  }}
-    {{#if model.checkedInToday}}
-      {{#if model.gradableUsers}}
-        {{#each model.gradableUsers as |profile|}}
-          {{gradable-user
-            preloader=preloader
-            first_name=profile.first_name
-            last_name=profile.last_name
-            profile_image=profile.profile_image
-            profile_id=profile.id
-          action="gradeUser"}}
-        {{/each}}
-
-        {{else}}
-          <div class="rich-info">
-            {{paper-icon "people"}}
-            <p>No one to grade at this moment</p>
-          </div>
-        {{/if}}
-    {{else}}
-      <div class="rich-info">
-        {{paper-icon "alarm-off"}}
-        <p>Check in in order to grade coworkers/friends/buddies</p>
-      </div>
-    {{/if}}
-  {{/app-page-card}}
-
-  {{#app-page-card
-    title="Today's History"
-    resizeable=true
-    info="History of grade's you gave today."
-  }}
-    {{#if model.history}}
-      {{#each model.history as |user|}}
-        <div class="history-item layout-row layout-align-start-center">
-          <div class="avatar">
-            {{#if user.profile_image}}
-              <img class="flex-none" src="{{user.profile_image}}">
+{{#app-page
+  title="Grading"
+  contentReady=grading.ready
+}}
+  {{#if workplace.active}}
+    {{#if grading.yesterday}}
+      <div class="yesterday-grading-box">
+        <div class="layout-row layout-align-start-center">
+          <div class="yesterday">For Yesterday</div>
+          <span class="flex"></span>
+          <div>{{yesterday}}</div>
+          <div class="toggle-btn" {{action "toggleYesterdayInfo"}}>
+            {{#if yesterdayInfo}}
+              {{paper-icon "info"}}
             {{else}}
-              {{paper-icon "account-circle"}}
+              {{paper-icon "info-outline"}}
             {{/if}}
           </div>
+        </div>
 
-          <div class="user-info-box">
-            <p class="name">{{user.first_name}} {{user.last_name}}</p>
-            <p class="date">at {{moment-format user.grade_timestamp "h:mm a"}}</p>
-          </div>
+        {{#if yesterdayInfo}}
+          <p>Cutoff time is at 3AM after that grading list is restarted! Please grade coworkers performance before cutoff time (after that you won't be able to grade who you worked with today).</p>
+        {{/if}}
+      </div>
+    {{/if}}
 
-          {{#if user.grade_value}}
-            <div class="grade-value number">
-              {{user.grade_value}}
-            </div>
+    {{#app-page-card
+      title="Users to grade"
+      refreshAction="refreshGrading"
+      resizeable=true
+      info="List of coworkers you worked with today. This list is restarted at 3 AM the next day, all grades should be given by that time. After the cutoff time list is restarted and you won't be able to grade coworkers for the previous day."
+    }}
+      {{#if checking.checkedIn}}
+        {{#if grading.gradableUsers}}
+          {{#each grading.gradableUsers as |profile|}}
+            {{gradable-user user=profile}}
+          {{/each}}
+
           {{else}}
-            <div class="grade-value">
-              {{paper-icon "visibility-off"}}
+            <div class="rich-info">
+              {{paper-icon "people"}}
+              <p>No one to grade at this moment</p>
             </div>
           {{/if}}
 
-        </div>
-      {{/each}}
+      {{else}}
 
-    {{else}}
+        <div class="rich-info">
+          {{paper-icon "alarm-off"}}
+          <p>Check in in order to grade coworkers/friends/buddies</p>
+        </div>
+      {{/if}}
+    {{/app-page-card}}
+
+    {{#app-page-card
+      title="Today's History"
+      resizeable=true
+      folded=true
+      info="History of grade's you gave today."
+    }}
+      {{#if grading.history}}
+        {{#each grading.history as |user|}}
+
+          {{#if user.nei}}
+            {{#if user.comment}}
+              {{#user-list-item
+                user=user
+                icon="comment"
+                icon2="visibility-off"
+                toggle=true
+              }}
+                <div class="graded-comment">
+                  {{user.comment}}
+                </div>
+              {{/user-list-item}}
+
+            {{else}}
+              {{user-list-item
+                user=user
+                icon="visibility-off"
+              }}
+            {{/if}}
+
+          {{else}}
+            {{#if user.comment}}
+              {{#user-list-item
+                user=user
+                icon="comment"
+                toggle=true
+              }}
+                <div class="graded-comment">
+                  {{user.comment}}
+                </div>
+              {{/user-list-item}}
+
+            {{else}}
+              {{user-list-item user=user}}
+            {{/if}}
+          {{/if}}
+
+
+          <!-- <div class="history-item layout-row layout-align-start-center">
+            <div class="avatar">
+              {{#if user.profile_image}}
+                <img class="flex-none" src="{{user.profile_image}}">
+              {{else}}
+                {{paper-icon "account-circle"}}
+              {{/if}}
+            </div>
+
+            <div class="user-info-box">
+              <p class="name">{{user.first_name}} {{user.last_name}}</p>
+              <p class="date">at {{moment-format user.grade_timestamp "h:mm a"}}</p>
+            </div>
+
+            {{#if user.grade_value}}
+              <div class="grade-value number">
+                {{user.grade_value}}
+              </div>
+            {{else}}
+              <div class="grade-value">
+                {{paper-icon "visibility-off"}}
+              </div>
+            {{/if}}
+
+          </div> -->
+        {{/each}}
+
+      {{else}}
+        <div class="rich-info">
+          {{paper-icon "history"}}
+          <p>You didn't grade anyone so far</p>
+        </div>
+      {{/if}}
+    {{/app-page-card}}
+
+  {{else}}
+    {{#app-page-card
+      header=false
+    }}
       <div class="rich-info">
-        {{paper-icon "history"}}
-        <p>You didn't grade anyone so far</p>
+        {{paper-icon "people"}}
+        <p>No workplace</p>
       </div>
-    {{/if}}
-  {{/app-page-card}}
+    {{/app-page-card}}
+
+  {{/if}}
+
 {{/app-page}}

@@ -11,6 +11,7 @@ export default Component.extend({
   hours: null,
   check: null,
 
+
   didReceiveAttrs() {
     this._super(...arguments);
 
@@ -21,15 +22,12 @@ export default Component.extend({
     this.set('hours', moment.duration(hours, 'hours').humanize());
   },
 
+
   didInsertElement(){
     let self = this;
 
     this.$().on('click', function(){
       self.toggleProperty('folded');
     });
-  },
-
-  actions: {
-
   }
 });

@@ -1,45 +1,34 @@
-.ranking-user {
-  padding: 1em 0;
-  border-bottom: 1px solid lighten($color-text, 45);
+.rank-list {
+  .card-header {
+    md-input-container {
+      margin: 0;
+      margin-left: 0.7em;
 
-  .image {
-    width: 3em;
-    height: 3em;
-    margin-right: 1.4em;
+      .md-errors-spacer {
+        display: none;
+      }
 
-    img {
-      overflow: hidden;
-      border-radius: 20em;
-      width: 100%;
-      height: 100%;
-      background: lighten($color-text, 40);
-    }
+      md-select {
+        .md-select-value {
+          border: none;
 
-    md-icon {
-      font-size: 3.7em;
-      height: 1em;
-      color: lighten($color-text, 30);
-      position: relative;
-      left: -0.1em;
-      top: -0.1em;
-    }
-  }
-
-  .name {
-    font-size: 1.2em;
-    color: $color-text;
-  }
-
-  .grade {
-    color: lighten($color-text, 15);
-
-    .value {
-      color: $color-text;
-      font-size: 1.4em;
+          .md-select-icon {
+            //margin: 4px 4px 0;
+            color: $color-text;
+          }
+        }
+      }
     }
   }
 }
 
-.ranking-user:last-child {
-  border: none;
+.managers-label {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin: 2em 0 1em;
+  // padding: 0.4em 0.9em;
+  // background-color: lighten(color($primary), 15);
+  display: inline-block;
+  // border-radius: 2em;
+  color: $color-text;
 }

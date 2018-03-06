@@ -1,10 +1,14 @@
 <div class="top-bar layout-row layout-align-start-center">
   <img class="logo" src="assets/images/yograde_logo.svg">
 
+  {{#if user.accountType.business}}
+    <div class="business">Business</div>
+  {{/if}}
+
   <span class="flex"></span>
 
   {{#if user.accountType.user}}
-    {{#if user.checkedIn}}
+    {{#if checking.checkedIn}}
       <div class="top-bar-btn green" {{action "goToChecking"}}>
         {{paper-icon "alarm-on"}}
       </div>
@@ -15,21 +19,11 @@
     {{/if}}
   {{/if}}
 
-  {{#if user.accountType.business}}
-    <div class="business">Business</div>
-  {{/if}}
-
   {{#if notifications.total}}
     <div class="top-bar-btn alert" {{action "goToNotifications"}}>
       {{paper-icon "notifications"}}
     </div>
   {{/if}}
-
-  {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
-    <div class="hide-gt-sm menu-btn" {{action toggleAction}}>
-      {{paper-icon "more-vert"}}
-    </div>
-  {{/paper-sidenav-toggle}}
 </div>
 
 {{#paper-sidenav-container class="inner-sidenav"}}
@@ -48,7 +42,7 @@
 
         {{#link-to "checking"}}
           {{#paper-item}}
-            {{paper-icon "alarm-on"}}
+            {{paper-icon "alarm"}}
             <p>Check In/Out</p>
           {{/paper-item}}
         {{/link-to}}
@@ -63,11 +57,20 @@
         {{#link-to "ranking"}}
           {{#paper-item}}
             {{paper-icon "equalizer"}}
-            <p>Ranking</p>
+            <p>Rank list</p>
           {{/paper-item}}
         {{/link-to}}
 
         {{paper-divider}}
+
+        {{#if workplace.data.manager}}
+          {{#link-to "employees"}}
+            {{#paper-item}}
+              {{paper-icon "people"}}
+              <p>Employees</p>
+            {{/paper-item}}
+          {{/link-to}}
+        {{/if}}
 
         {{#link-to "workplace"}}
           {{#paper-item}}
@@ -119,7 +122,7 @@
         {{#link-to "ranking"}}
           {{#paper-item}}
             {{paper-icon "equalizer"}}
-            <p>Ranking</p>
+            <p>Rank list</p>
           {{/paper-item}}
         {{/link-to}}
 
@@ -173,8 +176,59 @@
   {{/paper-sidenav}}
 
 
-  {{#paper-card-content}}
+  {{#paper-card-content id="content-scroll"}}
     {{outlet}}
   {{/paper-card-content}}
 
 {{/paper-sidenav-container}}
+
+<div class="bottom-bar hide-gt-sm layout-row layout-align-start-center">
+  <div class="bottom-bar-btn" {{action "goBack"}}>
+    {{paper-icon "arrow-back"}}
+  </div>
+
+  <span class="flex"></span>
+
+  {{#if user.accountType.user}}
+    {{#link-to "checking"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "alarm"}}
+      </div>
+    {{/link-to}}
+
+    {{#link-to "grading"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "star"}}
+      </div>
+    {{/link-to}}
+
+    {{#link-to "ranking"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "equalizer"}}
+      </div>
+    {{/link-to}}
+
+    {{#if workplace.data.manager}}
+      {{#link-to "employees"}}
+        <div class="bottom-bar-btn">
+          {{paper-icon "people"}}
+        </div>
+      {{/link-to}}
+
+    {{else}}
+      {{#link-to "profile"}}
+        <div class="bottom-bar-btn">
+          {{paper-icon "person"}}
+        </div>
+      {{/link-to}}
+    {{/if}}
+  {{/if}}
+
+  <span class="flex"></span>
+
+  {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}
+    <div class="bottom-bar-btn" {{action toggleAction}}>
+      {{paper-icon "more-vert"}}
+    </div>
+  {{/paper-sidenav-toggle}}
+</div>

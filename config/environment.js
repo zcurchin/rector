@@ -5,7 +5,13 @@ module.exports = function(environment) {
     modulePrefix: 'yo-grade',
     environment: environment,
     rootURL: '/',
-    locationType: 'auto',
+    // locationType: 'auto',
+
+    locationType: 'router-scroll',
+    historySupportMiddleware: true,
+    routerScroll: {
+      scrollElement: '#content-scroll'
+    },
 
     torii: {
       sessionServiceName: 'session'

@@ -7,6 +7,7 @@ const {
   set
 } = Ember;
 
+
 export default Controller.extend({
   //app_controler: controller('application'),
   business: service(),
@@ -14,6 +15,7 @@ export default Controller.extend({
   preloader: false,
   error_msg: '',
   hideTemplate: false,
+
 
   actions: {
     signUpBusiness(){

@@ -14,10 +14,12 @@ export default Service.extend({
   firebaseApp: service(),
   notifications: service(),
   paperToaster: service(),
+  workplace: service(),
 
-  ready: false,
   staff: null,
   management: null,
+
+  ready: false,
 
 
   init(){
@@ -28,63 +30,66 @@ export default Service.extend({
   },
 
 
-  initialize(business_id){
-    console.log('# Service : Employees : initialize');
+  createList(){
     let self = this;
-    let staff = get(this, 'staff');
-    let management = get(this, 'management');
+    let workplace = get(this, 'workplace');
+    let uid = workplace.data ? workplace.data.business_id : get(this, 'session.currentUser').uid;
+
+    let management = [];
+    let staff = [];
+
+    console.log('# Service : Employees : createList : business_uid :', uid);
 
     let firebaseApp = get(this, 'firebaseApp');
-    let uid = business_id || get(this, 'session.currentUser').uid;
     let rootRef = firebaseApp.database().ref();
     let employeesRef = rootRef.child('businessEmployees').child(uid);
 
-    // TO DO:
-    // fix duplicated items after delete
+    return new RSVP.Promise(resolve => {
+      employeesRef.once('value', snap => {
+        let employee_uids = Object.keys(snap.val());
+        let total_employees = employee_uids.length;
+        let fully_loaded_count = 0;
 
-    employeesRef.on('child_added', snap => {
-      console.log(snap);
+        employee_uids.forEach((employee_uid) => {
+          let userBusiness = snap.val()[employee_uid];
 
-      let userProfileRef = rootRef.child('userProfiles').child(snap.key);
-      let gradesRef = rootRef.child('businessGrades').child(uid).child(snap.key);
-      let employeeVal = snap.val();
-      employeeVal.user_uid = snap.key;
+          let userProfileRef = rootRef.child('userProfiles').child(employee_uid);
+          let gradesRef = rootRef.child('businessGrades').child(uid).child(employee_uid);
 
-      console.log('# Service : Employees : child_added : ', snap.key);
+          userProfileRef.once('value', snap => {
+            let profileVal = snap.val();
+            profileVal.uid = employee_uid;
 
-      userProfileRef.once('value', snap => {
-        let profileVal = snap.val();
+            gradesRef.once('value', _snap => {
+              let gradeObj = self.getGradeObjects(_snap.val());
+              let joinedObj = Object.assign(userBusiness, profileVal);
 
-        gradesRef.once('value', snap => {
-          let gradeObj = self.getGradeObjects(snap.val());
-          let joinedObj = Object.assign(employeeVal, profileVal);
+              joinedObj.grades = gradeObj;
 
-          joinedObj.grades = gradeObj;
+              if (joinedObj.manager) {
+                management.addObject(joinedObj);
+              } else {
+                staff.addObject(joinedObj);
+              }
 
-          if (joinedObj.manager) {
-            management.addObject(joinedObj);
-          } else {
-            staff.addObject(joinedObj);
-          }
+              fully_loaded_count++;
+
+              if (fully_loaded_count === total_employees) {
+                set(self, 'management', management);
+                set(self, 'staff', staff);
+
+                set(self, 'ready', true);
+
+                resolve({
+                  staff: staff,
+                  management: management
+                });
+              }
+            });
+          });
         });
       });
     });
-
-    employeesRef.on('child_removed', snap => {
-      //console.log('# Service : Employees : child_removed : ', snap.key);
-
-      let collection = snap.val().manager ? management : staff;
-
-      collection.forEach(employeeObj => {
-        if (employeeObj.user_uid === snap.key) {
-          collection.removeObject(employeeObj);
-        }
-      });
-    });
-
-    set(self, 'ready', true);
-
-    console.log('# Service : Employees : READY');
   },
 
 
@@ -144,7 +149,6 @@ export default Service.extend({
 
 
   deleteEmployee(employee){
-    // console.log(employee);
     let user_uid = employee.user_uid;
     let paperToaster = get(this, 'paperToaster');
     let firebaseApp = get(this, 'firebaseApp');

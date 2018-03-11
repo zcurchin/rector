@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
+import moment from 'moment';
 
 const {
   Service,
@@ -16,10 +17,13 @@ export default Service.extend({
 
   ready: false,
   checkedIn: false,
+  checkedInToday: false,
   checkedInAt: null,
   autoCheckOutAt: null,
   currentCheckInId: null,
   checkedOutAt: null,
+
+  after_midnight_treshold: 3,
 
   history: [],
 
@@ -47,6 +51,13 @@ export default Service.extend({
 
           if (data) {
             let lastCheckIn = data[data.length - 1];
+
+            let after_midnight_treshold = get(this, 'after_midnight_treshold');
+            let startToday = moment().startOf('day').add(after_midnight_treshold, 'hours').format('x');
+
+            if (lastCheckIn > startToday) {
+              set(self, 'checkedInToday', true);
+            }
 
             if (lastCheckIn.out > Date.now()) {
               set(self, 'checkedIn', true);

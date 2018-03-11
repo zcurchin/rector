@@ -36,6 +36,20 @@
             {{gradable-user user=profile}}
           {{/each}}
 
+        {{else}}
+          <div class="rich-info">
+            {{paper-icon "people"}}
+            <p>No one to grade at this moment</p>
+          </div>
+        {{/if}}
+
+      {{else}}
+        {{#if checking.checkedInToday}}
+          {{#if grading.gradableUsers}}
+            {{#each grading.gradableUsers as |profile|}}
+              {{gradable-user user=profile}}
+            {{/each}}
+
           {{else}}
             <div class="rich-info">
               {{paper-icon "people"}}
@@ -43,12 +57,12 @@
             </div>
           {{/if}}
 
-      {{else}}
-
-        <div class="rich-info">
-          {{paper-icon "alarm-off"}}
-          <p>Check in in order to grade coworkers/friends/buddies</p>
-        </div>
+        {{else}}
+          <div class="rich-info">
+            {{paper-icon "alarm-off"}}
+            <p>Check in in order to grade coworkers/friends/buddies</p>
+          </div>
+        {{/if}}
       {{/if}}
     {{/app-page-card}}
 

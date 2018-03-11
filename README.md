@@ -59,3 +59,17 @@ https://firebase.googleblog.com/2016/07/deploy-to-multiple-environments-with.htm
 
 https://firebase.google.com/docs/firestore/security/get-started?authuser=0
 https://firebase.google.com/docs/firestore/security/secure-data?authuser=0
+
+
+### TO DO:
+
+- Remove user from business (use-case)
+- Delete user account (use-case)
+- Add #No in rank list
+- Add prompt when deleting user
+
+### DONE
+
+- Allow showing grading if you are signed-out but checked-in at least once today
+- Refresh lists on page open (!Checking, Grading, Rank list, Employees);
+- Added refresh Employees list

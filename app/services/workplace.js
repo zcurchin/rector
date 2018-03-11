@@ -15,11 +15,33 @@ export default Service.extend({
   employees: service(),
   checking: service(),
   notifications: service(),
-  user: service(),  
+  user: service(),
 
   data: null,
   ready: false,
   active: false,
+
+
+  _onReadyFunctions: [],
+
+
+  _isReady(){
+    let funcs = get(this, '_onReadyFunctions');
+
+    if (funcs.length === 1) {
+      funcs[0]();
+
+    } else if (funcs.length > 1) {
+      funcs.forEach(fn => {
+        fn();
+      });
+    }
+  },
+
+
+  onReady(func){
+    this._onReadyFunctions.addObject(func);
+  },
 
 
   initialize(){
@@ -43,7 +65,7 @@ export default Service.extend({
         set(this, 'active', true);
         set(this, 'ready', true);
         // set(this, 'data', )
-        //return;
+        self._isReady();
         resolve();
         return;
       }
@@ -74,6 +96,8 @@ export default Service.extend({
                 console.log('# Service : Workplace : active :', false);
                 console.log('# Service : Workplace : READY');
 
+                self._isReady();
+
                 resolve(businessObj);
 
               } else {
@@ -86,6 +110,8 @@ export default Service.extend({
 
                     console.log('# Service : Workplace : active :', false);
                     console.log('# Service : Workplace : READY');
+
+                    self._isReady();
 
                     resolve(null);
 
@@ -102,9 +128,7 @@ export default Service.extend({
                     console.log('# Service : Workplace : active :', true);
                     console.log('# Service : Workplace : READY');
 
-                    if (snap.val().manager) {
-                      employees.initialize(key);
-                    }
+                    self._isReady();
 
                     resolve(businessObj);
                   }
@@ -125,6 +149,11 @@ export default Service.extend({
         }
       });
     });
+  },
+
+
+  cancelRequest(){
+
   },
 
 

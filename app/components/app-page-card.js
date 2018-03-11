@@ -12,6 +12,7 @@ const {
 export default Component.extend({
   grading: service(),
   ranking: service(),
+  employees: service(),
 
   classNames: ['app-page-card'],
   classNameBindings: ['preloader'],
@@ -63,11 +64,9 @@ export default Component.extend({
   }],
 
 
-  init(){
-    this._super(...arguments);
-
-
-  },
+  // init(){
+  //   this._super(...arguments);
+  // },
 
 
   actions: {
@@ -98,6 +97,13 @@ export default Component.extend({
         let ranking = get(this, 'ranking');
 
         ranking.createList().then(() => {
+          set(self, 'preloader', false);
+        });
+
+      } else if (refreshAction === 'refreshEmployees') {
+        let employees = get(this, 'employees');
+
+        employees.createList().then(() => {
           set(self, 'preloader', false);
         });
       }

@@ -13,8 +13,13 @@ export default Controller.extend({
 
   actions: {
     showInfo(employee){
-      //console.log(employee);
-      this.transitionToRoute('employee-info', employee.user_uid);
+      // console.log(employee);
+      this.transitionToRoute('employee-info', employee.uid);
+    },
+
+
+    refreshList(){
+      
     }
   }
 });

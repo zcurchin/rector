@@ -44,9 +44,9 @@ export default Route.extend({
           }
         }
 
-        if (target === 'employee-info') {
-          this.replaceWith('employees');
-        }
+        // if (target === 'employee-info') {
+        //   this.replaceWith('employees');
+        // }
       });
     }
   }

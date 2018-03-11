@@ -7,7 +7,7 @@ const {
 
 
 export default Controller.extend({
-  firebaseApp: service(),
+  // firebaseApp: service(),
   grading: service(),
   checking: service(),
   workplace: service(),

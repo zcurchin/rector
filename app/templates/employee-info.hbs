@@ -7,12 +7,8 @@
     header=false
     class="profile-card"
   }}
-    <!-- <div class="action-btn left" {{action "goBack"}}>
-      {{paper-icon "arrow_back"}}
-    </div> -->
-
     {{#if user.accountType.business}}
-      <div class="action-btn right" {{action "deleteEmployee" model}}>
+      <div class="action-btn right" {{action "promptRemoveEmployee"}}>
         {{paper-icon "delete"}}
       </div>
     {{/if}}
@@ -137,3 +133,22 @@
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}
+
+{{#if removingEmployee}}
+  {{#custom-dialog
+    title="Remove Employee"
+    active=removingEmployee
+  }}
+    <p class="prompt-info">Do you realy want to remove this employee?</p>
+
+    {{custom-dialog-actions
+      active=removingEmployee
+      confirmLabel="Yes, Remove Now"
+      confirmAction=(action "removeEmployee" model)
+      waiting=re_waiting
+      success=re_success
+      error=re_error
+      successMsg="You successfully removed employee"
+    }}
+  {{/custom-dialog}}
+{{/if}}

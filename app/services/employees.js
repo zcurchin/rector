@@ -149,7 +149,7 @@ export default Service.extend({
 
 
   deleteEmployee(employee){
-    let user_uid = employee.user_uid;
+    let user_uid = employee.uid;
     let paperToaster = get(this, 'paperToaster');
     let firebaseApp = get(this, 'firebaseApp');
     let notifications = get(this, 'notifications');
@@ -159,8 +159,6 @@ export default Service.extend({
     let userWorkplacesRef = rootRef.child('userWorkplaces').child(user_uid).child(business_uid);
 
     return new RSVP.Promise((resolve) => {
-      window.history.back();
-
       employeesRef.remove().then(() => {
         userWorkplacesRef.remove().then(() => {
           notifications.sendMessage(user_uid, 'We canceled your employement!').then(() => {

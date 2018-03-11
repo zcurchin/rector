@@ -224,6 +224,26 @@
     {{/if}}
   {{/if}}
 
+  {{#if user.accountType.business}}
+    {{#link-to "ranking"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "equalizer"}}
+      </div>
+    {{/link-to}}
+
+    {{#link-to "employees"}}
+    <div class="bottom-bar-btn">
+      {{paper-icon "people"}}
+    </div>
+    {{/link-to}}
+
+    {{#link-to "notifications"}}
+      <div class="bottom-bar-btn">
+        {{paper-icon "notifications"}}
+      </div>
+    {{/link-to}}
+  {{/if}}
+
   <span class="flex"></span>
 
   {{#paper-sidenav-toggle name="left-sidenav" as |toggleAction|}}

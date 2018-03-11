@@ -37,6 +37,7 @@
 
         {{#if workplace.data.pending}}
           <div class="pending">Pending Response</div>
+          <div class="outline-btn" {{action "promptCancelRequest"}}>Cancel Request</div>
 
         {{else}}
           <div class="info-box">
@@ -122,6 +123,25 @@
       success=ce_success
       error=ce_error
       successMsg="You successfully canceled employement"
+    }}
+  {{/custom-dialog}}
+{{/if}}
+
+{{#if cancelingRequest}}
+  {{#custom-dialog
+    title="Cancel Request"
+    active=cancelingRequest
+  }}
+    <p class="prompt-info">Do you realy want to cancel request?</p>
+
+    {{custom-dialog-actions
+      active=cancelingRequest
+      confirmLabel="Yes, Cancel Now"
+      confirmAction=(action "cancelRequest")
+      waiting=cr_waiting
+      success=cr_success
+      error=cr_error
+      successMsg="You successfully canceled request"
     }}
   {{/custom-dialog}}
 {{/if}}

@@ -90,6 +90,8 @@ export default Service.extend({
 
               if (pending) {
                 businessObj.pending = true;
+                businessObj.business_id = snap.key;
+                businessObj.request_id = val[key].request_id;
                 set(self, 'data', businessObj);
                 set(self, 'ready', true);
 
@@ -152,8 +154,57 @@ export default Service.extend({
   },
 
 
-  cancelRequest(){
+  sendRequest(userId, businessId){
+    //let self = this;
+    let firebaseApp = get(this, 'firebaseApp');
+    let businessRequests = firebaseApp.database().ref('businessRequests');
+    let userWorkplaces = firebaseApp.database().ref('userWorkplaces');
 
+    let businessData = {
+      timestamp: Date.now(),
+      sender_uid: userId
+    };
+
+    return new RSVP.Promise((resolve, reject) => {
+      businessRequests.child(businessId).push(businessData).then((snap) => {
+        let userData = {
+          pending: true,
+          request_id: snap.key
+        };
+
+        userWorkplaces.child(userId).child(businessId).set(userData).then(() => {
+          resolve();
+        });
+
+      }).catch(err => {
+        reject(err);
+      });
+    });
+  },
+
+
+  cancelRequest(){
+    let self = this;
+    let data = get(this, 'data');
+    let firebaseApp = get(this, 'firebaseApp');
+    let notifications = get(this, 'notifications');
+    let uid = get(this, 'session.currentUser.uid');
+    let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(uid).child(data.business_id);
+    let businessRequestsRef = firebaseApp.database().ref('businessRequests').child(data.business_id).child(data.request_id);
+
+    console.log(data);
+
+    return new RSVP.Promise((resolve) => {
+      businessRequestsRef.remove().then(() => {
+        userWorkplacesRef.remove().then(() => {
+          notifications.sendMessage(data.business_id, 'I canceled request!').then(() => {
+            set(self, 'data', null);
+            set(self, 'active', false);
+            resolve();
+          });
+        });
+      });
+    });
   },
 
 

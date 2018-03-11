@@ -30,6 +30,11 @@ export default Controller.extend({
   ce_success: false,
   ce_error: false,
 
+  cancelingRequest: false,
+  cr_waiting: false,
+  cr_success: false,
+  cr_error: false,
+
 
   sendRequest(dialog){
     let target = dialog._targetObject;
@@ -61,29 +66,9 @@ export default Controller.extend({
 
 
   sendRequestToBusiness(userId, businessId){
-    //let self = this;
-    let firebaseApp = get(this, 'firebaseApp');
-    let businessRequests = firebaseApp.database().ref('businessRequests');
-    let userWorkplaces = firebaseApp.database().ref('userWorkplaces');
+    let workplace = get(this, 'workplace');
 
-    let businessData = {
-      timestamp: Date.now(),
-      sender_uid: userId
-    };
-
-    let userData = {
-      pending: true
-    };
-
-    return new RSVP.Promise((resolve, reject) => {
-      businessRequests.child(businessId).push(businessData).then(() => {
-        userWorkplaces.child(userId).child(businessId).set(userData).then(() => {
-          resolve();
-        });
-      }).catch(err => {
-        reject(err);
-      });
-    });
+    return workplace.sendRequest(userId, businessId);
   },
 
 
@@ -160,6 +145,22 @@ export default Controller.extend({
 
     promptCancelEmployement(){
       set(this, 'cancelingEmpolyement', true);
+    },
+
+
+    cancelRequest(){
+      let workplace = get(this, 'workplace');
+
+      set(this, 'cr_waiting', true);
+
+      workplace.cancelRequest().then(() => {
+        set(this, 'cr_success', true);
+      });
+    },
+
+
+    promptCancelRequest(){
+      set(this, 'cancelingRequest', true);
     }
   }
 });

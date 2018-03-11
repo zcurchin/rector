@@ -70,6 +70,7 @@ https://firebase.google.com/docs/firestore/security/secure-data?authuser=0
 
 ### DONE
 
+- Refresh Check-ins on page open
 - Allow showing grading if you are signed-out but checked-in at least once today
-- Refresh lists on page open (!Checking, Grading, Rank list, Employees);
+- Refresh lists on page open (Grading, Rank list, Employees);
 - Added refresh Employees list

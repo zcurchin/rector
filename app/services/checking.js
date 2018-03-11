@@ -76,6 +76,7 @@ export default Service.extend({
               }
 
             } else {
+              set(self, 'checkedIn', false);
               set(self, 'checkedOutAt', lastCheckIn.out);
               set(self, 'history', data);
 

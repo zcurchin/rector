@@ -70,6 +70,8 @@ https://firebase.google.com/docs/firestore/security/secure-data?authuser=0
 
 ### DONE
 
+- Highlighted sorting properties (employees)
+- Added cancel request (workplace)
 - Refresh Check-ins on page open
 - Allow showing grading if you are signed-out but checked-in at least once today
 - Refresh lists on page open (Grading, Rank list, Employees);

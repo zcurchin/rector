@@ -14,7 +14,7 @@
   }
 
   .sort-prop {
-    color: $color-text;
+    color: color($primary);
     padding: 1em 0;
     cursor: pointer;
     font-weight: 500;
@@ -27,7 +27,7 @@
     right: -0.5em;
 
     md-icon {
-      color: lighten($color-text, 20);
+      color: color($primary);
     }
   }
 }

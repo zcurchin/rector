@@ -13,7 +13,7 @@
 
       {{#if ranking.workers}}
         {{#each ranking.workers as |user index|}}
-          {{user-list-item user=user order=true}}
+          {{user-list-item user=user order=true orderIndex=index}}
         {{/each}}
 
       {{else}}

@@ -1,6 +1,18 @@
 .user-list-item {
   padding: 1em 0;
   border-bottom: 1px solid $color-border;
+  position: relative;
+
+  .order-number {
+    color: $color-text;
+    position: absolute;
+    top: 1em;
+    background: #FFF;
+    padding: 0.2em 0.5em;
+    border-radius: 10em;
+    left: -1.2em;
+    box-shadow: 0 0 1px rgba(0,0,0,0.4);
+  }
 
   .image {
     height: 3.8em;

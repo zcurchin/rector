@@ -19,6 +19,9 @@ export default Component.extend({
   icon2: null,
   toggle: false,
   toggleState: false, // OFF true is ON
+  order: false,
+  orderIndex: null,
+  orderNum: null,
 
 
   didReceiveAttrs(){
@@ -31,7 +34,11 @@ export default Component.extend({
 
     if (get(this, 'action') || get(this, 'toggle')) {
       set(this, 'clickable', true);
-    }    
+    }
+
+    if (get(this, 'order')) {
+      set(this, 'orderNum', get(this, 'orderIndex') + 1);
+    }
   },
 
 

@@ -65,12 +65,12 @@ https://firebase.google.com/docs/firestore/security/secure-data?authuser=0
 
 - Remove user from business (use-case)
 - Delete user account (use-case)
-- Add #No in rank list
-- Add prompt when deleting user
+
 
 ### DONE
 
-- Added refresh Employees (Employees)
+- Added order number (Rank list)
+- Added refresh action (Employees)
 - Highlighted sorting properties (Employees)
 - Added cancel request (Workplace)
 - Refresh Check-ins on page open (Check In/Out)

@@ -13,7 +13,7 @@
 
       {{#if ranking.workers}}
         {{#each ranking.workers as |user index|}}
-          {{user-list-item user=user}}
+          {{user-list-item user=user order=true}}
         {{/each}}
 
       {{else}}
@@ -28,7 +28,7 @@
           <div class="managers-label">Managers</div>
 
           {{#each ranking.managers as |user index|}}
-            {{user-list-item user=user}}
+            {{user-list-item user=user order=true orderIndex=index}}
           {{/each}}
         {{/if}}
       {{/if}}

@@ -1,4 +1,8 @@
 <div class="user-list-item-profile layout-row layout-align-start-center">
+  {{#if order}}
+    <div class="order-number">{{orderNum}}</div>
+  {{/if}}
+
   <div class="image layout-row layout-column layout-align-center-center">
     {{#if user.profile_image}}
       <img src="{{user.profile_image}}" alt="">

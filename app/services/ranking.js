@@ -186,28 +186,40 @@ export default Service.extend({
 
 
   sortList(list){
-    let sorted_1 = list.sort(function(a, b) {
-      //console.log(a, b);
-      if (a.grades.average > b.grades.average) {
-        return -1;
-
-      } else if (a.grades.average < b.grades.average) {
-        return 1;
-
-      } else if (a.grades.average === b.grades.average) {
-        if (a.grades.total > b.grades.total) {
+    console.log(list);
+    if (list.length) {
+      let sorted_1 = list.sort(function(a, b) {
+        //console.log(a, b);
+        if (a.grades.average > b.grades.average) {
           return -1;
 
-        } else if (a.grades.total < b.grades.total) {
+        } else if (a.grades.average < b.grades.average) {
           return 1;
 
-        } else {
-          return 0;
-        }
-      }
-    });
+        } else if (a.grades.average === b.grades.average) {
+          if (a.grades.total > b.grades.total) {
+            return -1;
 
-    return sorted_1;
+          } else if (a.grades.total < b.grades.total) {
+            return 1;
+
+          } else {
+            return 0;
+          }
+        }
+      });
+
+      if (list.length > 5) {
+        let first_50_percent = Math.floor(list.length / 2);
+        return sorted_1.slice(0, first_50_percent);
+
+      } else {
+        return sorted_1;
+      }
+
+    } else {
+      return [];
+    }
   },
 
 

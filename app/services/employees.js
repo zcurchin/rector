@@ -46,48 +46,65 @@ export default Service.extend({
 
     return new RSVP.Promise(resolve => {
       employeesRef.once('value', snap => {
-        let employee_uids = Object.keys(snap.val());
-        let total_employees = employee_uids.length;
-        let fully_loaded_count = 0;
+        console.log('SNAP: ', snap.val());
 
-        employee_uids.forEach((employee_uid) => {
-          let userBusiness = snap.val()[employee_uid];
+        if (!snap.val()) {
+          set(self, 'management', []);
+          set(self, 'staff', []);
 
-          let userProfileRef = rootRef.child('userProfiles').child(employee_uid);
-          let gradesRef = rootRef.child('businessGrades').child(uid).child(employee_uid);
+          set(self, 'ready', true);
 
-          userProfileRef.once('value', snap => {
-            let profileVal = snap.val();
-            profileVal.uid = employee_uid;
+          resolve({
+            staff: [],
+            management: []
+          });
 
-            gradesRef.once('value', _snap => {
-              let gradeObj = self.getGradeObjects(_snap.val());
-              let joinedObj = Object.assign(userBusiness, profileVal);
+        } else {
 
-              joinedObj.grades = gradeObj;
+          let employee_uids = Object.keys(snap.val());
+          let total_employees = employee_uids.length;
+          let fully_loaded_count = 0;
 
-              if (joinedObj.manager) {
-                management.addObject(joinedObj);
-              } else {
-                staff.addObject(joinedObj);
-              }
 
-              fully_loaded_count++;
+          employee_uids.forEach((employee_uid) => {
+            let userBusiness = snap.val()[employee_uid];
 
-              if (fully_loaded_count === total_employees) {
-                set(self, 'management', management);
-                set(self, 'staff', staff);
+            let userProfileRef = rootRef.child('userProfiles').child(employee_uid);
+            let gradesRef = rootRef.child('businessGrades').child(uid).child(employee_uid);
 
-                set(self, 'ready', true);
+            userProfileRef.once('value', snap => {
+              let profileVal = snap.val();
+              profileVal.uid = employee_uid;
 
-                resolve({
-                  staff: staff,
-                  management: management
-                });
-              }
+              gradesRef.once('value', _snap => {
+                let gradeObj = self.getGradeObjects(_snap.val());
+                let joinedObj = Object.assign(userBusiness, profileVal);
+
+                joinedObj.grades = gradeObj;
+
+                if (joinedObj.manager) {
+                  management.addObject(joinedObj);
+                } else {
+                  staff.addObject(joinedObj);
+                }
+
+                fully_loaded_count++;
+
+                if (fully_loaded_count === total_employees) {
+                  set(self, 'management', management);
+                  set(self, 'staff', staff);
+
+                  set(self, 'ready', true);
+
+                  resolve({
+                    staff: staff,
+                    management: management
+                  });
+                }
+              });
             });
           });
-        });
+        }
       });
     });
   },

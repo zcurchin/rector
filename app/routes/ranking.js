@@ -24,5 +24,12 @@ export default Route.extend({
         ranking.initialize();
       });
     }
+  },
+
+
+  deactivate(){
+    let ranking = get(this, 'ranking');
+
+    ranking.resetList();
   }
 });

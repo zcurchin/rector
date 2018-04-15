@@ -39,7 +39,7 @@ export default Component.extend({
 
     let rankListPeriods = get(this, 'rankListPeriods');
 
-    set(this, 'rankListSelectedPeriod', rankListPeriods[0]);
+    set(this, 'rankListSelectedPeriod', rankListPeriods[1]);
   },
 
   onPeriodChange: observer('rankListSelectedPeriod', function(){
@@ -50,6 +50,9 @@ export default Component.extend({
   }),
 
   rankListPeriods: [{
+    value: 'yesterday',
+    label: 'Yesterday'
+  }, {
     value: 'this_week',
     label: 'This week'
   }, {

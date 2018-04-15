@@ -38,9 +38,16 @@ export default Service.extend({
   },
 
 
+  resetList(){
+    set(this, 'period', 'this_week');
+    set(this, 'workers', []);
+    set(this, 'managers', []);
+  },
+
+
   createList(){
-    let period = get(this, 'period');
     let self = this;
+    let period = get(this, 'period');
     let uid = get(this, 'session').get('uid');
     let user = get(this, 'user');
     let sortByDefault = get(this, 'sortBy') === 'default' ? true : false ;
@@ -145,6 +152,11 @@ export default Service.extend({
     let endTime = null;
 
     switch (period) {
+      case 'yesterday':
+        startTime = moment().startOf('day').subtract(1, 'day').add(after_midnight_treshold, 'hours').format('x');
+        endTime = moment().startOf('day').add(after_midnight_treshold, 'hours').format('x');
+      break;
+
       case 'this_week':
         startTime = moment().startOf('isoWeek').add(after_midnight_treshold, 'hours').format('x');
         endTime = moment().endOf('isoWeek').add(after_midnight_treshold, 'hours').format('x');

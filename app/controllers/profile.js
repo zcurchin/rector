@@ -47,21 +47,33 @@ export default Controller.extend({
   updateUserProfile(data){
     let self = this;
     let uid = get(this, 'session.currentUser.uid');
-    let firebaseApp = get(this, 'firebaseApp');
+    let firebaseApp = get(this, 'firebaseApp');    
 
     set(self, 'pi_waiting', true);
     set(self, 'pi_error', false);
     set(self, 'pi_success', false);
 
-    console.log('###### updateUserProfile :', data);
-
-    firebaseApp.database().ref('userProfiles/'+ uid).update(data).then(() => {
-      set(self, 'pi_success', true);
-
-    }).catch(error => {
-      set(self, 'pi_errorMsg', error);
+    if (data.first_name === '') {
+      set(self, 'pi_errorMsg', 'First name can\'t be blank');
       set(self, 'pi_error', true);
-    });
+
+    } else if (data.last_name === '') {
+      set(self, 'pi_errorMsg', 'Last name can\'t be blank');
+      set(self, 'pi_error', true);
+
+    } else if (data.username === '') {
+      set(self, 'pi_errorMsg', 'Username can\'t be blank');
+      set(self, 'pi_error', true);
+
+    } else {
+      firebaseApp.database().ref('userProfiles/'+ uid).update(data).then(() => {
+        set(self, 'pi_success', true);
+
+      }).catch(error => {
+        set(self, 'pi_errorMsg', error);
+        set(self, 'pi_error', true);
+      });
+    }
   },
 
 

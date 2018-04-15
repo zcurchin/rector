@@ -48,18 +48,21 @@ export default Controller.extend({
     set(self, 'pi_error', false);
     set(self, 'pi_success', false);
 
-    console.log('###### updateUserProfile :', data);
-    //console.log(data);
+    // console.log('###### updateBusinessProfile :', data);
 
-    //let dbRef = user.accountType.business ? 'businessProfiles' : 'userProfiles';
-
-    firebaseApp.database().ref('businessProfiles/'+ uid).update(data).then(() => {
-      set(self, 'pi_success', true);
-
-    }).catch(error => {
-      set(self, 'pi_errorMsg', error);
+    if (data.name === '') {
+      set(self, 'pi_errorMsg', 'Business name can\'t be blank');
       set(self, 'pi_error', true);
-    });
+
+    } else {
+      firebaseApp.database().ref('businessProfiles/'+ uid).update(data).then(() => {
+        set(self, 'pi_success', true);
+
+      }).catch(error => {
+        set(self, 'pi_errorMsg', error);
+        set(self, 'pi_error', true);
+      });
+    }
   },
 
 

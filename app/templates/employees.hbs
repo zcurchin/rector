@@ -1,12 +1,12 @@
 {{#app-page
-  title="Employees"
+  title="Team"
   contentReady=employees.ready
 }}
   {{#app-page-card
-    title="Staff"
+    title="Employees"
     title_count=employees.staff.length
     resizeable=true
-    info="Info goes here"
+    info="List of all employees, their average grades and the number of grades. Sort people by average grade, the number of grades or alphabetically."
     class="sorting"
     refreshAction="refreshEmployees"
   }}
@@ -36,7 +36,7 @@
     title="Management"
     title_count=employees.management.length
     resizeable=true
-    info="Info goes here"
+    info="List of all managers, their average grades and the number of grades. Sort people by average grade, the number of grades or alphabetically. This list is visible to Admin and Manager accounts only."
     class="sorting"
     refreshAction="refreshEmployees"
   }}

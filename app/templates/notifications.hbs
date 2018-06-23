@@ -1,4 +1,4 @@
-{{#app-page 
+{{#app-page
   title="Notifications"
   contentReady=notifications.ready
 }}
@@ -10,7 +10,7 @@
       title="Requests"
       title_count=notifications.requests.length
       resizeable=true
-      info="Those are requests came from the people who want to join your business and you didn't respond to their request."
+      info='Requests from profiles that want to be listed as employees in your business. Requests can be approved or denied, if approved, choosing job title is required. To give manager authorization to a profile "add as manager" needs to be checked.'
     }}
       {{#if notifications.requests.length}}
         <div class="requests">
@@ -21,7 +21,7 @@
       {{else}}
         <div class="rich-info">
           {{paper-icon "assignment-ind"}}
-          <p>You don't have any requests yet</p>
+          <p>No requests</p>
         </div>
       {{/if}}
     {{/app-page-card}}
@@ -33,7 +33,7 @@
     title="Messages"
     title_count=notifications.messages.length
     resizeable=true
-    info="Those are notification messages."
+    info="Notification inbox. Delete notifications to clear inbox."
   }}
     {{#if notifications.messages.length}}
       <div class="messages">
@@ -44,7 +44,7 @@
     {{else}}
       <div class="rich-info">
         {{paper-icon "mail-outline"}}
-        <p>You don't have any messages yet</p>
+        <p>No messages</p>
       </div>
     {{/if}}
   {{/app-page-card}}

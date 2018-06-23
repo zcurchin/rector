@@ -178,8 +178,8 @@ export default Service.extend({
     return new RSVP.Promise((resolve) => {
       employeesRef.remove().then(() => {
         userWorkplacesRef.remove().then(() => {
-          notifications.sendMessage(user_uid, 'We canceled your employement!').then(() => {
-            let toasterText = 'You deleted ' + employee.first_name + ' ' + employee.last_name + ' from your business';
+          notifications.sendMessage(user_uid, 'Your profile is no longer linked to our business.').then(() => {
+            let toasterText = 'You successfully removed the profile of ' + employee.first_name + ' ' + employee.last_name + '.';
             paperToaster.show(toasterText, {
               duration: 7000,
               position: 'top right'

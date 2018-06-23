@@ -1,13 +1,13 @@
-{{#app-page title="Check In/Out"
+{{#app-page title="Check-In/Out"
   contentReady=checking.ready
 }}
 
   <!-- WORKPLACE ACTIVE : TRUE -->
   {{#if workplace.active}}
     {{#app-page-card
-      title="Current Status"
+      title="Status"
       resizeable=true
-      info="This is your current status. Here you can check out manually and edit check in time. Check in for the shift will enable you to grade and to be graded by coworkers for the time you worked togeather."
+      info="Checking in for the shift will enable you to grade and be graded."
     }}
 
       {{#if checking.checkedIn}}
@@ -66,7 +66,7 @@
     {{#app-page-card
       title="History"
       resizeable=true
-      info="Preview of your check in activity."
+      info="Here you can see you previous Check-Ins."
     }}
       {{#if checking.history.length}}
         <div class="checkin-history-list">
@@ -92,7 +92,7 @@
     }}
       <div class="rich-info">
         {{paper-icon "people"}}
-        <p>No workplace</p>
+        <p>You are not linked to an employer.</p>
       </div>
     {{/app-page-card}}
 
@@ -105,8 +105,8 @@
 {{#if checkingIn}}
   {{#custom-dialog
     active=checkingIn
-    title="Check In"
-    info="How many hours will you be working today? You can always check out before 'automatic check out' in case necessary."
+    title="Check-In"
+    info="Set Check-out time and Check-in."
   }}
     {{time-chooser
       label="Check me out automatically at:"
@@ -129,20 +129,20 @@
 
 {{#if checkingOut}}
   {{#custom-dialog
-    title="Check Out"
+    title="Check-Out"
     active=checkingOut
   }}
-    <p class="prompt-info">Would you like to check out before your automatic check out?</p>
+    <p class="prompt-info">Are you sure you want to Check-Out now?</p>
 
     {{custom-dialog-actions
       active=checkingOut
-      confirmLabel="Check Out Now"
+      confirmLabel="Check-Out"
       confirmAction=(action "checkOut")
       waiting=co_waiting
       success=co_success
       error=co_error
       errorMsg=co_errorMsg
-      successMsg="You are checked out"
+      successMsg="You are Checked Out"
     }}
   {{/custom-dialog}}
 {{/if}}
@@ -150,9 +150,9 @@
 
 {{#if editingAutoCheckOut}}
   {{#custom-dialog
-    title="Update Auto Check Out Time"
+    title="Edit Check-Out time"
     active=editingAutoCheckOut
-    info="How many hours will you be working today? You can always check out before 'automatic check out' in case necessary."
+    info="If necessary edit you Check-Out."
   }}
     {{time-chooser
       startTime=checking.autoCheckOutAt
@@ -166,7 +166,7 @@
       success=ua_success
       error=ua_error
       errorMsg=ua_errorMsg
-      successMsg="Successfully updated auto check out time"
+      successMsg="Successfully updated Check-Out time"
     }}
   {{/custom-dialog}}
 {{/if}}

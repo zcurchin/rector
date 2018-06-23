@@ -4,8 +4,8 @@
 }}
   {{#app-page-card
     resizeable=true
-    title="My Current Workplace"
-    info="This is where you are currently employed"
+    title="My Workplace"
+    info="Here you will find information about your workplace. Use this page to find employer."
   }}
     {{#if workplace.data}}
       <div class="workplace-box">
@@ -49,7 +49,7 @@
               </div>
             {{/if}}
           </div>
-          <div class="outline-btn" {{action "promptCancelEmployement"}}>Cancel Employement</div>
+          <div class="outline-btn" {{action "promptCancelEmployement"}}>Leave {{workplace.data.name}}</div>
         {{/if}}
       </div>
 
@@ -57,22 +57,22 @@
     {{else}}
       <div class="rich-info">
         {{paper-icon "store-mall-directory"}}
-        <p>You are not employed at this moment. Try to find business that you want to work for and send them request.</p>
+        <p>You are not linked to an employer.</p>
       </div>
-      <div class="outline-btn centered" {{action "showFinder"}}>Find Business</div>
+      <div class="outline-btn centered" {{action "showFinder"}}>Find Employer</div>
     {{/if}}
   {{/app-page-card}}
 {{/app-page}}
 
 {{#if findingWorkplace}}
   {{#custom-dialog
-    title="Find Business"
+    title="Find Employer"
     active=findingWorkplace
   }}
 
     <div class="inner">
       {{paper-input
-        label="Business Name"
+        label="Employer"
         type="text"
         value=searchQuery
         onChange=(action "queryChanged")
@@ -102,7 +102,7 @@
       waiting=waiting
       success=success
       error=error
-      successMsg="Request successfully sent"
+      successMsg="Request sent"
     }}
 
   {{/custom-dialog}}
@@ -110,19 +110,19 @@
 
 {{#if cancelingEmpolyement}}
   {{#custom-dialog
-    title="Cancel Employement"
+    title="Leave Workplace"
     active=cancelingEmpolyement
   }}
-    <p class="prompt-info">Do you realy want to cancel employement?</p>
+    <p class="prompt-info">By leaving {{workplace.data.name}}, you will no longer be listed as an employee of {{workplace.data.name}}. Are you sure you want to leave?</p>
 
     {{custom-dialog-actions
       active=cancelingEmpolyement
-      confirmLabel="Yes, Cancel Now"
+      confirmLabel="Yes, Leave"
       confirmAction=(action "cancelEmployement")
       waiting=ce_waiting
       success=ce_success
       error=ce_error
-      successMsg="You successfully canceled employement"
+      successMsg="You are no longer linked with an employer."
     }}
   {{/custom-dialog}}
 {{/if}}
@@ -136,7 +136,7 @@
 
     {{custom-dialog-actions
       active=cancelingRequest
-      confirmLabel="Yes, Cancel Now"
+      confirmLabel="Yes, Cancel Request"
       confirmAction=(action "cancelRequest")
       waiting=cr_waiting
       success=cr_success

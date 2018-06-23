@@ -92,7 +92,7 @@ export default Controller.extend({
         set(self, 'preloader2', false);
         set(self, 'verifyEmailSent', true);
 
-        let message = 'We sent you an email with instructions on how to verfy you email address';
+        let message = 'Verification sent, please check your email.';
 
         paperToaster.show(message, {
           duration: 7000,

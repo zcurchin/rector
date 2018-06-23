@@ -32,7 +32,7 @@
   {{#app-page-card
     title="Grades"
     resizeable=true
-    info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
+    info="Your average grade and distribution of all grades given to you."
   }}
     {{#if model.grades.all_grades}}
       <div class="main-grade layout-row layout-align-start-center">
@@ -118,7 +118,7 @@
   {{#app-page-card
     title="Comments"
     resizeable=true
-    info="Visible to restaurant group members only. Preview of your average grade and all grade's given to you."
+    info="Your average grade and distribution of all grades given to you."
   }}
     {{#if model.grades.comments}}
       {{#each model.grades.comments as |comment|}}
@@ -136,14 +136,14 @@
 
 {{#if removingEmployee}}
   {{#custom-dialog
-    title="Remove Employee"
+    title="Remove this profile"
     active=removingEmployee
   }}
-    <p class="prompt-info">Do you realy want to remove this employee?</p>
+    <p class="prompt-info">Are you sure you want to remove profile?</p>
 
     {{custom-dialog-actions
       active=removingEmployee
-      confirmLabel="Yes, Remove Now"
+      confirmLabel="Yes"
       confirmAction=(action "removeEmployee" model)
       waiting=re_waiting
       success=re_success

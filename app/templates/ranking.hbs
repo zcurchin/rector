@@ -7,7 +7,7 @@
       class="rank-list"
       refreshAction="refreshRankList"
       rankList=true
-      info="Ranking of OTIUM's staff members. Arhitmetic mean/quantity of grades."
+      info="This is staff ranking list with average grades and number of grades. This list shows top rated employees. Use the drop-down menu to select the time frame."
       refresh=refreshRealtimeList
     }}
 
@@ -19,7 +19,7 @@
       {{else}}
         <div class="rich-info">
           {{paper-icon "equalizer"}}
-          <p>There are no graded users so far</p>
+          <p>There are no grades in this time frame.</p>
         </div>
       {{/if}}
 
@@ -41,7 +41,7 @@
     }}
       <div class="rich-info">
         {{paper-icon "people"}}
-        <p>No workplace</p>
+        <p>You are not linked to an employer.</p>
       </div>
     {{/app-page-card}}
   {{/if}}

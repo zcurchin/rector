@@ -227,10 +227,10 @@ export default Service.extend({
                 self.decrementProperty('total');
               }
 
-              let text = 'We added you as ' +  jobTitle;
+              let text = 'Congratulations, you are added as ' + jobTitle + '.';
 
               if (isManager) {
-                text = 'We added you as ' +  jobTitle + '. You are also a manager.';
+                text = 'Congratulations, you are added as manager. Your position is ' + jobTitle + '.';
               }
 
               let userWorkplacesRef = firebaseApp.database().ref('userWorkplaces').child(userId).child(business_id);

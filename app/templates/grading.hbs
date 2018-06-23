@@ -28,7 +28,7 @@
       title="Users to grade"
       refreshAction="refreshGrading"
       resizeable=true
-      info="List of coworkers you worked with today. This list is restarted at 3 AM the next day, all grades should be given by that time. After the cutoff time list is restarted and you won't be able to grade coworkers for the previous day."
+      info="List of people you worked with today. New list is assembled daily, please make sure to grade everyone before 3 am."
     }}
       {{#if checking.checkedIn}}
         {{#if grading.gradableUsers}}
@@ -70,7 +70,7 @@
       title="Today's History"
       resizeable=true
       folded=true
-      info="History of grade's you gave today."
+      info="Grades you gave today."
     }}
       {{#if grading.history}}
         {{#each grading.history as |user|}}
@@ -143,7 +143,7 @@
       {{else}}
         <div class="rich-info">
           {{paper-icon "history"}}
-          <p>You didn't grade anyone so far</p>
+          <p>You didn't grade anyone.</p>
         </div>
       {{/if}}
     {{/app-page-card}}
@@ -154,7 +154,7 @@
     }}
       <div class="rich-info">
         {{paper-icon "people"}}
-        <p>No workplace</p>
+        <p>You are not linked to an employer.</p>
       </div>
     {{/app-page-card}}
 

@@ -64,7 +64,7 @@ export default Component.extend({
       let first_name = get(this, 'user.first_name');
       let last_name = get(this, 'user.last_name');
       let comment = get(this, 'comment');
-      let error_msg = 'You have to write comment if you want to grade user below grade 3';
+      let error_msg = 'Comment is required for one and two star grades';
       let success_msg = 'You successfully graded ' + first_name + ' ' + last_name;
 
       if ((grade === 1 || grade === 2) && !comment) {

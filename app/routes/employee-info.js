@@ -4,8 +4,7 @@ import RSVP from 'rsvp';
 const {
   Route,
   inject: { service },
-  get,
-  set
+  get
 } = Ember;
 
 export default Route.extend({

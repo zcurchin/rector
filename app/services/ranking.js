@@ -50,7 +50,7 @@ export default Service.extend({
     let period = get(this, 'period');
     let uid = get(this, 'session').get('uid');
     let user = get(this, 'user');
-    let sortByDefault = get(this, 'sortBy') === 'default' ? true : false ;
+    // let sortByDefault = get(this, 'sortBy') === 'default' ? true : false ;
     let workplace = get(this, 'workplace');
 
     if (user.accountType.user && !workplace.active) {

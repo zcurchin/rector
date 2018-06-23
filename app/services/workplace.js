@@ -47,7 +47,7 @@ export default Service.extend({
   initialize(){
     let self = this;
     let firebaseApp = get(this, 'firebaseApp');
-    let employees = get(this, 'employees');
+    // let employees = get(this, 'employees');
     let user = get(this, 'user');
     //let checking = get(this, 'checking');
     let uid = get(this, 'session.currentUser.uid');

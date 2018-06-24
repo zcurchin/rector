@@ -39,6 +39,7 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "^2.14.4",
     "ember-export-application-global": "^2.0.0",
+    "ember-firebase-adapter": "0.0.1",
     "ember-gestures": "^0.4.5",
     "ember-inflector": "^2.0.1",
     "ember-load-initializers": "^1.0.0",

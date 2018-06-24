@@ -10,12 +10,12 @@ const {
 
 export default Route.extend({
   user: service(),
-
+  store: service(),
 
   model(){
     // let self = this;
     let user = get(this, 'user');
-    // let uid = get(this, 'session.currentUser.uid');
+    let store = get(this, 'store');
 
     return new RSVP.Promise((resolve, reject) => {
       let requests = {

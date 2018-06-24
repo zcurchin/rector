@@ -1,0 +1,42 @@
+{{#app-page
+  title="Data Store"
+  contentReady=true
+}}
+  {{#app-page-card
+    title="User Profile"
+    resizeable=true
+  }}
+    <p>{{profile.username}}</p>
+    {{!--
+    {{#each model as |profile|}}
+      <h4>{{profile.first_name}} {{profile.last_name}}</h4>
+      <p>{{profile.username}}</p>
+      <p>{{profile.country}}</p>
+      <hr>
+    {{/each}}
+    --}}
+  {{/app-page-card}}
+
+
+  {{#app-page-card
+    title="User Grades"
+    resizeable=true
+  }}
+    {{#each grades as |grade|}}
+      <h4>Grade: {{grade.value}}</h4>
+      <hr>
+    {{/each}}
+  {{/app-page-card}}
+
+
+  {{#app-page-card
+    title="Coworkers"
+    resizeable=true
+  }}
+
+    <h4>Place:{{workplace.test}}</h4>
+    <hr>
+
+  {{/app-page-card}}
+
+{{/app-page}}

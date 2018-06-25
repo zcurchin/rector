@@ -8,10 +8,18 @@ export function gradeHtml(params) {
   let type = params[0];
   let grades = params[1];
 
+  // if (grades[0].content) {
+  //   console.log(grades.content);
+  // }
+
+  grades.forEach(grade => {
+    console.log(grade.get('value'));
+  });
+
   let valid_grades = grades.filter(grade => {
-    return grade.value > 0;
+    return grade.get('value') > 0;
   }).map(grade => {
-    return grade.value;
+    return grade.get('value');
   });
 
   let sum = valid_grades.length ? valid_grades.reduce(function(a, b) { return a + b; }) : 0;

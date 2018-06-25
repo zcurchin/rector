@@ -37,6 +37,12 @@
     {{#paper-content}}
 
       {{! MAIN-NAV : USER ACCOUNT --}}
+      {{#link-to "dashboard"}}
+        {{#paper-item}}
+          {{paper-icon "dashboard"}}
+          <p>Dashboard</p>
+        {{/paper-item}}
+      {{/link-to}}
 
       {{#if user.accountType.user}}
 

@@ -26,7 +26,7 @@ Router.map(function() {
   this.route('business-profile');
   this.route('business-requests');
   this.route('employee-info', { path: ':id' });
-  this.route('data-store');
+  this.route('dashboard');
 });
 
 export default Router;

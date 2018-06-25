@@ -1,0 +1,70 @@
+{{#app-page
+  title="Dashboard"
+  contentReady=true
+}}
+  <div class="layout-row flex">
+
+    <!--
+    ===============================================
+    PROFILE
+    ===============================================
+    -->
+    {{#app-page-card
+      title="User Profile"
+      resizeable=true
+      class="flex"
+    }}
+      <p>{{profile.username}}</p>
+    {{/app-page-card}}
+
+
+    <!--
+    ===============================================
+    GRADES
+    ===============================================
+    -->
+    {{#app-page-card
+      title="User Grades"
+      resizeable=true
+      class="flex"
+    }}
+      {{grades-stat grades=grades}}
+    {{/app-page-card}}
+
+  </div>
+  <div class="layout-row flex">
+
+    <!--
+    ===============================================
+    EMPLOYEES
+    ===============================================
+    -->
+    {{#app-page-card
+      title="Employees"
+      resizeable=true
+      class="sorting flex"
+    }}
+      <!-- {{#each employees as |employee|}}
+        <div class="layout-row layout-align-center-center">
+          <div class="">{{employee.profile.first_name}} {{employee.profile.last_name}}</div>
+          <span class="flex"></span>
+          <div class="">{{employee.grades.length}}</div>
+        </div>
+      {{/each}} -->
+      {{#sort-box
+        props=(arr 'first_name')
+        labels=(arr 'alphabetically')
+        unsortedList=employees as |sortedList|
+      }}
+        {{#each sortedList as |employee|}}
+          {{user-list-item
+            user=employee
+
+          }}
+        {{/each}}
+      {{/sort-box}}
+    {{/app-page-card}}
+
+  </div>
+
+{{/app-page}}

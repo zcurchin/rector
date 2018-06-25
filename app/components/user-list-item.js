@@ -13,7 +13,7 @@ export default Component.extend({
   clickable: false,
 
   user: null,
-  initials: null,
+  // initials: null,
   action: null,
   icon: null,
   icon2: null,
@@ -28,9 +28,12 @@ export default Component.extend({
     this._super(...arguments);
 
     let user = get(this, 'user');
-    let initials = user.first_name[0] + '' + user.last_name[0];
+    let profile = get(user, 'profile');
 
-    set(this, 'initials', initials);
+    set(this, 'initials', Ember.Object.create({
+      first: get(profile, 'first_name')[0],
+      last: get(profile, 'last_name')[0],
+    }));
 
     if (get(this, 'action') || get(this, 'toggle')) {
       set(this, 'clickable', true);
@@ -39,6 +42,9 @@ export default Component.extend({
     if (get(this, 'order')) {
       set(this, 'orderNum', get(this, 'orderIndex') + 1);
     }
+
+    let grades = get(user, 'grades');
+    console.log(grades);
   },
 
 

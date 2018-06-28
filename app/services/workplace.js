@@ -16,6 +16,7 @@ export default Service.extend({
   checking: service(),
   notifications: service(),
   user: service(),
+  store: service(),
 
   data: null,
   ready: false,
@@ -231,6 +232,111 @@ export default Service.extend({
             });
           });
         });
+      });
+    });
+  },
+
+
+  updateGrades(){
+    let store = this.get('store');
+    let uid = this.get('session.currentUser').uid;
+    let firebaseApp = get(this, 'firebaseApp');
+
+    return firebaseApp.database().ref('businessGrades').once('value', snap => {
+      let business_uid = Object.keys(snap.val());
+      console.log(business_uid);
+
+      return RSVP.all(businesses.content.map(business => {
+    });
+
+    return store.query('businessGrade', {
+      // path: 'publicGrade/'
+
+    }).then(businesses => {
+
+      return RSVP.all(businesses.content.map(business => {
+
+        return store.query('userWorkplace', {
+          path: 'userWorkplaces/' + business.id
+
+        }).then((userWorkplaces) => {
+          if (userWorkplaces.content.length) {
+            let workplace_uid = userWorkplaces.content[0].id;
+
+            return store.query('businessGrade', {
+              path: 'businessGrades/'+ workplace_uid + '/' + owner.id
+            });
+
+          } else {
+            return false;
+          }
+
+        }).then(businessGrades => {
+
+          let one = 0;
+          let two = 0;
+          let three = 0;
+          let four = 0;
+          let five = 0;
+
+          if (businessGrades) {
+            businessGrades.forEach(grade => {
+              // console.log(grade._internalModel._data.value);
+              switch (grade._internalModel._data.value) {
+                case 1:
+                  one++;
+                break;
+                case 2:
+                  two++;
+                break;
+                case 3:
+                  three++;
+                break;
+                case 4:
+                  four++;
+                break;
+                case 5:
+                  five++;
+                break;
+              }
+            });
+          }
+
+          let total_sum = (one * 1) + (two * 2) + (three * 3) + (four * 4) + (five * 5);
+          let total_grades = one + two + three + four + five;
+          let average = total_sum / total_grades;
+
+          function roundToTwo(num) {
+            return +(Math.round(num + "e+2") + "e-2");
+          }
+
+          if (average) {
+            return {
+              average: roundToTwo(average),
+              total: total_grades,
+              one: one,
+              two: two,
+              three: three,
+              four: four,
+              five: five
+            };
+
+          } else {
+            return false;
+          }
+
+
+        }).then(stat => {
+          if (stat) {
+            return firebaseApp.database().ref('publicGradesStats').child(owner.id).set(stat);
+
+          } else {
+            return false;
+          }
+        });
+
+      })).then((res) => {
+        return res;
       });
     });
   }

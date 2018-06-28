@@ -44,7 +44,7 @@ export default Component.extend({
     }
 
     let grades = get(user, 'grades');
-    console.log(grades);
+    // console.log(grades);
   },
 
 

@@ -2,11 +2,8 @@ import Ember from 'ember';
 
 const {
   Component
-  // inject: { service },
-  // set,
-  // get
 } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   grades: null
 });

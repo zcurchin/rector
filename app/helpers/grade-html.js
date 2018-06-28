@@ -8,14 +8,6 @@ export function gradeHtml(params) {
   let type = params[0];
   let grades = params[1];
 
-  // if (grades[0].content) {
-  //   console.log(grades.content);
-  // }
-
-  grades.forEach(grade => {
-    console.log(grade.get('value'));
-  });
-
   let valid_grades = grades.filter(grade => {
     return grade.get('value') > 0;
   }).map(grade => {
